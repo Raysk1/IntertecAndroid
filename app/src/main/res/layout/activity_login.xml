@@ -83,9 +83,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/rounded_ui"
-        android:backgroundTint="#FFFFFF"
+        android:backgroundTint="@color/white"
         android:clipChildren="false"
-        android:clipToOutline="true"
         android:clipToPadding="false"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
@@ -99,14 +98,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.33" />
+            app:layout_constraintGuide_percent="0.31" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.67" />
+            app:layout_constraintGuide_percent="0.69" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline25"
@@ -259,8 +258,7 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:autoSizeTextType="none"
-            android:background="#FCA311"
-            android:backgroundTint="#FCA311"
+            android:backgroundTint="@color/yellow"
             android:enabled="true"
             android:paddingLeft="10sp"
             android:paddingRight="10sp"
@@ -325,7 +323,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline8"></androidx.coordinatorlayout.widget.CoordinatorLayout>
+        app:layout_constraintTop_toTopOf="@id/guideline8"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

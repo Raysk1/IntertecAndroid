@@ -1,5 +1,6 @@
 package com.raysk.intertec;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -63,17 +64,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!ValidarControl()){
-                    control.requestFocus();
-                }else if (!ValidarPassword()){
-                    password.requestFocus();
-                }else {
-                    login.showLoading();
-                    new Connection().execute(control.getText().toString(),password.getText().toString());
-                }
+        login.setOnClickListener(v -> {
+            if (!ValidarControl()){
+                control.requestFocus();
+            }else if (!ValidarPassword()){
+                password.requestFocus();
+            }else {
+                login.showLoading();
+                new Connection().execute(control.getText().toString(),password.getText().toString());
             }
         });
     }
@@ -108,7 +106,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public class Connection extends AsyncTask<String, Integer, Alumno> {
+    @SuppressLint("StaticFieldLeak")
+    public class  Connection extends AsyncTask<String, Integer, Alumno> {
         String mensaje = "";
         boolean validado = false;
         Alumno alumno;
@@ -138,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
             if (validado) {
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                Intent intent = new Intent(LoginActivity.this, ButtonNavigation.class);
                 //Gson gson = new Gson();
                 //String al = gson.toJson(a);
                 //intent.putExtra("alumno", al);

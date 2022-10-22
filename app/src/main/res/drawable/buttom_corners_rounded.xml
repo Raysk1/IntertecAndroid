@@ -16,8 +16,8 @@
     <!-- size element is used to define a design here height & width are same means square with some radius -->
 
     <gradient
-        android:startColor="#14213d"
-        android:endColor="#000000"
+        android:startColor="@color/dark_blue"
+        android:endColor="@color/black"
         android:type="linear"
         android:angle="90"/>
 </shape>

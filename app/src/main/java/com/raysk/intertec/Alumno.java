@@ -84,6 +84,7 @@ public class Alumno {
         this.datosPersonales.put("cp", datos.get(4).text().trim());
         this.datosPersonales.put("telefono", datos.get(5).text().trim());
         this.datosPersonales.put("correoPersonal", datos.get(6).text().trim());
+        this.datosPersonales.put("correoInstitucional",control + "@eldorado.tecnm.mx");
         this.datosPersonales.put("fechaDeNacimiento", datos.get(8).text().trim());
 
         //Obteniendo los datos Academicos

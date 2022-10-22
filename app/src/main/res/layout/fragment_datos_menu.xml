@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DatosMenuFragment">
+    tools:context=".datos.DatosMenuFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -62,13 +62,12 @@
 
 
             <TextView
-                android:id="@+id/nameIcon"
+                android:id="@+id/userNameIcon"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:autoSizeTextType="uniform"
                 android:background="@drawable/circle_name_user"
                 android:gravity="center"
-                android:text="O"
                 android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
@@ -111,7 +110,6 @@
             android:layout_height="0dp"
             android:autoSizeTextType="none"
             android:gravity="center"
-            android:text="LUIS ALFREDO CARRASCO MACHADO"
             android:textColor="#000000"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -136,7 +134,6 @@
             android:backgroundTint="#14213d"
             android:gravity="center"
             android:paddingHorizontal="10sp"
-            android:text="19160027"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -175,7 +172,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.25" />
+                app:layout_constraintGuide_percent="0.26" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline34"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.42" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline35"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.58" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline36"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.74" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline37"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.9" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline31"
@@ -192,11 +217,12 @@
                 app:layout_constraintGuide_percent="0.1" />
 
             <com.kusu.loadingbutton.LoadingButton
-                android:id="@+id/button"
-                style="but"
+                android:id="@+id/btDatosGenerales"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:autoSizeTextType="none"
+                android:backgroundTint="@color/white"
+                android:backgroundTintMode="src_in"
                 android:text="Datos Generales"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/guideline33"
@@ -204,7 +230,40 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@id/guideline30"
                 app:layout_constraintTop_toTopOf="@+id/guideline32"
-                app:lb_isCircular="true" />
+                app:lb_isCircular="true"
+                app:lb_isShadowEnable="false" />
+
+            <com.kusu.loadingbutton.LoadingButton
+                android:id="@+id/btDatosPersonales"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:autoSizeTextType="none"
+                android:backgroundTint="@color/white"
+                android:backgroundTintMode="src_in"
+                android:text="Datos Personales"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/guideline35"
+                app:layout_constraintEnd_toStartOf="@id/guideline31"
+                app:layout_constraintStart_toEndOf="@id/guideline30"
+                app:layout_constraintTop_toTopOf="@+id/guideline34"
+                app:lb_isCircular="true"
+                app:lb_isShadowEnable="false" />
+
+            <com.kusu.loadingbutton.LoadingButton
+                android:id="@+id/btDatosAcademicos"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:autoSizeTextType="none"
+                android:backgroundTint="@color/white"
+                android:backgroundTintMode="src_in"
+                android:text="Datos Academicos"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/guideline37"
+                app:layout_constraintEnd_toStartOf="@id/guideline31"
+                app:layout_constraintStart_toEndOf="@id/guideline30"
+                app:layout_constraintTop_toTopOf="@id/guideline36"
+                app:lb_isCircular="true"
+                app:lb_isShadowEnable="false" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline32"
@@ -212,6 +271,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.1" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.Guideline
