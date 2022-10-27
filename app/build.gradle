@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
@@ -48,5 +49,12 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'com.github.koushikcse:LoadingButton:1.7'
     implementation 'com.github.AndroidDeveloperLB:AutoFitTextView:9'
+    implementation 'com.github.thellmund.Android-Week-View:core:5.2.4'
+    implementation 'com.github.thellmund.Android-Week-View:jodatime:5.2.4'
+    implementation 'com.github.thellmund.Android-Week-View:threetenabp:5.2.4'
+    implementation 'com.github.thellmund.Android-Week-View:jsr310:5.2.4'
+    implementation 'com.github.thellmund.Android-Week-View:emoji:5.2.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
 
 }

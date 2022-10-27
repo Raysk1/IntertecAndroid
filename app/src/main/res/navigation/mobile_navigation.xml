@@ -38,4 +38,19 @@
         android:name="com.raysk.intertec.datos.DatosAcademicosFragment"
         android:label="fragment_datos_academicos"
         tools:layout="@layout/fragment_datos_academicos" />
+    <fragment
+        android:id="@+id/horarioFragment"
+        android:name="com.raysk.intertec.horario.HorarioFragment"
+        android:label="fragment_horario"
+        tools:layout="@layout/fragment_horario" />
+    <fragment
+        android:id="@+id/kardexFragment"
+        android:name="com.raysk.intertec.KardexFragment"
+        android:label="fragment_kardex"
+        tools:layout="@layout/fragment_kardex" />
+    <fragment
+        android:id="@+id/calificacionesFragment"
+        android:name="com.raysk.intertec.CalificacionesFragment"
+        android:label="fragment_calificaciones"
+        tools:layout="@layout/fragment_calificaciones" />
 </navigation>

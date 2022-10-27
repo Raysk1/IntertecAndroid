@@ -16,14 +16,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.raysk.intertec.Alumno;
+import com.raysk.intertec.alumno.Alumno;
 import com.raysk.intertec.R;
-
-import org.json.JSONException;
 
 
 public class DatosMenuFragment extends Fragment {
-    TextView tvUsername, tvUserNumControl,tvUsernameIcon;
+    TextView tvUsername, tvUserNumControl, tvUsernameIcon;
     Button btDatosGenerales, btDatosPersonales, btDatosAcademicos;
 
 
@@ -35,6 +33,7 @@ public class DatosMenuFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //getActivity().getSupportFragmentManager().popBackStack();
 
     }
 
@@ -49,7 +48,7 @@ public class DatosMenuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         tvUsername = view.findViewById(R.id.userName);
-        tvUsernameIcon = view.findViewById(R.id.userNameIcon);
+        tvUsernameIcon = view.findViewById(R.id.tvCalificacion);
         tvUserNumControl = view.findViewById(R.id.userNumControl);
         btDatosGenerales = view.findViewById(R.id.btDatosGenerales);
         btDatosPersonales = view.findViewById(R.id.btDatosPersonales);
@@ -57,22 +56,19 @@ public class DatosMenuFragment extends Fragment {
         Alumno alumno = Alumno.getAlumno();
         NavController navController = Navigation.findNavController(view);
 
-        try {
-            String nombre = alumno.datosGenerales.getString("nombre");
-            tvUsername.setText(nombre);
-            String icon = nombre.charAt(0) + "";
-            tvUsernameIcon.setText(icon);
-            tvUserNumControl.setText(alumno.control);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+        String nombre = alumno.datosGenerales.getNombre();
+        tvUsername.setText(nombre);
+        String icon = nombre.charAt(0) + "";
+        tvUsernameIcon.setText(icon);
+        tvUserNumControl.setText(alumno.control);
+
 
         btDatosGenerales.setOnClickListener(v -> navController.navigate(R.id.action_datosMenuFragment_to_datosGeneralesFragment));
 
         btDatosPersonales.setOnClickListener(v -> navController.navigate(R.id.action_datosMenuFragment_to_datosPersonalesFragment));
 
         btDatosAcademicos.setOnClickListener(v -> navController.navigate(R.id.action_datosMenuFragment_to_datosAcademicosFragment));
-
 
 
     }

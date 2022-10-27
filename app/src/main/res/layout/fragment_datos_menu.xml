@@ -62,7 +62,7 @@
 
 
             <TextView
-                android:id="@+id/userNameIcon"
+                android:id="@+id/tvCalificacion"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:autoSizeTextType="uniform"
@@ -76,7 +76,8 @@
                 app:layout_constraintStart_toEndOf="@+id/spaceStart"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.375"
-                app:layout_constraintVertical_chainStyle="packed" />
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="O" />
 
             <Space
                 android:id="@+id/spaceBottomRight"
@@ -117,7 +118,8 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline28"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="@+id/guideline27"
-            app:layout_constraintTop_toTopOf="@+id/guideline14" />
+            app:layout_constraintTop_toTopOf="@+id/guideline14"
+            tools:text="OSCAR FRANCO GARCIA" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline14"
@@ -140,7 +142,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline26" />
+            app:layout_constraintTop_toTopOf="@+id/guideline26"
+            tools:text="19160027" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline27"

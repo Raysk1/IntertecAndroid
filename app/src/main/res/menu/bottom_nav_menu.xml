@@ -5,5 +5,22 @@
         android:id="@+id/datosMenuFragment"
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="Datos" />
+    <item
+        android:id="@+id/horarioFragment"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="Horario"
+        />
+
+    <item
+        android:id="@+id/kardexFragment"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="Kardex"
+        />
+    <item
+        android:id="@+id/calificacionesFragment"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="Calificaciones"
+        />
+
 
 </menu>

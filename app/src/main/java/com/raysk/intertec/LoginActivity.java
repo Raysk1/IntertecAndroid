@@ -13,12 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.kusu.loadingbutton.LoadingButton;
+import com.raysk.intertec.alumno.Alumno;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView control;
     private TextView password;
     private LoadingButton login;
-    boolean error = false;
     private View snackBarContainer;
 
     @Override
@@ -138,9 +138,6 @@ public class LoginActivity extends AppCompatActivity {
             }
             if (validado) {
                 Intent intent = new Intent(LoginActivity.this, ButtonNavigation.class);
-                //Gson gson = new Gson();
-                //String al = gson.toJson(a);
-                //intent.putExtra("alumno", al);
                 startActivity(intent);
                 finish();
             } else {

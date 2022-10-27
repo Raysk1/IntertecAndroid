@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -11,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.raysk.intertec.Alumno;
+import com.raysk.intertec.alumno.Alumno;
 import com.raysk.intertec.R;
 
 import org.json.JSONException;
@@ -52,18 +53,24 @@ public class DatosPersonalesFragment extends Fragment {
 
         Alumno alumno = Alumno.getAlumno();
 
-        try {
-            tvCiudad.setText(alumno.datosPersonales.getString("ciudad"));
-            tvColonia.setText(alumno.datosPersonales.getString("colonia"));
-            tvCalle.setText(alumno.datosPersonales.getString("calle"));
-            tvNoCalle.setText(alumno.datosPersonales.getString("noCalle"));
-            tvCp.setText(alumno.datosPersonales.getString("cp"));
-            tvTelefono.setText(alumno.datosPersonales.getString("telefono"));
-            tvCorreoPer.setText(alumno.datosPersonales.getString("correoPersonal"));
-            tvCorreoIns.setText(alumno.datosPersonales.getString("correoInstitucional"));
-            tvFechaNac.setText(alumno.datosPersonales.getString("fechaDeNacimiento"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+        tvCiudad.setText(alumno.datosPersonales.getCiudad());
+        tvColonia.setText(alumno.datosPersonales.getColonia());
+        tvCalle.setText(alumno.datosPersonales.getCalle());
+        tvNoCalle.setText(alumno.datosPersonales.getNoCalle());
+        tvCp.setText(alumno.datosPersonales.getCp());
+        tvTelefono.setText(alumno.datosPersonales.getTelefono());
+        tvCorreoPer.setText(alumno.datosPersonales.getCorreoPersonal());
+        tvCorreoIns.setText(alumno.datosPersonales.getCorreoInstitucional());
+        tvFechaNac.setText(alumno.datosPersonales.getFechaDeNacimiento());
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_back_button);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 }

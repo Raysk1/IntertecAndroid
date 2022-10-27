@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".horario.HorarioFragment">
+
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+      <com.google.android.material.appbar.MaterialToolbar
+          android:id="@+id/toolbar2"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:minHeight="?attr/actionBarSize"
+          android:theme="@style/ToolbarTheme"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:title="Horario" />
+
+      <com.alamkanak.weekview.WeekView
+          android:id="@+id/weekView"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:saveEnabled="true"
+          app:columnGap="3dp"
+          app:dayBackgroundColor="@color/transparent"
+          app:eventTextColor="@color/black"
+          app:futureBackgroundColor="@color/transparent"
+          app:futureWeekendBackgroundColor="@color/transparent"
+          app:headerBackgroundColor="@color/transparent"
+          app:headerTextColor="@color/white"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/toolbar2"
+          app:maxHour="14"
+          app:minHour="7"
+          app:nowLineColor="@color/yellow"
+          app:nowLineDotColor="@color/yellow"
+          app:pastBackgroundColor="@color/transparent"
+          app:pastWeekendBackgroundColor="@color/transparent"
+          app:showCurrentTimeFirst="true"
+          app:showFirstDayOfWeekFirst="false"
+          app:showNowLine="true"
+          app:showNowLineDot="true"
+          app:timeColumnBackgroundColor="@color/transparent"
+          app:timeColumnTextColor="@color/white"
+          app:todayBackgroundColor="@color/transparent"
+          app:todayHeaderTextColor="@color/yellow"
+          app:weekNumberBackgroundColor="@color/transparent"
+          app:weekNumberTextColor="@color/white"
+          app:weekendHeaderTextColor="@color/white" />
+   </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

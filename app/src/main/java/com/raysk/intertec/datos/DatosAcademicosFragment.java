@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -11,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.raysk.intertec.Alumno;
+import com.raysk.intertec.alumno.Alumno;
 import com.raysk.intertec.R;
 
 import org.json.JSONException;
@@ -49,15 +50,20 @@ public class DatosAcademicosFragment extends Fragment {
 
         Alumno alumno = Alumno.getAlumno();
 
-        try {
-            tvEscuelaProcedencia.setText(alumno.datosAcademicos.getString("escuelaDeProcedencia"));
-            tvPeriodoIngreso.setText(alumno.datosAcademicos.getString("periodoDeIngreso"));
-            tvPeriodosValidados.setText(alumno.datosAcademicos.getString("periodosValidados"));
-            tvPeriodoActual.setText(alumno.datosAcademicos.getString("periodoActual"));
-            tvCreditos.setText(alumno.datosAcademicos.getString("creditosAcumulados"));
-            tvSituacion.setText(alumno.datosAcademicos.getString("situacion"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        tvEscuelaProcedencia.setText(alumno.datosAcademicos.getEscuelaDeProcedencia());
+        tvPeriodoIngreso.setText(alumno.datosAcademicos.getPeriodoDeIngreso());
+        tvPeriodosValidados.setText(alumno.datosAcademicos.getPeriodosValidados());
+        tvPeriodoActual.setText(alumno.datosAcademicos.getPeriodoActual());
+        tvCreditos.setText(alumno.datosAcademicos.getCreditosAcumulados());
+        tvSituacion.setText(alumno.datosAcademicos.getSituacion());
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_back_button);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 }

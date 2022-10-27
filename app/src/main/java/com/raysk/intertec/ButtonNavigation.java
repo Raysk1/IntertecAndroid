@@ -31,8 +31,9 @@ public class ButtonNavigation extends AppCompatActivity {
                 R.id.datosGeneralesFragment)
                 .build();*/
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_button_navigation);
-        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        //NavigationUI.setupActionBarWithNavController(this, navController);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
     }
 
 }

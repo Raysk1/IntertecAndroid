@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
@@ -13,8 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.lb.auto_fit_textview.AutoResizeTextView;
-import com.raysk.intertec.Alumno;
+import com.raysk.intertec.alumno.Alumno;
 import com.raysk.intertec.R;
 
 import org.json.JSONException;
@@ -22,7 +20,8 @@ import org.json.JSONException;
 
 public class DatosGeneralesFragment extends Fragment {
 
-    TextView tvNombre,tvNoControl,tvCurp,tvCarrera,tvEspecialidad,tvModalidad,tvPlan;
+    TextView tvNombre, tvNoControl, tvCurp, tvCarrera, tvEspecialidad, tvModalidad, tvPlan;
+
     public DatosGeneralesFragment() {
         // Required empty public constructor
     }
@@ -53,17 +52,23 @@ public class DatosGeneralesFragment extends Fragment {
         tvPlan = view.findViewById(R.id.tvPlan);
 
         Alumno alumno = Alumno.getAlumno();
-        try {
-            tvNombre.setText(alumno.datosGenerales.getString("nombre"));
-            tvNoControl.setText(alumno.control);
-            tvCurp.setText(alumno.datosGenerales.getString("curp"));
-            tvCarrera.setText(alumno.datosGenerales.getString("carrera"));
-            tvEspecialidad.setText(alumno.datosGenerales.getString("especialidad"));
-            tvModalidad.setText("matutina");
-            tvPlan.setText(alumno.datosGenerales.getString("planDeEstudios"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
+        tvNombre.setText(alumno.datosGenerales.getNombre());
+        tvNoControl.setText(alumno.control);
+        tvCurp.setText(alumno.datosGenerales.getCurp());
+        tvCarrera.setText(alumno.datosGenerales.getCarrera());
+        tvEspecialidad.setText(alumno.datosGenerales.getEspecialidad());
+        tvModalidad.setText("matutina");
+        tvPlan.setText(alumno.datosGenerales.getPlanDeEstudios());
+
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_back_button);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 }
