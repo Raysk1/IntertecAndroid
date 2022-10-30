@@ -6,16 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.raysk.intertec.alumno.Alumno
 import com.raysk.intertec.views.ItemView
 
 
 class KardexFragment : Fragment() {
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,11 +23,22 @@ class KardexFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val layout = view.findViewById<LinearLayout>(R.id.lyContenedor)
+        val alumno = Alumno.alumno
 
-        for (i in 1 .. 5){
-            val itemView = activity?.let { ItemView(it.applicationContext) }
-            itemView?.setData("calculo diferencial", "100")
-            layout.addView(itemView)
+        if (alumno != null) {
+            for (data in alumno.kardex.data) {
+                val itemView = activity?.let { ItemView(it.applicationContext) }
+                itemView?.setData(
+                    data.materia,
+                    data.calificacion.ifEmpty { "SC" }
+                )
+                itemView?.setOnClickListener {
+                    val modal = ModalFragment("Detalles", data)
+                    activity?.supportFragmentManager?.let { it1 -> modal.show(it1, "nosexd") }
+                }
+
+                layout.addView(itemView)
+            }
         }
     }
 }

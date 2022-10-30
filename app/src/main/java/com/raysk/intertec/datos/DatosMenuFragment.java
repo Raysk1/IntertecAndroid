@@ -61,7 +61,7 @@ public class DatosMenuFragment extends Fragment {
         tvUsername.setText(nombre);
         String icon = nombre.charAt(0) + "";
         tvUsernameIcon.setText(icon);
-        tvUserNumControl.setText(alumno.control);
+        tvUserNumControl.setText(alumno.getControl());
 
 
         btDatosGenerales.setOnClickListener(v -> navController.navigate(R.id.action_datosMenuFragment_to_datosGeneralesFragment));

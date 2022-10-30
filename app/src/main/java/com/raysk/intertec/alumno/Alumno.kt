@@ -1,229 +1,226 @@
-package com.raysk.intertec.alumno;
+package com.raysk.intertec.alumno
 
-import android.graphics.Color;
-import android.util.Log;
+import android.graphics.Color
+import com.raysk.intertec.alumno.Kardex.Companion.CURSADO
+import com.raysk.intertec.alumno.Kardex.Companion.EN_CURSO
+import com.raysk.intertec.alumno.Kardex.Companion.POR_CURSAR
+import org.jsoup.Jsoup
+import org.jsoup.nodes.TextNode
+import java.io.IOException
 
-import org.json.JSONException;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+class Alumno private constructor(var control: String, var password: String) {
+    var passwordToken: String? = null
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+    @JvmField
+    var datosGenerales: DatosGenerales = DatosGenerales()
 
-public class Alumno {
-    public String control;
-    public String password;
-    public String passwordToken;
-    public DatosGenerales datosGenerales;
-    public DatosPersonales datosPersonales;
-    public DatosAcademicos datosAcademicos;
-    public ArrayList<HorarioEvent> horario;
-    public Kardex kardex;
-    public ArrayList<Calificaciones> calificaciones;
-    static private Alumno alumno = null;
+    @JvmField
+    var datosPersonales: DatosPersonales = DatosPersonales()
 
-    private Alumno(String control, String password) {
-        this.control = control;
-        this.password = password;
-        this.datosGenerales = new DatosGenerales();
-        this.datosPersonales = new DatosPersonales();
-        this.datosAcademicos = new DatosAcademicos();
-        this.horario = new ArrayList<HorarioEvent>();
-        this.kardex = new Kardex();
-        this.calificaciones = new ArrayList<Calificaciones>();
-    }
+    @JvmField
+    var datosAcademicos: DatosAcademicos = DatosAcademicos()
+    var horario: ArrayList<HorarioEvent> = ArrayList()
+    var kardex: Kardex = Kardex()
+    var calificaciones: ArrayList<Calificaciones> = ArrayList()
 
-    public static Alumno getAlumno() {
-        return alumno;
-    }
-
-
-    public static Alumno getAlumno(String control, String password) {
-        if (alumno == null) {
-            alumno = new Alumno(control, password);
+    @Throws(IOException::class)
+    fun validarInicioDeSesion(): Boolean {
+        val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=MAIN&Control=" +
+                control + "&password=" + password + "&aceptar=ACEPTAR"
+        val document = Jsoup.connect(url).get()
+        val title = document.title()
+        if (title == "SIE Estudiantes") {
+            return false
         }
-        return alumno;
-    }
-
-    public static void setAlumno(Alumno alumno){
-        Alumno.alumno = alumno;
-    }
-
-    public boolean ValidarInicioDeSesion() throws IOException, JSONException {
-        String url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=MAIN&Control=" +
-                this.control + "&password=" + this.password + "&aceptar=ACEPTAR";
-
-
-        Document document = Jsoup.connect(url).get();
-        String title = document.title();
-
-        if (Objects.equals(title, "SIE Estudiantes")) {
-            return false;
-        }
-
-        String pass = document.selectFirst("frame").attr("src");
-        pass = pass.substring(pass.indexOf("Password") + 9);
-        this.passwordToken = pass.substring(0, pass.indexOf("&"));
-        ObtenerDatosDeAlumno();
-       // ObtenerKardex();
-        ObtenerHorario();
-        ObtenerCalificaciones();
-        setAlumno(this);
-        return true;
+        var pass = document.selectFirst("frame").attr("src")
+        pass = pass.substring(pass.indexOf("Password") + 9)
+        passwordToken = pass.substring(0, pass.indexOf("&"))
+        obtenerDatosDeAlumno()
+        obtenerKardex()
+        obtenerHorario()
+        obtenerCalificaciones()
+        alumno = this
+        return true
     }
 
     //Obtiene los datos Personales del alumno
-    private void ObtenerDatosDeAlumno() throws IOException {
-        String url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=DATOSALU&Control=" +
-                this.control + "&password=" + this.passwordToken + "&aceptar=ACEPTAR";
-
-        Document document = Jsoup.connect(url).get();
-        Elements datos = document.select("strong");
+    @Throws(IOException::class)
+    private fun obtenerDatosDeAlumno() {
+        val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=DATOSALU&Control=" +
+                control + "&password=" + passwordToken + "&aceptar=ACEPTAR"
+        val document = Jsoup.connect(url).get()
+        var datos = document.select("strong")
 
         //Obteniendo los datos Generales
-        this.datosGenerales.setNombre(datos.get(3).text().trim());
-        this.datosGenerales.setCurp(datos.get(4).text().trim());
-        this.datosGenerales.setCarrera(datos.get(7).text().replaceAll("\\(\\d+\\)", "")
-                .trim());
-        this.datosGenerales.setPlanDeEstudios(datos.get(8).text().replaceAll("\\(\\d+\\)", ""));
-        this.datosGenerales.setEspecialidad(datos.get(9).text().replaceAll("\\(\\d+\\)", "")
-                .trim());
+        datosGenerales.nombre = datos[3].text().trim { it <= ' ' }
+        datosGenerales.curp = datos[4].text().trim { it <= ' ' }
+        datosGenerales.carrera = datos[7].text().replace("\\(\\d+\\)".toRegex(), "")
+            .trim { it <= ' ' }
+        datosGenerales.planDeEstudios = datos[8].text().replace("\\(\\d+\\)".toRegex(), "")
+        datosGenerales.especialidad = datos[9].text().replace("\\(\\d+\\)".toRegex(), "")
+            .trim { it <= ' ' }
 
         //Obteniendo los datos Personales
-        datos = document.select("p");
-        this.datosPersonales.setCalle(datos.get(0).text().trim());
-        this.datosPersonales.setNoCalle(datos.get(1).text().trim());
-        this.datosPersonales.setColonia(datos.get(2).text().trim());
-        this.datosPersonales.setCiudad(datos.get(3).text().trim());
-        this.datosPersonales.setCp(datos.get(4).text().trim());
-        this.datosPersonales.setTelefono(datos.get(5).text().trim());
-        this.datosPersonales.setCorreoPersonal(datos.get(6).text().trim());
-        this.datosPersonales.setCorreoInstitucional(control + "@eldorado.tecnm.mx");
-        this.datosPersonales.setFechaDeNacimiento(datos.get(8).text().trim());
+        datos = document.select("p")
+        datosPersonales.calle = datos[0].text().trim { it <= ' ' }
+        datosPersonales.noCalle = datos[1].text().trim { it <= ' ' }
+        datosPersonales.colonia = datos[2].text().trim { it <= ' ' }
+        datosPersonales.ciudad = datos[3].text().trim { it <= ' ' }
+        datosPersonales.cp = datos[4].text().trim { it <= ' ' }
+        datosPersonales.telefono = datos[5].text().trim { it <= ' ' }
+        datosPersonales.correoPersonal = datos[6].text().trim { it <= ' ' }
+        datosPersonales.correoInstitucional = "$control@eldorado.tecnm.mx"
+        datosPersonales.fechaDeNacimiento = datos[8].text().trim { it <= ' ' }
 
         //Obteniendo los datos Academicos
-        this.datosAcademicos.setEscuelaDeProcedencia(datos.get(9).text()
-                .replaceAll("\\s*\\(*\\d*\\)\\s*", "").trim());
-        this.datosAcademicos.setPeriodoDeIngreso(datos.get(10).text()
-                .replaceAll("\\(\\d+\\)", "").trim());
-        this.datosAcademicos.setPeriodosValidados(datos.get(11).text().trim());
-        this.datosAcademicos.setPeriodoActual(datos.get(12).text()
-                .replaceAll("\\(\\d+\\)", "").trim());
-        this.datosAcademicos.setCreditosAcumulados(datos.get(13).text().trim());
-        this.datosAcademicos.setSituacion(datos.get(14).text().trim());
-
-
+        datosAcademicos.escuelaDeProcedencia = datos[9].text()
+            .replace("\\s*\\(*\\d*\\)\\s*".toRegex(), "").trim { it <= ' ' }
+        datosAcademicos.periodoDeIngreso = datos[10].text()
+            .replace("\\(\\d+\\)".toRegex(), "").trim { it <= ' ' }
+        datosAcademicos.periodosValidados = datos[11].text().trim { it <= ' ' }
+        datosAcademicos.periodoActual = datos[12].text()
+            .replace("\\(\\d+\\)".toRegex(), "").trim { it <= ' ' }
+        datosAcademicos.creditosAcumulados = datos[13].text().trim { it <= ' ' }
+        datosAcademicos.situacion = datos[14].text().trim { it <= ' ' }
     }
 
-    private void ObtenerKardex() throws IOException {
-        String url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=KARDEX&Control=" + this.control +
-                "&password=" + this.passwordToken + "&aceptar=ACEPTAR";
-
-        Document document = Jsoup.connect(url).get();
-        Elements tables = document.select("table");
-        Elements trs = tables.get(1).select("tr");
-        List<KardexData> data = new ArrayList<>();
-
-        for (int i = 2; i < trs.size() - 1; i++) {
-            Element tr = trs.get(i);
-            Elements tds = tr.select("td");
-            data.add(new KardexData(
-                    tds.get(0).text(),
-                    tds.get(1).text(),
-                    tds.get(2).text(),
-                    tds.get(5).text()
-            ));
-        }
-        this.kardex.setData(data);
-
-        this.kardex.setPromedio(trs.get(trs.size() - 1).select("td").get(2).text());
-        trs = tables.get(2).select("tr");
-        String[] creditos = trs.get(0).selectFirst("td").text().toUpperCase().replace("CREDITOS ACUMULADOS", "")
-                .trim().split(" DE ");
-        this.kardex.setCreditosObtenidos(creditos[0]);
-        this.kardex.setCreditosTotales(creditos[1]);
-        this.kardex.setAvance(trs.get(1).selectFirst("td").text().toUpperCase().replace("% DE AVANCE:", "")
-                .trim());
-
-        Log.i("kardex", this.kardex.toString());
-    }
-
-    private void ObtenerHorario() throws IOException {
-
-        String url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=HORARIO&Control=" + this.control +
-                "&password=" + this.passwordToken + "&aceptar=ACEPTAR";
-
-        Document document = Jsoup.connect(url).get();
-        Elements tables = document.select("table");
-        Elements trs = tables.get(1).select("tr");
-        int id = 0;
-        String[] colors = {
-                "#bf9780",
-                "#fdcae1",
-                "#ffda89",
-                "#84b6f4",
-                "#fdfd96",
-                "#ff6961",
-                "#bae0f5",
-                "#77dd77",
-                "#98f6a9",
-                "#bc98f3"
-        };
-        for (int i = 1; i < trs.size(); i++) {
-            Elements tds = trs.get(i).select("td");
-            for (int j = 7; j <= 11; j++) {
-                String[] horaAula = tds.get(j).text().split(" ");
-                if (horaAula[0] == "") {
-                    continue;
+    @Throws(IOException::class)
+    private fun obtenerKardex() {
+        val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=KARDEX&Control=" + control +
+                "&password=" + passwordToken + "&aceptar=ACEPTAR"
+        val document = Jsoup.connect(url).get()
+        val tables = document.select("table")
+        val trs = tables[1].select("tr")
+        val data: MutableList<KardexData> = ArrayList()
+        for (i in 2 until trs.size - 1) {
+            val tr = trs[i]
+            val tds = tr.select("td")
+            for (j in tds.indices) {
+                val td = tds[j]
+                if (td.childNodes().size < 2) {
+                    continue
                 }
-                String[] hora = horaAula[0].split("-");
-                String aula = horaAula[1];
+                val divs = td.select("div")
+                val materia = td.childNode(2) as TextNode
+                val calificacion = divs[2].text().trim { it <= ' ' }.split(" ").toTypedArray()[0]
 
-                horario.add(new HorarioEvent(
+                //Buscando por color para asignar el estado
+                var estado: Int
+                val style = td.attr("style")
+                estado = when (style) {
+                    "background-color: rgba(125,190,255)" -> {
+                        CURSADO
+                    }
+                    "background-color: rgba(0,255,0)" -> {
+                        EN_CURSO
+                    }
+                    else -> {
+                        POR_CURSAR
+                    }
+                }
+                data.add(
+                    KardexData(
+                        divs[0].text().trim { it <= ' ' },
+                        materia.text().trim { it <= ' ' },
+                        calificacion,
+                        (j + 1), estado
+                    )
+                )
+            }
+        }
+        kardex.data = data.sortedBy { it.estado }.sortedBy{ it.periodo }
+        val promedio = tables[0].select("tr")[8].select("td")[1].text().trim { it <= ' ' }.toFloat()
+        kardex.promedio = promedio
+        kardex.creditosObtenidos =
+            tables[0].select("tr")[5].select("td")[3].text().trim { it <= ' ' }
+        kardex.creditosTotales = tables[0].select("tr")[5].select("td")[1].text().trim { it <= ' ' }
+        val avance = tables[0].select("tr")[5].select("td")[5].text().trim { it <= ' ' }.toInt()
+        kardex.avance = avance.toFloat()
+    }
+
+    @Throws(IOException::class)
+    private fun obtenerHorario() {
+        val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=HORARIO&Control=" + control +
+                "&password=" + passwordToken + "&aceptar=ACEPTAR"
+        val document = Jsoup.connect(url).get()
+        val tables = document.select("table")
+        val trs = tables[1].select("tr")
+        var id = 0
+        val colors = arrayOf(
+            "#bf9780",
+            "#fdcae1",
+            "#ffda89",
+            "#84b6f4",
+            "#fdfd96",
+            "#ff6961",
+            "#bae0f5",
+            "#77dd77",
+            "#98f6a9",
+            "#bc98f3"
+        )
+        for (i in 1 until trs.size) {
+            val tds = trs[i].select("td")
+            for (j in 7..11) {
+                val horaAula = tds[j].text().split(" ").toTypedArray()
+                if (horaAula[0] === "") {
+                    continue
+                }
+                val hora = horaAula[0].split("-").toTypedArray()
+                val aula = horaAula[1]
+                horario.add(
+                    HorarioEvent(
                         id++,
-                        tds.get(1).text().trim(),
-                        Integer.parseInt(hora[0].split(":")[0]),
-                        Integer.parseInt(hora[1].split(":")[0]),
+                        tds[1].text().trim { it <= ' ' },
+                        hora[0].split(":").toTypedArray()[0].toInt(),
+                        hora[1].split(":").toTypedArray()[0].toInt(),
                         aula,
                         j - 6,
-                        Color.parseColor(colors[i-1])
-                ));
-
-
+                        Color.parseColor(colors[i - 1])
+                    )
+                )
             }
         }
-
     }
 
-    private void ObtenerCalificaciones() throws IOException {
-        String url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=CALIF&Control=" + this.control +
-                "&password=" + this.passwordToken + "&aceptar=ACEPTAR";
-        Document document = Jsoup.connect(url).get();
-        Elements tables = document.select("table");
-        Elements trs = tables.get(1).select("tr");
-
-        for (int i = 1; i < trs.size(); i++) {
-            Elements tds = trs.get(i).select("td");
-            float promedio = 0;
-            ArrayList<Integer> notas = new ArrayList<>();
-            for (int j = 5; j < tds.size() ; j++) {
-                String nota = tds.get(j).text().trim();
-                if (nota != ""){
-                    notas.add(Integer.parseInt(nota));
-                    promedio += Integer.parseInt(nota);
+    @Throws(IOException::class)
+    private fun obtenerCalificaciones() {
+        val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=CALIF&Control=" + control +
+                "&password=" + passwordToken + "&aceptar=ACEPTAR"
+        val document = Jsoup.connect(url).get()
+        val tables = document.select("table")
+        val trs = tables[1].select("tr")
+        for (i in 1 until trs.size) {
+            val tds = trs[i].select("td")
+            var promedio = 0f
+            val notas = ArrayList<Int>()
+            for (j in 5 until tds.size) {
+                val nota = tds[j].text().trim { it <= ' ' }
+                if (nota !== "") {
+                    notas.add(nota.toInt())
+                    promedio += nota.toInt()
                 }
             }
-            promedio = promedio/notas.size();
-            this.calificaciones.add(new Calificaciones(
-                    tds.get(0).text().trim(),
-                    tds.get(2).text().trim(),
+            promedio /= notas.size
+            calificaciones.add(
+                Calificaciones(
+                    tds[0].text().trim { it <= ' ' },
+                    tds[2].text().trim { it <= ' ' },
                     notas,
                     promedio
-            ));
+                )
+            )
         }
+    }
+
+    companion object {
+        @JvmStatic
+        var alumno: Alumno? = null
+        fun getAlumno(control: String, password: String): Alumno? {
+            if (alumno == null) {
+                alumno = Alumno(control, password)
+            }
+            return alumno
+        }
+
     }
 }

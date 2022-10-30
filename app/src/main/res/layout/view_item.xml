@@ -7,73 +7,12 @@
     android:layout_marginVertical="10dp"
     android:background="@drawable/circle"
     android:backgroundTint="@color/white"
+    android:clickable="true"
     android:gravity="center">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="end"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/guideline47"
-            app:layout_constraintEnd_toStartOf="@+id/guideline45"
-            app:layout_constraintStart_toStartOf="@+id/guideline48"
-            app:layout_constraintTop_toTopOf="@+id/guideline46">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="@id/guideline13"
-                app:layout_constraintEnd_toEndOf="@id/guideline45"
-                app:layout_constraintStart_toStartOf="@id/guideline48"
-                app:layout_constraintTop_toTopOf="@id/guideline12">
-
-
-                <TextView
-                    android:id="@+id/tvCalificacion"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:autoSizeTextType="none"
-                    android:background="@drawable/circle_name_user"
-                    android:elegantTextHeight="false"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toStartOf="@+id/spaceBottomRight"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/spaceStart"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.375"
-                    app:layout_constraintVertical_chainStyle="packed"
-                    tools:text="100" />
-
-                <Space
-                    android:id="@+id/spaceBottomRight"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_percent="0.08"
-                    app:layout_constraintWidth_percent="0.05" />
-
-                <Space
-                    android:id="@+id/spaceStart"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintHeight_percent="0.08"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.20" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
+        android:layout_height="60dp">
 
         <TextView
             android:id="@+id/tvMateria"
@@ -85,7 +24,7 @@
             android:textSize="18sp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="@id/guideline47"
-            app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+            app:layout_constraintEnd_toStartOf="@+id/guideline48"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/guideline46"
             tools:text="Calculo diferencial" />
@@ -95,28 +34,60 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="1" />
+            app:layout_constraintGuide_end="5dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline48"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.85" />
+            app:layout_constraintGuide_end="55dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline46"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.05" />
+            app:layout_constraintGuide_begin="5dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline47"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.95" />
+            app:layout_constraintGuide_begin="55dp" />
+
+
+        <com.tistory.zladnrms.roundablelayout.RoundableLayout
+            android:id="@+id/layout_example"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:elevation="10dp"
+            android:textAlignment="gravity"
+            app:backgroundColor="@color/yellow"
+            app:cornerLeftBottom="40dp"
+            app:cornerLeftTop="40dp"
+            app:cornerRightBottom="40dp"
+            app:cornerRightTop="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline47"
+            app:layout_constraintEnd_toEndOf="@id/guideline45"
+            app:layout_constraintStart_toStartOf="@+id/guideline48"
+            app:layout_constraintTop_toTopOf="@+id/guideline46">
+
+            <TextView
+                android:id="@+id/tvCalificacion"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="100" />
+        </com.tistory.zladnrms.roundablelayout.RoundableLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

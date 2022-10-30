@@ -1,21 +1,19 @@
 package com.raysk.intertec.horario
 
-import android.content.Context
 import com.alamkanak.weekview.WeekView
 import com.alamkanak.weekview.WeekViewEntity
-import com.raysk.intertec.R
 import com.raysk.intertec.alumno.HorarioEvent
 import java.time.LocalDate
-import java.util.Calendar
+import java.util.*
 
 class Adapter : WeekView.SimpleAdapter<HorarioEvent>() {
 
     override fun onCreateEntity(item: HorarioEvent): WeekViewEntity {
-        var startTime = Calendar.getInstance();
-        var endTime = Calendar.getInstance()
+        val startTime = Calendar.getInstance()
+        val endTime = Calendar.getInstance()
 
-        var weekDayNow = LocalDate.now().dayOfWeek.value
-        var weekDay = item.dia
+        val weekDayNow = LocalDate.now().dayOfWeek.value
+        val weekDay = item.dia
 
         startTime.add(Calendar.DAY_OF_MONTH,weekDay-weekDayNow)
         startTime.set(Calendar.HOUR_OF_DAY,item.horaDeEntrada)
@@ -30,6 +28,7 @@ class Adapter : WeekView.SimpleAdapter<HorarioEvent>() {
         endTime.set(Calendar.MILLISECOND,0)
 
         val style = WeekViewEntity.Style.Builder().setBackgroundColor(item.color).build()
+
         return WeekViewEntity.Event.Builder(item)
             .setId(item.id.toLong())
             .setTitle(item.materia)

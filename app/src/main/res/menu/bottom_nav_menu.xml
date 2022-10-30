@@ -7,18 +7,18 @@
         android:title="Datos" />
     <item
         android:id="@+id/horarioFragment"
-        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:icon="@drawable/ic_baseline_access_time_24"
         android:title="Horario"
         />
 
     <item
         android:id="@+id/kardexFragment"
-        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:icon="@drawable/ic_outline_wysiwyg_24"
         android:title="Kardex"
         />
     <item
         android:id="@+id/calificacionesFragment"
-        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:icon="@drawable/exam_svgrepo_com"
         android:title="Calificaciones"
         />
 

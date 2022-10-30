@@ -1,151 +1,128 @@
-package com.raysk.intertec;
+package com.raysk.intertec
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.widget.TextView;
+import android.content.Intent
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
+import com.kusu.loadingbutton.LoadingButton
+import com.raysk.intertec.alumno.Alumno
+import com.raysk.intertec.alumno.Alumno.Companion.getAlumno
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-import androidx.appcompat.app.AppCompatActivity;
+class LoginActivity : AppCompatActivity() {
+    private lateinit var control: TextView
+    private lateinit var password: TextView
+    private lateinit var login: LoadingButton
+    private lateinit var snackBarContainer: View
+    private val uiScope = CoroutineScope(Dispatchers.Main)
 
-import com.google.android.material.snackbar.Snackbar;
-import com.kusu.loadingbutton.LoadingButton;
-import com.raysk.intertec.alumno.Alumno;
-
-public class LoginActivity extends AppCompatActivity {
-    private TextView control;
-    private TextView password;
-    private LoadingButton login;
-    private View snackBarContainer;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        control = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-        login = findViewById(R.id.loginButton);
-        snackBarContainer = findViewById(R.id.snackBar);
-
-        control.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
+        control = findViewById(R.id.username)
+        password = findViewById(R.id.password)
+        login = findViewById(R.id.loginButton)
+        snackBarContainer = findViewById(R.id.snackBar)
+        control.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                validarCampos()
             }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+        })
+        password.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                validarCampos()
             }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                ValidarCampos();
+        })
+        login.setOnClickListener {
+            if (!validarControl()) {
+                control.requestFocus()
+            } else if (!validarPassword()) {
+                password.requestFocus()
+            } else {
+                login.showLoading()
+                uiScope.launch {
+                    conectar(control.text.toString(), password.text.toString())
+                }
             }
-        });
-
-        password.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                ValidarCampos();
-            }
-        });
-
-        login.setOnClickListener(v -> {
-            if (!ValidarControl()){
-                control.requestFocus();
-            }else if (!ValidarPassword()){
-                password.requestFocus();
-            }else {
-                login.showLoading();
-                new Connection().execute(control.getText().toString(),password.getText().toString());
-            }
-        });
-    }
-
-    private void ValidarCampos() {
-        ValidarControl();
-        ValidarPassword();
-    }
-    public  boolean ValidarControl(){
-        if (control.getText().toString().isEmpty()) {
-            control.setError("Debe llenar el campo");
-            return false;
-        } else if (control.getText().toString().length() < 8) {
-            control.setError("Debe contener 8 numeros");
-            return false;
-        } else {
-            return true;
         }
     }
 
-    public boolean ValidarPassword(){
-        if (password.getText().toString().isEmpty()) {
-            password.setError("Debe llenar el campo");
-            return false;
+    private fun validarCampos() {
+        validarControl()
+        validarPassword()
+    }
+
+    fun validarControl(): Boolean {
+        return if (control.text.toString().isEmpty()) {
+            control.error = "Debe llenar el campo"
+            false
+        } else if (control.text.toString().length < 8) {
+            control.error = "Debe contener 8 numeros"
+            false
         } else {
-            return true;
+            true
         }
     }
 
-    private void MostrarMensaje(String Mensaje){
-        Snackbar.make(snackBarContainer,Mensaje,Snackbar.LENGTH_LONG).show();
+    fun validarPassword(): Boolean {
+        return if (password.text.toString().isEmpty()) {
+            password.error = "Debe llenar el campo"
+            false
+        } else {
+            true
+        }
     }
 
+    private fun mostrarMensaje(Mensaje: String) {
+        Snackbar.make(snackBarContainer, Mensaje, Snackbar.LENGTH_LONG).show()
+    }
 
-    @SuppressLint("StaticFieldLeak")
-    public class  Connection extends AsyncTask<String, Integer, Alumno> {
-        String mensaje = "";
-        boolean validado = false;
-        Alumno alumno;
-        @Override
-        protected Alumno doInBackground(String... strings) {
+    //Corrutina en 2do plano
+    private suspend fun conectar(control: String, password: String){
+        var alumno: Alumno?
+        var mensaje = ""
+        var validado = false
 
+        withContext(Dispatchers.Default){
             try {
-                String control = strings[0];
-                String password = strings[1];
-                alumno = Alumno.getAlumno(control,password);
-                validado = alumno.ValidarInicioDeSesion();
-
-            } catch (Exception e) {
-                alumno = null;
-                mensaje = "Error de conexion";
-                e.printStackTrace();
-                login.setClickable(true);
+                alumno = getAlumno(control, password)
+                validado = alumno!!.validarInicioDeSesion()
+            } catch (e: Exception) {
+                alumno = null
+                mensaje = "Error de conexion"
+                e.printStackTrace()
+                login.isClickable = true
             }
-            return alumno;
         }
-
-        @Override
-        protected void onPostExecute(Alumno a) {
-            if (a == null) {
-                login.hideLoading();
-                MostrarMensaje(mensaje);
-                return;
+        
+        //en hilo principal
+        withContext(Dispatchers.Main) {
+            if (alumno == null) {
+                login.hideLoading()
+                mostrarMensaje(mensaje)
+                return@withContext
             }
             if (validado) {
-                Intent intent = new Intent(LoginActivity.this, ButtonNavigation.class);
-                startActivity(intent);
-                finish();
+                val intent = Intent(this@LoginActivity, ButtonNavigation::class.java)
+                startActivity(intent)
+                finish()
             } else {
-                mensaje = "Usuario o Contraseña Incorrecto";
-                MostrarMensaje(mensaje);
-                login.hideLoading();
+                mensaje = "Usuario o Contraseña Incorrecto"
+                mostrarMensaje(mensaje)
+                login.hideLoading()
             }
-
         }
     }
+
 }

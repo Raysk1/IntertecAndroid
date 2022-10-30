@@ -45,7 +45,7 @@ class HorarioFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         weekView = view.findViewById(R.id.weekView)
         weekView.adapter = adapter
-        this.alumno = Alumno.getAlumno()
+        this.alumno = Alumno.alumno!!
 
         uiScope.launch {
             processHorario()
@@ -102,7 +102,7 @@ class HorarioFragment : Fragment() {
             val now = LocalDate.now()
             val weekDay = now.dayOfWeek.value
             startDay = now.minusDays((weekDay - 1).toLong())
-            endDay = now.plusDays((5 - weekDay).toLong())
+            endDay = now.plusDays((7 - weekDay).toLong())
         }
 
         withContext(Dispatchers.Main) {

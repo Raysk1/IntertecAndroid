@@ -36,8 +36,7 @@ public class DatosGeneralesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_datos_generales, container, false);
-        return v;
+        return inflater.inflate(R.layout.fragment_datos_generales, container, false);
     }
 
     @Override
@@ -54,7 +53,7 @@ public class DatosGeneralesFragment extends Fragment {
         Alumno alumno = Alumno.getAlumno();
 
         tvNombre.setText(alumno.datosGenerales.getNombre());
-        tvNoControl.setText(alumno.control);
+        tvNoControl.setText(alumno.getControl());
         tvCurp.setText(alumno.datosGenerales.getCurp());
         tvCarrera.setText(alumno.datosGenerales.getCarrera());
         tvEspecialidad.setText(alumno.datosGenerales.getEspecialidad());
@@ -64,11 +63,6 @@ public class DatosGeneralesFragment extends Fragment {
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back_button);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
     }
 }
