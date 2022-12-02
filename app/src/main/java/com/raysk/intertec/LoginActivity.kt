@@ -1,20 +1,24 @@
 package com.raysk.intertec
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.kusu.loadingbutton.LoadingButton
 import com.raysk.intertec.alumno.Alumno
 import com.raysk.intertec.alumno.Alumno.Companion.getAlumno
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var control: TextView
@@ -63,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
         validarPassword()
     }
 
-    fun validarControl(): Boolean {
+    private fun validarControl(): Boolean {
         return if (control.text.toString().isEmpty()) {
             control.error = "Debe llenar el campo"
             false
@@ -75,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun validarPassword(): Boolean {
+    private fun validarPassword(): Boolean {
         return if (password.text.toString().isEmpty()) {
             password.error = "Debe llenar el campo"
             false
@@ -84,17 +88,21 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun mostrarMensaje(Mensaje: String) {
-        Snackbar.make(snackBarContainer, Mensaje, Snackbar.LENGTH_LONG).show()
+    private fun mostrarMensaje(Mensaje: String, color: Int = R.color.ligh_gray) {
+        Snackbar.make(snackBarContainer, Mensaje, Snackbar.LENGTH_LONG)
+            .setBackgroundTint(ContextCompat.getColor(this, color))
+            .setTextColor(Color.WHITE)
+            .show()
     }
 
     //Corrutina en 2do plano
-    private suspend fun conectar(control: String, password: String){
+    private suspend fun conectar(control: String, password: String) {
         var alumno: Alumno?
         var mensaje = ""
         var validado = false
+        var guardado = false
 
-        withContext(Dispatchers.Default){
+        withContext(Dispatchers.Default) {
             try {
                 alumno = getAlumno(control, password)
                 validado = alumno!!.validarInicioDeSesion()
@@ -105,21 +113,40 @@ class LoginActivity : AppCompatActivity() {
                 login.isClickable = true
             }
         }
-        
+
+        withContext(Dispatchers.IO) {
+            try {
+                if (validado) {
+                    alumno?.guardarDatosJson(filesDir)
+                    guardado = true
+                }
+            } catch (e: Exception) {
+                guardado = false
+            }
+        }
+
         //en hilo principal
         withContext(Dispatchers.Main) {
+
             if (alumno == null) {
                 login.hideLoading()
-                mostrarMensaje(mensaje)
+                mostrarMensaje(mensaje,R.color.error)
                 return@withContext
             }
             if (validado) {
+                if (!guardado) {
+                    Toasty.error(
+                        this@LoginActivity,
+                        "No se han guardado los datos",
+                        Toasty.LENGTH_LONG
+                    ).show()
+                }
                 val intent = Intent(this@LoginActivity, ButtonNavigation::class.java)
                 startActivity(intent)
                 finish()
-            } else {
+            } else if (mensaje.isEmpty()){
                 mensaje = "Usuario o Contraseña Incorrecto"
-                mostrarMensaje(mensaje)
+                mostrarMensaje(mensaje,R.color.warning)
                 login.hideLoading()
             }
         }

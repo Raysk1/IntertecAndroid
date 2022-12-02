@@ -44,6 +44,7 @@ class HorarioFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         weekView = view.findViewById(R.id.weekView)
+        adapter.fragmentManager = parentFragmentManager
         weekView.adapter = adapter
         this.alumno = Alumno.alumno!!
 

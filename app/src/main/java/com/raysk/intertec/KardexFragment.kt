@@ -30,7 +30,7 @@ class KardexFragment : Fragment() {
                 val itemView = activity?.let { ItemView(it.applicationContext) }
                 itemView?.setData(
                     data.materia,
-                    data.calificacion.ifEmpty { "SC" }
+                    data.calificacion
                 )
                 itemView?.setOnClickListener {
                     val modal = ModalFragment("Detalles", data)

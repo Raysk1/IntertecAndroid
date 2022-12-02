@@ -1,15 +1,20 @@
 package com.raysk.intertec.alumno
 
 import android.graphics.Color
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.raysk.intertec.alumno.Kardex.Companion.CURSADO
 import com.raysk.intertec.alumno.Kardex.Companion.EN_CURSO
 import com.raysk.intertec.alumno.Kardex.Companion.POR_CURSAR
 import org.jsoup.Jsoup
 import org.jsoup.nodes.TextNode
+import java.io.File
+import java.io.FileReader
+import java.io.FileWriter
 import java.io.IOException
 
-class Alumno private constructor(var control: String, var password: String) {
-    var passwordToken: String? = null
+class Alumno private constructor(var control: String, private var password: String) {
+    private var passwordToken: String? = null
 
     @JvmField
     var datosGenerales: DatosGenerales = DatosGenerales()
@@ -102,7 +107,8 @@ class Alumno private constructor(var control: String, var password: String) {
                 }
                 val divs = td.select("div")
                 val materia = td.childNode(2) as TextNode
-                val calificacion = divs[2].text().trim { it <= ' ' }.split(" ").toTypedArray()[0]
+                var calificacion = divs[2].text().trim { it <= ' ' }.split(" ").toTypedArray()[0]
+                calificacion = calificacion.ifEmpty { "SC" }
 
                 //Buscando por color para asignar el estado
                 var estado: Int
@@ -128,7 +134,7 @@ class Alumno private constructor(var control: String, var password: String) {
                 )
             }
         }
-        kardex.data = data.sortedBy { it.estado }.sortedBy{ it.periodo }
+        kardex.data = data.sortedBy { it.estado }.sortedBy { it.periodo }
         val promedio = tables[0].select("tr")[8].select("td")[1].text().trim { it <= ' ' }.toFloat()
         kardex.promedio = promedio
         kardex.creditosObtenidos =
@@ -140,6 +146,7 @@ class Alumno private constructor(var control: String, var password: String) {
 
     @Throws(IOException::class)
     private fun obtenerHorario() {
+        horario.clear()
         val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=HORARIO&Control=" + control +
                 "&password=" + passwordToken + "&aceptar=ACEPTAR"
         val document = Jsoup.connect(url).get()
@@ -175,7 +182,8 @@ class Alumno private constructor(var control: String, var password: String) {
                         hora[1].split(":").toTypedArray()[0].toInt(),
                         aula,
                         j - 6,
-                        Color.parseColor(colors[i - 1])
+                        Color.parseColor(colors[i - 1]),
+                        tds[0].text().trim { it <= ' ' }
                     )
                 )
             }
@@ -184,6 +192,7 @@ class Alumno private constructor(var control: String, var password: String) {
 
     @Throws(IOException::class)
     private fun obtenerCalificaciones() {
+        calificaciones.clear()
         val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=CALIF&Control=" + control +
                 "&password=" + passwordToken + "&aceptar=ACEPTAR"
         val document = Jsoup.connect(url).get()
@@ -212,15 +221,50 @@ class Alumno private constructor(var control: String, var password: String) {
         }
     }
 
+    fun guardarDatosJson(filesDir: File) {
+        //guardando datos del alumno
+        val alumnoDataFile = File(filesDir, "alumnoData.json")
+        val gson = GsonBuilder().setPrettyPrinting().create()
+        val fileWriter = FileWriter(alumnoDataFile)
+        gson.toJson(this, fileWriter)
+        fileWriter.close()
+    }
+
+
+    fun eliminarDatosJson(filesDir: File) {
+        alumno = null
+        val alumnoDataFile = File(filesDir, "alumnoData.json")
+        if (alumnoDataFile.exists()){
+            alumnoDataFile.delete()
+        }
+    }
+
     companion object {
         @JvmStatic
         var alumno: Alumno? = null
         fun getAlumno(control: String, password: String): Alumno? {
-            if (alumno == null) {
-                alumno = Alumno(control, password)
-            }
+            alumno = Alumno(control, password)
             return alumno
         }
 
+        fun datosJsonExists(filesDir: File): Boolean {
+            val alumnoDataFile = File(filesDir, "alumnoData.json")
+            return alumnoDataFile.exists()
+        }
+
+        fun cargarDatosAlumno(filesDir: File): Boolean{
+           try {
+               val alumnoDataFile = File(filesDir, "alumnoData.json")
+               val gson = Gson()
+               val fileReader = FileReader(alumnoDataFile)
+               alumno = gson.fromJson(fileReader,Alumno::class.java)
+               fileReader.close()
+               return true
+           }catch (e:Exception){
+               e.printStackTrace()
+               return false;
+           }
+
+        }
     }
 }

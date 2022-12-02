@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.raysk.intertec.alumno.Calificaciones
+import com.raysk.intertec.alumno.HorarioEvent
 import com.raysk.intertec.alumno.Kardex
 import com.raysk.intertec.alumno.Kardex.Companion.CURSADO
 import com.raysk.intertec.alumno.Kardex.Companion.POR_CURSAR
@@ -18,10 +19,14 @@ class ModalFragment() : DialogFragment() {
 
     val CALIFICACIONES = 1
     val KARDEX = 2
+    val HORARIO = 3
     private lateinit var calificacion: Calificaciones
     private lateinit var kardexData: KardexData
+    private lateinit var horarioData: HorarioEvent
     private var title: String? = null
     var seleccion = 0
+    private lateinit var tvReferencia: TextView
+    private lateinit var layout: LinearLayout
 
     constructor(title: String, calificacion: Calificaciones) : this() {
         this.title = title
@@ -33,6 +38,11 @@ class ModalFragment() : DialogFragment() {
         this.title = title
         this.kardexData = kardexData
         seleccion = KARDEX
+    }
+    constructor(title: String, horarioData: HorarioEvent) : this() {
+        this.title = title
+        this.horarioData = horarioData
+        seleccion = HORARIO
     }
 
 
@@ -52,18 +62,25 @@ class ModalFragment() : DialogFragment() {
             val tvTitle = view.findViewById<TextView>(R.id.tvTitle)
             var materia = ""
             var clave = ""
-            val modalLayout = view.findViewById<LinearLayout>(R.id.modalLayout)
+            layout = view.findViewById<LinearLayout>(R.id.modalLayout)
+            tvReferencia = tvMateria
 
+            //comprueba la seleccion
             when (seleccion) {
                 CALIFICACIONES -> {
                     materia = calificacion.materia
                     clave = calificacion.clave
-                    createCalificacionesLayout(tvMateria, modalLayout)
+                    createCalificacionesLayout()
                 }
                 KARDEX -> {
                     materia = kardexData.materia
                     clave = kardexData.clave
-                    createKardexLayout(tvMateria, modalLayout)
+                    createKardexLayout()
+                }
+                HORARIO -> {
+                    materia = horarioData.materia
+                    clave = horarioData.clave
+                    createHorarioLayout()
                 }
             }
 
@@ -76,7 +93,8 @@ class ModalFragment() : DialogFragment() {
         return buider.create()
     }
 
-    private fun createTitulo(tvReferencia: TextView, texto: String): TextView {
+    //crea un textView de titulo(en negritas)
+    private fun createTitulo(texto: String): TextView {
         val titulo = TextView(activity)
         titulo.text = texto
         titulo.setTextColor(Color.BLACK)
@@ -93,7 +111,8 @@ class ModalFragment() : DialogFragment() {
         return titulo
     }
 
-    private fun createContenido(tvReferencia: TextView, texto: String): TextView {
+    //crea un textView de contenido
+    private fun createContenido(texto: String): TextView {
         val contenido = TextView(activity)
         contenido.text = texto
         contenido.setTextColor(Color.BLACK)
@@ -108,30 +127,38 @@ class ModalFragment() : DialogFragment() {
         return contenido
     }
 
-    private fun createCalificacionesLayout(tvReferencia: TextView, layout: LinearLayout) {
+    private fun createCalificacionesLayout() {
         calificacion.notas.forEachIndexed { index: Int, nota: Int ->
-            layout.addView(createTitulo(tvReferencia, "Parcial " + (index + 1) + ":"))
-            layout.addView(createContenido(tvReferencia, nota.toString()))
+            layout.addView(createTitulo("Parcial " + (index + 1) + ":"))
+            layout.addView(createContenido(nota.toString()))
         }
     }
 
-    private fun createKardexLayout(tvReferencia: TextView, layout: LinearLayout) {
-        layout.addView(createTitulo(tvReferencia, "Calificacion"))
+    private fun createKardexLayout() {
+        layout.addView(createTitulo("Calificacion"))
         layout.addView(
             createContenido(
-                tvReferencia,
                 if (kardexData.calificacion.isEmpty()) "Sin calificacion" else kardexData.calificacion
             )
         )
-        layout.addView(createTitulo(tvReferencia, "Periodo"))
-        layout.addView(createContenido(tvReferencia, kardexData.periodo.toString()))
-        layout.addView(createTitulo(tvReferencia, "Estado"))
+        layout.addView(createTitulo("Periodo"))
+        layout.addView(createContenido(kardexData.periodo.toString()))
+        layout.addView(createTitulo("Estado"))
         val estado = when (kardexData.estado) {
             CURSADO -> "Cursado"
             POR_CURSAR -> "Por cursar"
             Kardex.EN_CURSO -> "En curso"
             else -> ""
         }
-        layout.addView(createContenido(tvReferencia, estado))
+        layout.addView(createContenido(estado))
+    }
+
+    private fun createHorarioLayout() {
+        layout.addView(createTitulo("aula"))
+        layout.addView(createContenido(horarioData.aula))
+        layout.addView(createTitulo("Hora de entrada"))
+        layout.addView(createContenido(horarioData.horaDeEntrada.toString() + ":00"))
+        layout.addView(createTitulo("Hora de salida"))
+        layout.addView(createContenido(horarioData.horaDeSalida.toString() + ":00"))
     }
 }

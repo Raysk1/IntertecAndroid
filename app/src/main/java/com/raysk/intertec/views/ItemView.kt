@@ -24,8 +24,8 @@ class ItemView @JvmOverloads constructor (
     }
 
     fun setData(materia:String, calificacion: String){
-        this.materia.setText(materia)
-        this.calificacion.setText(calificacion)
+        this.materia.text = materia
+        this.calificacion.text = calificacion
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {

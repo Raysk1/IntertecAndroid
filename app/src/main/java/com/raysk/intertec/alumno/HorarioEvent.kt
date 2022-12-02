@@ -7,5 +7,6 @@ data class HorarioEvent(
     var horaDeSalida: Int = 0,
     var aula: String = "",
     var dia: Int = 0,
-    var color: Int = 0
+    var color: Int = 0,
+    var clave: String = ""
 )

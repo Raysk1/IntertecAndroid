@@ -12,4 +12,8 @@
     <color name="ligh_gray">#E5E5E5</color>
     <color name="gray">#434343</color>
     <color name="yellow_transparet">#6DFCA311</color>
+    <color name="error">#d92727</color>
+    <color name="success">#60a365</color>
+    <color name="warning">#fdaf17</color>
+    <color name="info">#5060ba</color>
 </resources>

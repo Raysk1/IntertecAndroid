@@ -1,12 +1,16 @@
 package com.raysk.intertec.horario
 
+import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import com.alamkanak.weekview.WeekView
 import com.alamkanak.weekview.WeekViewEntity
+import com.raysk.intertec.ModalFragment
 import com.raysk.intertec.alumno.HorarioEvent
 import java.time.LocalDate
 import java.util.*
 
 class Adapter : WeekView.SimpleAdapter<HorarioEvent>() {
+    lateinit var fragmentManager: FragmentManager
 
     override fun onCreateEntity(item: HorarioEvent): WeekViewEntity {
         val startTime = Calendar.getInstance()
@@ -37,5 +41,11 @@ class Adapter : WeekView.SimpleAdapter<HorarioEvent>() {
             .setEndTime(endTime)
             .setStyle(style)
             .build()
+    }
+
+    override fun onEventClick(data: HorarioEvent) {
+        super.onEventClick(data)
+        val modal = ModalFragment("Detalles", data)
+        modal.show(fragmentManager,"nosexd")
     }
 }

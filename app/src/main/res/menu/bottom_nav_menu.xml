@@ -21,6 +21,11 @@
         android:icon="@drawable/exam_svgrepo_com"
         android:title="Calificaciones"
         />
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="Configuracion"
+        />
 
 
 </menu>
