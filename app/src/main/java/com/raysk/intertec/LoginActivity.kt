@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
         password = findViewById(R.id.password)
         login = findViewById(R.id.loginButton)
         snackBarContainer = findViewById(R.id.snackBar)
+
         control.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
@@ -62,11 +64,13 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /** valida los campos de numero de control y paswword*/
     private fun validarCampos() {
         validarControl()
         validarPassword()
     }
 
+    /** Valida el numero de control */
     private fun validarControl(): Boolean {
         return if (control.text.toString().isEmpty()) {
             control.error = "Debe llenar el campo"
@@ -79,6 +83,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /** Valida la contraseña */
     private fun validarPassword(): Boolean {
         return if (password.text.toString().isEmpty()) {
             password.error = "Debe llenar el campo"
@@ -88,6 +93,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /** Muestra un Snackbar con un mensaje
+     * @param Mensaje El mensaje a mostrar
+     * @param color El color del Snackbar a mostrar*/
     private fun mostrarMensaje(Mensaje: String, color: Int = R.color.ligh_gray) {
         Snackbar.make(snackBarContainer, Mensaje, Snackbar.LENGTH_LONG)
             .setBackgroundTint(ContextCompat.getColor(this, color))
@@ -95,7 +103,9 @@ class LoginActivity : AppCompatActivity() {
             .show()
     }
 
-    //Corrutina en 2do plano
+    /** corrutina que realiza la conexion al servidor para traer de vuelta los datos del alumno
+     * @param control Numero de control del alumno
+     * @param password Contraseña del alumno*/
     private suspend fun conectar(control: String, password: String) {
         var alumno: Alumno?
         var mensaje = ""
@@ -121,6 +131,7 @@ class LoginActivity : AppCompatActivity() {
                     guardado = true
                 }
             } catch (e: Exception) {
+                Log.e("Error",e.message!!)
                 guardado = false
             }
         }

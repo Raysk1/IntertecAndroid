@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
 import com.github.nikartm.button.FitButton
-import com.raysk.intertec.CalificacionesFragment
-import com.raysk.intertec.KardexFragment
+import com.raysk.intertec.calificaciones.CalificacionesFragment
+import com.raysk.intertec.kardex.KardexFragment
 import com.raysk.intertec.R
 import com.raysk.intertec.alumno.Alumno
 

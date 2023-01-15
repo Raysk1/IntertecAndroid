@@ -1,5 +1,5 @@
 package com.raysk.intertec.alumno
-
+/** Clase que contine los datos personales del alumno */
 data class DatosPersonales(
     var calle: String = "",
     var noCalle: String = "",

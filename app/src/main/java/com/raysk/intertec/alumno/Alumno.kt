@@ -27,7 +27,12 @@ class Alumno private constructor(var control: String, private var password: Stri
     var horario: ArrayList<HorarioEvent> = ArrayList()
     var kardex: Kardex = Kardex()
     var calificaciones: ArrayList<Calificaciones> = ArrayList()
+    var promedioDelSemestreActual = 0f
+    var parcialActual = 0
 
+    /** Funcion que valida si se ha iniciado correctamente la se sesion
+     * @return Retorna True si se ha iniciado correctamente la sesion
+     * */
     @Throws(IOException::class)
     fun validarInicioDeSesion(): Boolean {
         val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=MAIN&Control=" +
@@ -48,7 +53,7 @@ class Alumno private constructor(var control: String, private var password: Stri
         return true
     }
 
-    //Obtiene los datos Personales del alumno
+    /**Obtiene los datos Personales del alumno*/
     @Throws(IOException::class)
     private fun obtenerDatosDeAlumno() {
         val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=DATOSALU&Control=" +
@@ -89,6 +94,7 @@ class Alumno private constructor(var control: String, private var password: Stri
         datosAcademicos.situacion = datos[14].text().trim { it <= ' ' }
     }
 
+    /** Obtiene el kardex del alumno */
     @Throws(IOException::class)
     private fun obtenerKardex() {
         val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=KARDEX&Control=" + control +
@@ -144,6 +150,7 @@ class Alumno private constructor(var control: String, private var password: Stri
         kardex.avance = avance.toFloat()
     }
 
+    /** Obtiene el horario del alumno */
     @Throws(IOException::class)
     private fun obtenerHorario() {
         horario.clear()
@@ -191,6 +198,7 @@ class Alumno private constructor(var control: String, private var password: Stri
     }
 
     @Throws(IOException::class)
+    /** Obtiene las calificaciones del alumno */
     private fun obtenerCalificaciones() {
         calificaciones.clear()
         val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=CALIF&Control=" + control +
@@ -209,7 +217,13 @@ class Alumno private constructor(var control: String, private var password: Stri
                     promedio += nota.toInt()
                 }
             }
+            if (notas.size > parcialActual){
+                parcialActual = notas.size
+            }
             promedio /= notas.size
+            if (!promedio.isNaN()){
+                promedioDelSemestreActual += promedio
+            }
             calificaciones.add(
                 Calificaciones(
                     tds[0].text().trim { it <= ' ' },
@@ -219,8 +233,12 @@ class Alumno private constructor(var control: String, private var password: Stri
                 )
             )
         }
+        if (calificaciones.size >0) {
+            promedioDelSemestreActual /= calificaciones.size
+        }
     }
 
+    /** Convierte y guarda los datos del alumno en un archivo JSON */
     fun guardarDatosJson(filesDir: File) {
         //guardando datos del alumno
         val alumnoDataFile = File(filesDir, "alumnoData.json")
@@ -231,6 +249,7 @@ class Alumno private constructor(var control: String, private var password: Stri
     }
 
 
+    /** Elimina el archivo JSON con los datos del alumno si este existe */
     fun eliminarDatosJson(filesDir: File) {
         alumno = null
         val alumnoDataFile = File(filesDir, "alumnoData.json")
@@ -242,28 +261,38 @@ class Alumno private constructor(var control: String, private var password: Stri
     companion object {
         @JvmStatic
         var alumno: Alumno? = null
+        /** Crea una instancia de Alumno
+         * @param control Numero de control del alumno
+         * @param password Contraseña del alumno
+         * @return Una nueva instancia de Alumno*/
         fun getAlumno(control: String, password: String): Alumno? {
             alumno = Alumno(control, password)
             return alumno
         }
 
+        /** Comprueba si existe el archivo JSON con los datos del alumno en la ruta especificada
+         *@param filesDir Ruta del archivo
+         * @return Retorna True si el archivo existe */
         fun datosJsonExists(filesDir: File): Boolean {
             val alumnoDataFile = File(filesDir, "alumnoData.json")
             return alumnoDataFile.exists()
         }
 
+        /** Carga y convierte el archivo JSON a una instancia de Alumno
+         * @param filesDir Ruta del archivo
+         * @return Retorna True si se cargo correctamente*/
         fun cargarDatosAlumno(filesDir: File): Boolean{
-           try {
-               val alumnoDataFile = File(filesDir, "alumnoData.json")
-               val gson = Gson()
-               val fileReader = FileReader(alumnoDataFile)
-               alumno = gson.fromJson(fileReader,Alumno::class.java)
-               fileReader.close()
-               return true
-           }catch (e:Exception){
-               e.printStackTrace()
-               return false;
-           }
+            return try {
+                val alumnoDataFile = File(filesDir, "alumnoData.json")
+                val gson = Gson()
+                val fileReader = FileReader(alumnoDataFile)
+                alumno = gson.fromJson(fileReader,Alumno::class.java)
+                fileReader.close()
+                true
+            }catch (e:Exception){
+                e.printStackTrace()
+                false
+            }
 
         }
     }

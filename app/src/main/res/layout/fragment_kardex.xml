@@ -5,11 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
-    tools:context=".KardexFragment">
+    tools:context=".kardex.KardexFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/guideline52"
+            app:layout_constraintStart_toStartOf="@+id/guideline49"
+            app:layout_constraintTop_toTopOf="@id/guideline52" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerView3"
@@ -21,23 +29,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:navGraph="@navigation/kardex_indicadores_navigation" />
-
-        <ScrollView
-            android:id="@+id/scrollView2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView3"
-            app:layout_constraintEnd_toEndOf="@id/guideline52"
-            app:layout_constraintStart_toStartOf="@id/guideline49"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:id="@+id/lyContenedor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:orientation="vertical" />
-        </ScrollView>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline52"
@@ -52,7 +43,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent=".05" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,5 @@
 package com.raysk.intertec.horario
 
-import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.alamkanak.weekview.WeekView
 import com.alamkanak.weekview.WeekViewEntity
@@ -9,7 +8,7 @@ import com.raysk.intertec.alumno.HorarioEvent
 import java.time.LocalDate
 import java.util.*
 
-class Adapter : WeekView.SimpleAdapter<HorarioEvent>() {
+class HorarioAdapter : WeekView.SimpleAdapter<HorarioEvent>() {
     lateinit var fragmentManager: FragmentManager
 
     override fun onCreateEntity(item: HorarioEvent): WeekViewEntity {

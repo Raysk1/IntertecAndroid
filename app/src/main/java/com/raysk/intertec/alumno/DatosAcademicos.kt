@@ -1,5 +1,5 @@
 package com.raysk.intertec.alumno
-
+/** Clase que contine los datos academicos del alumno */
 data class DatosAcademicos(
     var escuelaDeProcedencia: String = "",
     var periodoDeIngreso: String = "",

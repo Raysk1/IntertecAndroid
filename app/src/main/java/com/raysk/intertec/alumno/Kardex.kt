@@ -1,5 +1,5 @@
 package com.raysk.intertec.alumno
-
+/** Clase que contine los datos del kardex del alumno */
 data class Kardex(
     var data: List<KardexData> = emptyList<KardexData>(),
     var creditosTotales: String = "",

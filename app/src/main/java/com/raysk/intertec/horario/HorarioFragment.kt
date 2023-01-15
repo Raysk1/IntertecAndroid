@@ -28,8 +28,8 @@ class HorarioFragment : Fragment() {
     private lateinit var weekView: WeekView
     private lateinit var endDay: LocalDate
     private lateinit var startDay: LocalDate
-    private lateinit var alumno: Alumno
-    private val adapter = Adapter()
+    private val alumno: Alumno = Alumno.alumno!!
+    private val adapter = HorarioAdapter()
     private val uiScope = CoroutineScope(Dispatchers.Main)
 
 
@@ -38,45 +38,50 @@ class HorarioFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_horario, container, false)
+        if (alumno.horario.size > 0) {
+            return inflater.inflate(R.layout.fragment_horario, container, false)
+        }else{
+            return inflater.inflate(R.layout.fragment_no_content, container, false)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        weekView = view.findViewById(R.id.weekView)
-        adapter.fragmentManager = parentFragmentManager
-        weekView.adapter = adapter
-        this.alumno = Alumno.alumno!!
+        if (alumno.horario.size > 0) {
+            weekView = view.findViewById(R.id.weekView)
+            adapter.fragmentManager = parentFragmentManager
+            weekView.adapter = adapter
 
-        uiScope.launch {
-            processHorario()
-        }
+            uiScope.launch {
+                processHorario()
+            }
 
-        //Configuarcion del menu de la toolbar
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar2)
-        toolbar.inflateMenu(R.menu.horario_menu)
-        var currentViewType = WeekViewType.of(weekView.numberOfVisibleDays)
-        toolbar.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.action_today -> {
-                    weekView.scrollToDateTime(dateTime = LocalDateTime.now())
-                    true
-                }
-                else -> {
-                    val viewType = item.mapToWeekViewType()
-                    if (viewType != currentViewType) {
-                        item.isChecked = !item.isChecked
-                        currentViewType = viewType
-                        weekView.numberOfVisibleDays = viewType.value
+            //Configuarcion del menu de la toolbar
+            val toolbar = view.findViewById<Toolbar>(R.id.toolbar2)
+            toolbar.inflateMenu(R.menu.horario_menu)
+            var currentViewType = WeekViewType.of(weekView.numberOfVisibleDays)
+            toolbar.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_today -> {
+                        weekView.scrollToDateTime(dateTime = LocalDateTime.now())
+                        true
                     }
-                    true
+                    else -> {
+                        val viewType = item.mapToWeekViewType()
+                        if (viewType != currentViewType) {
+                            item.isChecked = !item.isChecked
+                            currentViewType = viewType
+                            weekView.numberOfVisibleDays = viewType.value
+                        }
+                        true
+                    }
                 }
             }
         }
-
     }
 
 
+    /** Tipos de opcion de vista del horario */
     private enum class WeekViewType(val value: Int) {
         DayView(1),
         ThreeDayView(3),
@@ -96,7 +101,7 @@ class HorarioFragment : Fragment() {
         }
     }
 
-    //corrutina que procesa el horario en otro hilo
+    /**corrutina que procesa el horario en otro hilo */
     private suspend fun processHorario() {
         withContext(Dispatchers.Default) {
             adapter.submitList(alumno.horario)

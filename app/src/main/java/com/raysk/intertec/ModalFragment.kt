@@ -17,9 +17,9 @@ import com.raysk.intertec.alumno.KardexData
 
 class ModalFragment() : DialogFragment() {
 
-    val CALIFICACIONES = 1
-    val KARDEX = 2
-    val HORARIO = 3
+    private val CALIFICACIONES = 1
+    private val KARDEX = 2
+    private val HORARIO = 3
     private lateinit var calificacion: Calificaciones
     private lateinit var kardexData: KardexData
     private lateinit var horarioData: HorarioEvent
@@ -39,6 +39,7 @@ class ModalFragment() : DialogFragment() {
         this.kardexData = kardexData
         seleccion = KARDEX
     }
+
     constructor(title: String, horarioData: HorarioEvent) : this() {
         this.title = title
         this.horarioData = horarioData
@@ -50,6 +51,7 @@ class ModalFragment() : DialogFragment() {
         return createModal()
     }
 
+    /** Crea el Modal */
     private fun createModal(): Dialog {
         val buider = AlertDialog.Builder(activity)
         val inflater = activity?.layoutInflater
@@ -93,7 +95,8 @@ class ModalFragment() : DialogFragment() {
         return buider.create()
     }
 
-    //crea un textView de titulo(en negritas)
+    /**crea un textView de titulo(en negritas)
+     * @param texto Texto del titulo*/
     private fun createTitulo(texto: String): TextView {
         val titulo = TextView(activity)
         titulo.text = texto
@@ -111,7 +114,8 @@ class ModalFragment() : DialogFragment() {
         return titulo
     }
 
-    //crea un textView de contenido
+    /**crea un textView de contenido
+     * @param texto Texto del contenido*/
     private fun createContenido(texto: String): TextView {
         val contenido = TextView(activity)
         contenido.text = texto
@@ -127,6 +131,7 @@ class ModalFragment() : DialogFragment() {
         return contenido
     }
 
+    /** Crea el Layout del modal de calificaciones*/
     private fun createCalificacionesLayout() {
         calificacion.notas.forEachIndexed { index: Int, nota: Int ->
             layout.addView(createTitulo("Parcial " + (index + 1) + ":"))
@@ -134,6 +139,7 @@ class ModalFragment() : DialogFragment() {
         }
     }
 
+    /** Crea el Layout del modal del kardex*/
     private fun createKardexLayout() {
         layout.addView(createTitulo("Calificacion"))
         layout.addView(
@@ -153,6 +159,7 @@ class ModalFragment() : DialogFragment() {
         layout.addView(createContenido(estado))
     }
 
+    /** Crea el Layout del modal del horario*/
     private fun createHorarioLayout() {
         layout.addView(createTitulo("aula"))
         layout.addView(createContenido(horarioData.aula))

@@ -20,26 +20,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         progressBar = findViewById(R.id.progressBar)
 
-        if (Alumno.datosJsonExists(filesDir)){
+        if (Alumno.datosJsonExists(filesDir)) {
             progressBar.visibility = View.VISIBLE
             uiScope.launch { actualizarDatos() }
 
-        }else{
-          iniciarLogin()
+        } else {
+            iniciarLogin()
         }
-
-
 
 
     }
 
-    private fun iniciarLogin(){
+    /** Inicializa el activity Login */
+    private fun iniciarLogin() {
         val intent = Intent(this@MainActivity, LoginActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    private suspend fun actualizarDatos(){
+    /** Actualiza los datos del Alumno*/
+    private suspend fun actualizarDatos() {
         var alumno: Alumno?
         var mensaje = ""
         var validado = false
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         withContext(Dispatchers.IO) {
             try {
 
-                if (Alumno.cargarDatosAlumno(filesDir)){
+                if (Alumno.cargarDatosAlumno(filesDir)) {
                     alumno = Alumno.alumno
                     validado = alumno!!.validarInicioDeSesion()
                 }
@@ -66,20 +66,21 @@ class MainActivity : AppCompatActivity() {
                     mensaje = "Se han actualizado los datos"
                 }
             } catch (e: Exception) {
+
                 guardado = false
                 mensaje = "No se han podido guardar los datos"
             }
         }
 
-        withContext(Dispatchers.Main){
-            if (alumno == null){
-                Toasty.error(this@MainActivity,mensaje,Toasty.LENGTH_LONG).show()
+        withContext(Dispatchers.Main) {
+            if (alumno == null) {
+                Toasty.error(this@MainActivity, mensaje, Toasty.LENGTH_LONG).show()
                 iniciarLogin()
-            }else {
-                if (!guardado){
-                    Toasty.warning(this@MainActivity,mensaje,Toasty.LENGTH_LONG).show()
-                }else if (validado){
-                    Toasty.success(this@MainActivity,mensaje,Toasty.LENGTH_LONG).show()
+            } else {
+                if (!guardado) {
+                    Toasty.warning(this@MainActivity, mensaje, Toasty.LENGTH_LONG).show()
+                } else if (validado) {
+                    Toasty.success(this@MainActivity, mensaje, Toasty.LENGTH_LONG).show()
                 }
             }
             val intent = Intent(this@MainActivity, ButtonNavigation::class.java)
