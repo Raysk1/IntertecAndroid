@@ -20,7 +20,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="Datos Generales" />
+            app:navigationIcon="@drawable/ic_back_button"
+            app:title="Datos Generales"
+            app:titleTextColor="@color/black" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"

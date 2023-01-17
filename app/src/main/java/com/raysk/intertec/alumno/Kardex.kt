@@ -12,5 +12,6 @@ data class Kardex(
         val EN_CURSO = 2
         val POR_CURSAR = 3
         val REPROBADO = 4
+        val REPITE = 5
     }
 }

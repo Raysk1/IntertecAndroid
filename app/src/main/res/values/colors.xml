@@ -16,4 +16,9 @@
     <color name="success">#60a365</color>
     <color name="warning">#fdaf17</color>
     <color name="info">#5060ba</color>
+    <color name="ISCcolor">#023565</color>
+    <color name="IIALcolor">#ec8701</color>
+    <color name="INNcolor">#086a2e</color>
+    <color name="IGEcolor">#de010a</color>
+    <color name="IIAScolor">#737177</color>
 </resources>

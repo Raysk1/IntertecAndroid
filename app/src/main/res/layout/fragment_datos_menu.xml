@@ -5,6 +5,7 @@
     android:id="@+id/f"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".datos.DatosMenuFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,19 +13,37 @@
         android:layout_height="match_parent"
         tools:context=".HomeActivity">
 
+        <TextView
+            android:id="@+id/tvUserCarrera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_ui"
+            android:gravity="center"
+            android:paddingHorizontal="10sp"
+            android:paddingVertical="5sp"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/guideline28"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="@+id/guideline27"
+            app:layout_constraintTop_toBottomOf="@+id/userNumControl"
+            tools:text="ISC" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline26"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.48" />
+            app:layout_constraintGuide_percent="0.5" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.47" />
+            app:layout_constraintGuide_percent=".48" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline13"
@@ -33,17 +52,37 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.37" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.tistory.zladnrms.roundablelayout.RoundableLayout
+            android:id="@+id/roundableLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:backgroundTint="#00FFFFFF"
+            android:backgroundTintMode="screen"
+            android:forceHasOverlappingRendering="false"
+            android:foreground="@drawable/gradient_background"
+            app:backgroundColor="#00FFFFFF"
+            app:cornerLeftTop="65dp"
+            app:cornerRightTop="65dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline29">
+
+        </com.tistory.zladnrms.roundablelayout.RoundableLayout>
+
+        <com.tistory.zladnrms.roundablelayout.RoundableLayout
             android:id="@+id/constraintLayout3"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/buttom_corners_rounded"
+            android:foreground="@drawable/gradient_background_reverse"
+            android:hapticFeedbackEnabled="false"
+            app:cornerLeftBottom="65dp"
+            app:cornerRightBottom="65dp"
             app:layout_constraintBottom_toBottomOf="@id/guideline11"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline11"
@@ -97,6 +136,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.10" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.Guideline
@@ -110,7 +150,7 @@
             android:id="@+id/userName"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:autoSizeTextType="none"
+            android:autoSizeTextType="uniform"
             android:gravity="center"
             android:textColor="#000000"
             android:textSize="25sp"
@@ -120,7 +160,7 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="@+id/guideline27"
             app:layout_constraintTop_toTopOf="@+id/guideline14"
-            tools:text="OSCAR FRANCO GARCIA" />
+            tools:text="OSCAR FRANCO GARCIA " />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline14"
@@ -138,7 +178,7 @@
             android:gravity="center"
             android:paddingHorizontal="10sp"
             android:textColor="#FFFFFF"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -163,7 +203,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/top_corners_rounded"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -176,28 +215,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.26" />
+                app:layout_constraintGuide_percent="0.28" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline34"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.42" />
+                app:layout_constraintGuide_percent="0.41" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline35"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.58" />
+                app:layout_constraintGuide_percent="0.59" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline36"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.74" />
+                app:layout_constraintGuide_percent="0.72" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline37"
@@ -228,6 +267,7 @@
                 android:backgroundTint="@color/white"
                 android:backgroundTintMode="src_in"
                 android:text="Datos Generales"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/guideline33"
                 app:layout_constraintEnd_toStartOf="@+id/guideline31"
@@ -245,6 +285,7 @@
                 android:backgroundTint="@color/white"
                 android:backgroundTintMode="src_in"
                 android:text="Datos Personales"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@id/guideline35"
                 app:layout_constraintEnd_toStartOf="@id/guideline31"
@@ -261,6 +302,7 @@
                 android:backgroundTint="@color/white"
                 android:backgroundTintMode="src_in"
                 android:text="Datos Academicos"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@id/guideline37"
                 app:layout_constraintEnd_toStartOf="@id/guideline31"
@@ -283,7 +325,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.56" />
+            app:layout_constraintGuide_percent="0.64" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

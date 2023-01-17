@@ -10,10 +10,10 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.raysk.intertec.alumno.Calificaciones
 import com.raysk.intertec.alumno.HorarioEvent
-import com.raysk.intertec.alumno.Kardex
 import com.raysk.intertec.alumno.Kardex.Companion.CURSADO
 import com.raysk.intertec.alumno.Kardex.Companion.EN_CURSO
 import com.raysk.intertec.alumno.Kardex.Companion.POR_CURSAR
+import com.raysk.intertec.alumno.Kardex.Companion.REPITE
 import com.raysk.intertec.alumno.Kardex.Companion.REPROBADO
 import com.raysk.intertec.alumno.KardexData
 
@@ -157,6 +157,7 @@ class ModalFragment() : DialogFragment() {
             POR_CURSAR -> "Por cursar"
             EN_CURSO -> "En curso"
             REPROBADO -> "Reprobado"
+            REPITE -> "Repite"
             else -> ""
         }
         layout.addView(createContenido(estado))

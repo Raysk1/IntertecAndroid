@@ -98,13 +98,18 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:hint="Numero de control"
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/yellow"
             app:counterEnabled="true"
             app:counterMaxLength="8"
+            app:counterTextColor="@color/black"
             app:errorEnabled="true"
             app:layout_constraintBottom_toTopOf="@+id/guideline20"
             app:layout_constraintEnd_toStartOf="@+id/guideline17"
             app:layout_constraintStart_toStartOf="@+id/guideline16"
-            app:layout_constraintTop_toTopOf="@+id/guideline19">
+            app:layout_constraintTop_toTopOf="@+id/guideline19"
+            app:placeholderTextColor="@color/black"
+            app:prefixTextColor="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/username"
@@ -123,8 +128,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:hint="Contraseña"
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/yellow"
             app:counterEnabled="true"
             app:counterMaxLength="10"
+            app:counterTextColor="@color/black"
             app:errorEnabled="true"
             app:layout_constraintBottom_toTopOf="@+id/guideline23"
             app:layout_constraintEnd_toStartOf="@+id/guideline17"

@@ -1,11 +1,13 @@
 package com.raysk.intertec.alumno
 
 import android.graphics.Color
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.raysk.intertec.alumno.Kardex.Companion.CURSADO
 import com.raysk.intertec.alumno.Kardex.Companion.EN_CURSO
 import com.raysk.intertec.alumno.Kardex.Companion.POR_CURSAR
+import com.raysk.intertec.alumno.Kardex.Companion.REPITE
 import com.raysk.intertec.alumno.Kardex.Companion.REPROBADO
 import org.jsoup.Jsoup
 import org.jsoup.nodes.TextNode
@@ -109,8 +111,8 @@ class Alumno private constructor(var control: String, var password: String) {
             val tds = tr.select("td")
             for (j in tds.indices) {
                 val td = tds[j]
-                if (td.childNodes().size < 2) {
-                    continue
+                if (td.childNodes().size <= 2) {
+                   continue
                 }
                 val divs = td.select("div")
                 val materia = td.childNode(2) as TextNode
@@ -119,18 +121,23 @@ class Alumno private constructor(var control: String, var password: String) {
 
                 //Buscando por color para asignar el estado
                 var estado: Int
-                val style = td.attr("style")
+                var style = td.attr("style")
+                style = style.substring(style.indexOf("rgba")).trim()
                 estado = when (style) {
-                    "background-color: rgba(125,190,255)" -> {
+                    "rgba(125,190,255)" -> {
                         CURSADO
                     }
-                    "background-color: rgba(0,255,0)" -> {
+                    "rgba(0,255,0)" -> {
                         EN_CURSO
                     }
-                    "background-color: rgba(255,255,0)" ->{
+                    "rgba(255,255,0)" ->{
                         REPROBADO
                     }
+                   "rgba(255,128,0)" ->{
+                       REPITE
+                   }
                     else -> {
+                        Log.i("dd","llelgo")
                         POR_CURSAR
                     }
                 }

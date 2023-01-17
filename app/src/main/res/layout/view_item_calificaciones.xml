@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.tistory.zladnrms.roundablelayout.RoundableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="10dp"
-    android:background="@drawable/circle"
     android:backgroundTint="@color/white"
     android:clickable="true"
-    android:gravity="center">
+    android:gravity="center"
+    app:cornerAll="40dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,8 +21,8 @@
             android:gravity="center"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="normal"
+            android:textSize="17sp"
+            android:textStyle="normal|bold"
             app:layout_constraintBottom_toBottomOf="@id/guideline47"
             app:layout_constraintEnd_toStartOf="@+id/guideline48"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,14 +57,28 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="55dp" />
 
+        <com.tistory.zladnrms.roundablelayout.RoundableLayout
+            android:id="@+id/statusColor"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            app:backgroundColor="@color/white"
+            app:cornerLeftBottom="40dp"
+            app:cornerLeftSide="40dp"
+            app:cornerLeftTop="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </com.tistory.zladnrms.roundablelayout.RoundableLayout>
 
         <com.tistory.zladnrms.roundablelayout.RoundableLayout
-            android:id="@+id/layout_example"
+            android:id="@+id/calificacionLayout"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:elevation="10dp"
             android:textAlignment="gravity"
             app:backgroundColor="@color/yellow"
+            app:cornerAll="40dp"
             app:cornerLeftBottom="40dp"
             app:cornerLeftTop="40dp"
             app:cornerRightBottom="40dp"
@@ -91,4 +105,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+</com.tistory.zladnrms.roundablelayout.RoundableLayout>
