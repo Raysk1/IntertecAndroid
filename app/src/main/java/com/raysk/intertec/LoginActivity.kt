@@ -3,14 +3,14 @@ package com.raysk.intertec
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import com.kusu.loadingbutton.LoadingButton
 import com.raysk.intertec.alumno.Alumno
 import com.raysk.intertec.alumno.Alumno.Companion.getAlumno
@@ -27,6 +27,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var login: LoadingButton
     private lateinit var snackBarContainer: View
     private val uiScope = CoroutineScope(Dispatchers.Main)
+    private lateinit var tilUsername: TextInputLayout
+    private lateinit var tilPassword: TextInputLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,62 +37,57 @@ class LoginActivity : AppCompatActivity() {
         password = findViewById(R.id.password)
         login = findViewById(R.id.loginButton)
         snackBarContainer = findViewById(R.id.snackBar)
+        tilUsername = findViewById(R.id.tilUsername)
+        tilPassword = findViewById(R.id.tilPassword)
 
-        control.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                validarCampos()
-            }
-        })
-        password.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                validarCampos()
-            }
-        })
+        control.doAfterTextChanged { validarControl() }
+        password.doAfterTextChanged { validarPassword() }
+
         login.setOnClickListener {
-            if (!validarControl()) {
-                control.requestFocus()
-            } else if (!validarPassword()) {
-                password.requestFocus()
-            } else {
+            if (validarCampos()) {
                 login.showLoading()
-                uiScope.launch {
-                    conectar(control.text.toString(), password.text.toString())
-                }
+                uiScope.launch { conectar(control.text.toString(), password.text.toString()) }
             }
         }
     }
 
     /** valida los campos de numero de control y paswword*/
-    private fun validarCampos() {
-        validarControl()
-        validarPassword()
+    private fun validarCampos(): Boolean {
+        if (!validarControl()) {
+            control.requestFocus()
+            return false
+        }
+        if (!validarPassword()) {
+            password.requestFocus()
+            return false
+        }
+        return true
     }
 
     /** Valida el numero de control */
     private fun validarControl(): Boolean {
-        return if (control.text.toString().isEmpty()) {
-            control.error = "Debe llenar el campo"
-            false
-        } else if (control.text.toString().length < 8) {
-            control.error = "Debe contener 8 numeros"
-            false
-        } else {
-            true
+        if (control.text.toString().isEmpty()) {
+            tilUsername.error = "Debe llenar el campo"
+            return false
         }
+        if (control.text.toString().length < 8) {
+            tilUsername.error = "Debe contener 8 numeros"
+            return false
+        }
+        tilUsername.error = null
+        return true
+
     }
 
     /** Valida la contraseña */
     private fun validarPassword(): Boolean {
-        return if (password.text.toString().isEmpty()) {
-            password.error = "Debe llenar el campo"
-            false
-        } else {
-            true
+        if (password.text.toString().isEmpty()) {
+            tilPassword.error = "Debe llenar el campo"
+            return false
         }
+        tilPassword.error = null
+        return true
+
     }
 
     /** Muestra un Snackbar con un mensaje
@@ -131,7 +128,7 @@ class LoginActivity : AppCompatActivity() {
                     guardado = true
                 }
             } catch (e: Exception) {
-                Log.e("Error",e.message!!)
+                Log.e("Error", e.message!!)
                 guardado = false
             }
         }
@@ -141,7 +138,7 @@ class LoginActivity : AppCompatActivity() {
 
             if (alumno == null) {
                 login.hideLoading()
-                mostrarMensaje(mensaje,R.color.error)
+                mostrarMensaje(mensaje, R.color.error)
                 return@withContext
             }
             if (validado) {
@@ -155,9 +152,9 @@ class LoginActivity : AppCompatActivity() {
                 val intent = Intent(this@LoginActivity, ButtonNavigation::class.java)
                 startActivity(intent)
                 finish()
-            } else if (mensaje.isEmpty()){
+            } else if (mensaje.isEmpty()) {
                 mensaje = "Usuario o Contraseña Incorrecto"
-                mostrarMensaje(mensaje,R.color.warning)
+                mostrarMensaje(mensaje, R.color.warning)
                 login.hideLoading()
             }
         }

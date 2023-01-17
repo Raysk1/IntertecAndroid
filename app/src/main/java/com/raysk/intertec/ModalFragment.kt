@@ -12,7 +12,9 @@ import com.raysk.intertec.alumno.Calificaciones
 import com.raysk.intertec.alumno.HorarioEvent
 import com.raysk.intertec.alumno.Kardex
 import com.raysk.intertec.alumno.Kardex.Companion.CURSADO
+import com.raysk.intertec.alumno.Kardex.Companion.EN_CURSO
 import com.raysk.intertec.alumno.Kardex.Companion.POR_CURSAR
+import com.raysk.intertec.alumno.Kardex.Companion.REPROBADO
 import com.raysk.intertec.alumno.KardexData
 
 class ModalFragment() : DialogFragment() {
@@ -153,7 +155,8 @@ class ModalFragment() : DialogFragment() {
         val estado = when (kardexData.estado) {
             CURSADO -> "Cursado"
             POR_CURSAR -> "Por cursar"
-            Kardex.EN_CURSO -> "En curso"
+            EN_CURSO -> "En curso"
+            REPROBADO -> "Reprobado"
             else -> ""
         }
         layout.addView(createContenido(estado))

@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder
 import com.raysk.intertec.alumno.Kardex.Companion.CURSADO
 import com.raysk.intertec.alumno.Kardex.Companion.EN_CURSO
 import com.raysk.intertec.alumno.Kardex.Companion.POR_CURSAR
+import com.raysk.intertec.alumno.Kardex.Companion.REPROBADO
 import org.jsoup.Jsoup
 import org.jsoup.nodes.TextNode
 import java.io.File
@@ -13,7 +14,7 @@ import java.io.FileReader
 import java.io.FileWriter
 import java.io.IOException
 
-class Alumno private constructor(var control: String, private var password: String) {
+class Alumno private constructor(var control: String, var password: String) {
     private var passwordToken: String? = null
 
     @JvmField
@@ -126,6 +127,9 @@ class Alumno private constructor(var control: String, private var password: Stri
                     "background-color: rgba(0,255,0)" -> {
                         EN_CURSO
                     }
+                    "background-color: rgba(255,255,0)" ->{
+                        REPROBADO
+                    }
                     else -> {
                         POR_CURSAR
                     }
@@ -217,13 +221,13 @@ class Alumno private constructor(var control: String, private var password: Stri
                     promedio += nota.toInt()
                 }
             }
-            if (notas.size > parcialActual){
+            if (notas.size > parcialActual) {
                 parcialActual = notas.size
             }
-            promedio /= notas.size
-            if (!promedio.isNaN()){
-                promedioDelSemestreActual += promedio
-            }
+            promedio = if (notas.size > 0) promedio / notas.size else 0f
+
+            promedioDelSemestreActual += promedio
+
             calificaciones.add(
                 Calificaciones(
                     tds[0].text().trim { it <= ' ' },
@@ -233,7 +237,7 @@ class Alumno private constructor(var control: String, private var password: Stri
                 )
             )
         }
-        if (calificaciones.size >0) {
+        if (calificaciones.size > 0) {
             promedioDelSemestreActual /= calificaciones.size
         }
     }
@@ -248,19 +252,27 @@ class Alumno private constructor(var control: String, private var password: Stri
         fileWriter.close()
     }
 
+    /** Cambia la contraseña del alumno
+     * @param nuevoPassword Nueva contraseña del alumno
+     * @return Retorna true si el cambio se realizo correctamente*/
+    fun cambiarPassword(nuevoPassword: String): Boolean{
+        val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=CAMBIARNIP&Control=" + control +
+                "&password=" + passwordToken + "&Newpass=" + nuevoPassword + "&aceptar=ACEPTAR"
+        val document = Jsoup.connect(url).get()
 
-    /** Elimina el archivo JSON con los datos del alumno si este existe */
-    fun eliminarDatosJson(filesDir: File) {
-        alumno = null
-        val alumnoDataFile = File(filesDir, "alumnoData.json")
-        if (alumnoDataFile.exists()){
-            alumnoDataFile.delete()
+        return if ( document.title() == "Cambio de NIP"){
+            password = nuevoPassword
+            true
+        }else{
+            false
         }
     }
+
 
     companion object {
         @JvmStatic
         var alumno: Alumno? = null
+
         /** Crea una instancia de Alumno
          * @param control Numero de control del alumno
          * @param password Contraseña del alumno
@@ -281,19 +293,28 @@ class Alumno private constructor(var control: String, private var password: Stri
         /** Carga y convierte el archivo JSON a una instancia de Alumno
          * @param filesDir Ruta del archivo
          * @return Retorna True si se cargo correctamente*/
-        fun cargarDatosAlumno(filesDir: File): Boolean{
+        fun cargarDatosAlumno(filesDir: File): Boolean {
             return try {
                 val alumnoDataFile = File(filesDir, "alumnoData.json")
                 val gson = Gson()
                 val fileReader = FileReader(alumnoDataFile)
-                alumno = gson.fromJson(fileReader,Alumno::class.java)
+                alumno = gson.fromJson(fileReader, Alumno::class.java)
                 fileReader.close()
                 true
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
                 false
             }
 
+        }
+
+        /** Elimina el archivo JSON con los datos del alumno si este existe */
+        fun eliminarDatosJson(filesDir: File) {
+            alumno = null
+            val alumnoDataFile = File(filesDir, "alumnoData.json")
+            if (alumnoDataFile.exists()) {
+                alumnoDataFile.delete()
+            }
         }
     }
 }

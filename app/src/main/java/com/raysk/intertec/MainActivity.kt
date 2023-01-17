@@ -76,12 +76,18 @@ class MainActivity : AppCompatActivity() {
             if (alumno == null) {
                 Toasty.error(this@MainActivity, mensaje, Toasty.LENGTH_LONG).show()
                 iniciarLogin()
-            } else {
+            } else if (mensaje.isNotEmpty()) {
                 if (!guardado) {
                     Toasty.warning(this@MainActivity, mensaje, Toasty.LENGTH_LONG).show()
-                } else if (validado) {
+                }
+                if (validado) {
                     Toasty.success(this@MainActivity, mensaje, Toasty.LENGTH_LONG).show()
                 }
+            } else {
+                mensaje = "Vuleva a iniciar sesion"
+                Toasty.warning(this@MainActivity, mensaje, Toasty.LENGTH_LONG).show()
+                Alumno.eliminarDatosJson(filesDir)
+                iniciarLogin()
             }
             val intent = Intent(this@MainActivity, ButtonNavigation::class.java)
             startActivity(intent)
