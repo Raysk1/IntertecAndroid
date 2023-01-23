@@ -1,9 +1,11 @@
 package com.raysk.intertec.alumno
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.Color
 import android.print.PrintAttributes
 import android.print.PrintManager
+import android.util.Log
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -412,6 +414,7 @@ class Alumno private constructor(var control: String, var password: String) {
     fun agregarServicio(servicio: Servicio) {
         val url = "http://201.164.155.162/cgi-bin/sie.pl"
         val document = Jsoup.connect(url)
+            .data("concepto", servicio.value)
             .data("Opc", "AGREGASER")
             .data("Agregar", "Agregar")
             .data("Control", control)
@@ -419,16 +422,22 @@ class Alumno private constructor(var control: String, var password: String) {
             .data("psie", "intertec")
             .data("dummy", "0")
             .data("tcll", datosPersonales.calle)
-            .data("tnum", datosPersonales.noCalle)
-            .data("tcol", datosPersonales.colonia)
+            .data(
+                "tnum",
+                if (datosPersonales.noCalle.isEmpty()) "          " else datosPersonales.noCalle
+            )
+            .data(
+                "tcol",
+                if (datosPersonales.colonia.isEmpty()) "                              " else datosPersonales.colonia
+            )
             .data("tciu", datosPersonales.ciudad)
             .data("tcpo", datosPersonales.cp)
             .data("tte1", datosPersonales.telefono.substring(0 until 10))
             .data("tte2", datosPersonales.telefono.substring(0 until 10))
             .data("tmai", datosPersonales.correoPersonal)
             .data("trfc", datosGenerales.curp.substring(0..8))
-        document.data("concepto", servicio.value)
-        document.post()
+            .get()
+        Log.i(TAG, "agregarServicio: ${document.baseUri()}")
 
 
         obtenerServicios()

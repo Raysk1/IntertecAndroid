@@ -76,14 +76,13 @@ class ServicioItemView(view: View) : ViewHolder(view) {
         }
 
         withContext(Dispatchers.Main) {
-            if (eliminado) {
-                Alumno.alumno!!.servicios.remove(servicio)
-                val parent = itemView.parent as RecyclerView
-                parent.adapter!!.notifyDataSetChanged()
-                Toasty.success(itemView.context, "Eliminado correctamente").show()
-            } else {
+            if (!eliminado || !Alumno.alumno!!.servicios.remove(servicio)) {
                 Toasty.error(itemView.context, "Error al eliminar").show()
+                return@withContext
             }
+            val parent = itemView.parent as RecyclerView
+            parent.adapter!!.notifyDataSetChanged()
+            Toasty.success(itemView.context, "Eliminado correctamente").show()
         }
 
     }
