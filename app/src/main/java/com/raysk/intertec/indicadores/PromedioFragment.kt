@@ -8,10 +8,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.github.nikartm.button.FitButton
-import com.raysk.intertec.calificaciones.CalificacionesFragment
-import com.raysk.intertec.kardex.KardexFragment
 import com.raysk.intertec.R
 import com.raysk.intertec.alumno.Alumno
+import com.raysk.intertec.notas.calificaciones.CalificacionesFragment
+import com.raysk.intertec.notas.kardex.KardexFragment
 
 
 class PromedioFragment : Fragment() {
@@ -40,19 +40,20 @@ class PromedioFragment : Fragment() {
         var promedio = 0f
         var segundoTitulo = ""
         var segundoTituloValor = ""
-        if( parent is CalificacionesFragment){
+        if (parent is CalificacionesFragment) {
             promedio = parent.promedioTotal
             segundoTitulo = "Parcial:"
             segundoTituloValor = parent.parcialActual.toString()
 
-        }else if (parent is KardexFragment){
+        } else if (parent is KardexFragment) {
             val alumno = Alumno.alumno!!
             promedio = alumno.kardex.promedio
             segundoTitulo = "Creditos acumulados:"
-            segundoTituloValor = "${alumno.kardex.creditosObtenidos} de ${alumno.kardex.creditosTotales}"
+            segundoTituloValor =
+                "${alumno.kardex.creditosObtenidos} de ${alumno.kardex.creditosTotales}"
         }
 
-        tvPromedio.text = String.format("%.2f",promedio)
+        tvPromedio.text = String.format("%.2f", promedio)
         tvSegundoTitulo.text = segundoTitulo
         tvSegundoTituloValor.text = segundoTituloValor
     }

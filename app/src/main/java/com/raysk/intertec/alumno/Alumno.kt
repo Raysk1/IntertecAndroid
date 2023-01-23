@@ -1,7 +1,13 @@
 package com.raysk.intertec.alumno
 
+import android.content.Context
 import android.graphics.Color
-import android.util.Log
+import android.print.PrintAttributes
+import android.print.PrintManager
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.raysk.intertec.alumno.Kardex.Companion.CURSADO
@@ -9,12 +15,14 @@ import com.raysk.intertec.alumno.Kardex.Companion.EN_CURSO
 import com.raysk.intertec.alumno.Kardex.Companion.POR_CURSAR
 import com.raysk.intertec.alumno.Kardex.Companion.REPITE
 import com.raysk.intertec.alumno.Kardex.Companion.REPROBADO
+import es.dmoral.toasty.Toasty
 import org.jsoup.Jsoup
 import org.jsoup.nodes.TextNode
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.IOException
+
 
 class Alumno private constructor(var control: String, var password: String) {
     private var passwordToken: String? = null
@@ -32,6 +40,8 @@ class Alumno private constructor(var control: String, var password: String) {
     var calificaciones: ArrayList<Calificaciones> = ArrayList()
     var promedioDelSemestreActual = 0f
     var parcialActual = 0
+    var servicios: ArrayList<Servicio> = ArrayList()
+    var catalogoDeServicios: ArrayList<Servicio> = ArrayList()
 
     /** Funcion que valida si se ha iniciado correctamente la se sesion
      * @return Retorna True si se ha iniciado correctamente la sesion
@@ -52,11 +62,13 @@ class Alumno private constructor(var control: String, var password: String) {
         obtenerKardex()
         obtenerHorario()
         obtenerCalificaciones()
+        obtenerServicios()
+        obtenerCatalogoDeServicios()
         alumno = this
         return true
     }
 
-    /**Obtiene los datos Personales del alumno*/
+    /**Obtiene los [DatosPersonales], [DatosAcademicos] y [DatosGenerales] del alumno*/
     @Throws(IOException::class)
     private fun obtenerDatosDeAlumno() {
         val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=DATOSALU&Control=" +
@@ -97,7 +109,7 @@ class Alumno private constructor(var control: String, var password: String) {
         datosAcademicos.situacion = datos[14].text().trim { it <= ' ' }
     }
 
-    /** Obtiene el kardex del alumno */
+    /** Obtiene el [Kardex] del alumno */
     @Throws(IOException::class)
     private fun obtenerKardex() {
         val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=KARDEX&Control=" + control +
@@ -112,7 +124,7 @@ class Alumno private constructor(var control: String, var password: String) {
             for (j in tds.indices) {
                 val td = tds[j]
                 if (td.childNodes().size <= 2) {
-                   continue
+                    continue
                 }
                 val divs = td.select("div")
                 val materia = td.childNode(2) as TextNode
@@ -130,14 +142,13 @@ class Alumno private constructor(var control: String, var password: String) {
                     "rgba(0,255,0)" -> {
                         EN_CURSO
                     }
-                    "rgba(255,255,0)" ->{
+                    "rgba(255,255,0)" -> {
                         REPROBADO
                     }
-                   "rgba(255,128,0)" ->{
-                       REPITE
-                   }
+                    "rgba(255,128,0)" -> {
+                        REPITE
+                    }
                     else -> {
-                        Log.i("dd","llelgo")
                         POR_CURSAR
                     }
                 }
@@ -161,10 +172,10 @@ class Alumno private constructor(var control: String, var password: String) {
         kardex.avance = avance.toFloat()
     }
 
-    /** Obtiene el horario del alumno */
+    /** Obtiene el [HorarioEvent] del alumno */
     @Throws(IOException::class)
     private fun obtenerHorario() {
-        horario.clear()
+        horario = ArrayList()
         val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=HORARIO&Control=" + control +
                 "&password=" + passwordToken + "&aceptar=ACEPTAR"
         val document = Jsoup.connect(url).get()
@@ -176,7 +187,6 @@ class Alumno private constructor(var control: String, var password: String) {
             "#fdcae1",
             "#ffda89",
             "#84b6f4",
-            "#fdfd96",
             "#ff6961",
             "#bae0f5",
             "#77dd77",
@@ -209,9 +219,9 @@ class Alumno private constructor(var control: String, var password: String) {
     }
 
     @Throws(IOException::class)
-    /** Obtiene las calificaciones del alumno */
+    /** Obtiene las [Calificaciones] del alumno */
     private fun obtenerCalificaciones() {
-        calificaciones.clear()
+        calificaciones = ArrayList()
         val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=CALIF&Control=" + control +
                 "&password=" + passwordToken + "&aceptar=ACEPTAR"
         val document = Jsoup.connect(url).get()
@@ -262,19 +272,167 @@ class Alumno private constructor(var control: String, var password: String) {
     /** Cambia la contraseña del alumno
      * @param nuevoPassword Nueva contraseña del alumno
      * @return Retorna true si el cambio se realizo correctamente*/
-    fun cambiarPassword(nuevoPassword: String): Boolean{
+    fun cambiarPassword(nuevoPassword: String): Boolean {
         val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=CAMBIARNIP&Control=" + control +
                 "&password=" + passwordToken + "&Newpass=" + nuevoPassword + "&aceptar=ACEPTAR"
         val document = Jsoup.connect(url).get()
 
-        return if ( document.title() == "Cambio de NIP"){
+        return if (document.title() == "Cambio de NIP") {
             password = nuevoPassword
             true
-        }else{
+        } else {
             false
         }
     }
 
+    /**Obtiene la lista de servicios activa del alumno */
+    private fun obtenerServicios() {
+        servicios = ArrayList()
+        val url = "http://201.164.155.162/cgi-bin/sie.pl"
+        val document = Jsoup.connect(url)
+            .data("Opc", "PSERVICIOS")
+            .data("Control", control)
+            .data("Password", passwordToken)
+            .data("psie", "intertec")
+            .data("dummy", "0").get()
+        val tables = document.select("table")
+        val trs = tables[1].select("tr")
+        for (i in 2 until trs.size) {
+            val tds = trs[i].select("td")
+            servicios.add(
+                Servicio(
+                    tds[1].text().trim(),
+                    tds[2].text().trim(),
+                    tds[3].text().trim(),
+                    tds[4].text().trim(),
+                    tds[5].text().trim(),
+                    tds[6].text().trim(),
+                    tds[0].selectFirst("input").`val`().trim()
+                )
+            )
+
+        }
+
+    }
+
+    /**Imprime o guarda en formato PDF el recibo del [Servicio]
+     * @param servicio Servicio a imprimir o generar el recivo
+     * @param webView Es necesario un [WebView] para generar el recibo*/
+    fun imprimirServicio(servicio: Servicio, webView: WebView) {
+        val url = "http://201.164.155.162/cgi-bin/sie.pl?servicio=${servicio.value}" +
+                "&Opc=PSERVICIOS&Imprimir=Imprimir" +
+                "&Control=$control&Password=$passwordToken&psie=intertec&dummy=0"
+
+        var cargo = true
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView, url: String) {
+                super.onPageFinished(view, url)
+                if (cargo) {
+                    //initializing the printWeb Object
+                    val printManager = view.context
+                        .getSystemService(Context.PRINT_SERVICE) as PrintManager?
+
+                    val jobName: String = servicio.descripcion + " " + servicio.folio
+
+                    // Creating  PrintDocumentAdapter instance
+
+                    // Creating  PrintDocumentAdapter instance
+                    val printAdapter = webView.createPrintDocumentAdapter(jobName)
+
+                    // Create a print job with name and adapter instance
+                    if (printManager != null) {
+                        printManager.print(
+                            jobName, printAdapter,
+                            PrintAttributes.Builder().build()
+                        )
+                    } else {
+                        Toasty.error(view.context, "Error").show()
+                    }
+                }
+            }
+
+            override fun onReceivedError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                error: WebResourceError?
+            ) {
+                super.onReceivedError(view, request, error)
+                cargo = false
+                Toasty.error(view!!.context, "Error de conexion").show()
+            }
+        }
+        webView.loadUrl(url)
+
+
+    }
+
+    /**Elimina un servicio de la lista de servicios activos del alumno
+     * @param servicio [Servicio] a eliminar */
+    @Throws(IOException::class)
+    fun eliminarServicio(servicio: Servicio) {
+        val url = "http://201.164.155.162/cgi-bin/sie.pl?servicio=${servicio.value}" +
+                "&Opc=PSERVICIOS&Eliminar=Eliminar" +
+                "&Control=$control&Password=$passwordToken&psie=intertec&dummy=0"
+        Jsoup.connect(url).get()
+    }
+
+    /**Obtiene el catalogo de los servicios del alumno que se pueden agregar*/
+    @Throws(IOException::class)
+    private fun obtenerCatalogoDeServicios() {
+        catalogoDeServicios = ArrayList()
+        val url = "http://201.164.155.162/cgi-bin/sie.pl"
+        val document = Jsoup.connect(url)
+            .data("Opc", "SELSERVICIO")
+            .data("Control", control)
+            .data("Password", passwordToken)
+            .data("psie", "intertec")
+            .data("dummy", "0").get()
+
+        val table = document.selectFirst("table")
+        val trs = table.select("tr")
+        for (i in 1 until trs.size) {
+            val tds = trs[i].select("td")
+            catalogoDeServicios.add(
+                Servicio(
+                    "",
+                    tds[1].text().trim(),
+                    tds[2].text().trim(),
+                    tds[3].text().trim(),
+                    tds[4].text().trim(),
+                    "",
+                    tds[0].selectFirst("input").`val`().trim()
+                )
+            )
+
+        }
+    }
+
+    /**Agrega un nuevo [Servicio] a la lista de [servicios] del alumno
+     * @throws IOException*/
+    fun agregarServicio(servicio: Servicio) {
+        val url = "http://201.164.155.162/cgi-bin/sie.pl"
+        val document = Jsoup.connect(url)
+            .data("Opc", "AGREGASER")
+            .data("Agregar", "Agregar")
+            .data("Control", control)
+            .data("Password", passwordToken)
+            .data("psie", "intertec")
+            .data("dummy", "0")
+            .data("tcll", datosPersonales.calle)
+            .data("tnum", datosPersonales.noCalle)
+            .data("tcol", datosPersonales.colonia)
+            .data("tciu", datosPersonales.ciudad)
+            .data("tcpo", datosPersonales.cp)
+            .data("tte1", datosPersonales.telefono.substring(0 until 10))
+            .data("tte2", datosPersonales.telefono.substring(0 until 10))
+            .data("tmai", datosPersonales.correoPersonal)
+            .data("trfc", datosGenerales.curp.substring(0..8))
+        document.data("concepto", servicio.value)
+        document.post()
+
+
+        obtenerServicios()
+    }
 
     companion object {
         @JvmStatic

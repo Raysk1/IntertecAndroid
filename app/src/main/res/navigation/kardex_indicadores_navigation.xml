@@ -9,7 +9,7 @@
         android:id="@+id/avanceFragment2"
         android:name="com.raysk.intertec.indicadores.AvanceFragment"
         android:label="fragment_avance"
-        tools:layout="@layout/fragment_avance" >
+        tools:layout="@layout/fragment_avance">
         <action
             android:id="@+id/action_avanceFragment2_to_promedioFragment"
             app:destination="@id/promedioFragment" />
@@ -18,7 +18,7 @@
         android:id="@+id/promedioFragment"
         android:name="com.raysk.intertec.indicadores.PromedioFragment"
         android:label="fragment_promedio"
-        tools:layout="@layout/fragment_promedio" >
+        tools:layout="@layout/fragment_promedio">
         <action
             android:id="@+id/action_promedioFragment_to_avanceFragment2"
             app:destination="@id/avanceFragment2" />

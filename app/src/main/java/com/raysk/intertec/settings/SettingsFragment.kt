@@ -1,4 +1,4 @@
-package com.raysk.intertec
+package com.raysk.intertec.settings
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
+import com.raysk.intertec.LoginActivity
+import com.raysk.intertec.R
 import com.raysk.intertec.alumno.Alumno
 
 
@@ -35,10 +35,9 @@ class SettingsFragment : Fragment() {
         }
         val navController = findNavController(view)
         val btnCambiarPass: Button = view.findViewById(R.id.btnCambiarPass)
-        btnCambiarPass.setOnClickListener{
-            navController.navigate(R.id.action_settingsFragment_to_changePassFragment)
+        btnCambiarPass.setOnClickListener {
+            navController.navigate(R.id.action_settingsFragment2_to_changePassFragment)
         }
-
 
 
     }

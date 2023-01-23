@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
 import com.raysk.intertec.R
@@ -15,11 +16,11 @@ import com.raysk.intertec.alumno.Alumno.Companion.alumno
 class DatosMenuFragment : Fragment() {
     private lateinit var tvUsername: TextView
     private lateinit var tvUserNumControl: TextView
-   private lateinit var tvUsernameIcon: TextView
+    private lateinit var tvUsernameIcon: TextView
     private lateinit var btDatosGenerales: Button
     private lateinit var btDatosPersonales: Button
     private lateinit var btDatosAcademicos: Button
-    lateinit var tvUserCarrera:TextView
+    lateinit var tvUserCarrera: TextView
 
 
     override fun onCreateView(
@@ -49,27 +50,41 @@ class DatosMenuFragment : Fragment() {
         tvUserNumControl.text = alumno.control
         btDatosGenerales.setOnClickListener {
             navController.navigate(
-                R.id.action_datosMenuFragment_to_datosGeneralesFragment
+                R.id.action_datosMenuFragment2_to_datosGeneralesFragment
             )
         }
         btDatosPersonales.setOnClickListener {
             navController.navigate(
-                R.id.action_datosMenuFragment_to_datosPersonalesFragment
+                R.id.action_datosMenuFragment2_to_datosPersonalesFragment
             )
         }
         btDatosAcademicos.setOnClickListener {
             navController.navigate(
-                R.id.action_datosMenuFragment_to_datosAcademicosFragment
+                R.id.action_datosMenuFragment2_to_datosAcademicosFragment
             )
         }
         tvUserCarrera.text = alumno.datosGenerales.carrera
-        tvUserCarrera.setBackgroundColor(when(alumno.datosGenerales.carrera){
-            "ISC" ->{resources.getColor(R.color.ISCcolor)}
-            "IIAL" -> {resources.getColor(R.color.IIALcolor)}
-            "INN" -> {resources.getColor(R.color.INNcolor)}
-            "IGE" -> {resources.getColor(R.color.IGEcolor)}
-            "IIAS" -> {resources.getColor(R.color.IIAScolor)}
-            else->{Color.TRANSPARENT}
-        })
+        tvUserCarrera.setBackgroundColor(
+            when (alumno.datosGenerales.carrera) {
+                "ISC" -> {
+                    ContextCompat.getColor(requireContext(), R.color.ISCcolor)
+                }
+                "IIAL" -> {
+                    ContextCompat.getColor(requireContext(), R.color.IIALcolor)
+                }
+                "INN" -> {
+                    ContextCompat.getColor(requireContext(), R.color.INNcolor)
+                }
+                "IGE" -> {
+                    ContextCompat.getColor(requireContext(), R.color.IGEcolor)
+                }
+                "IIAS" -> {
+                    ContextCompat.getColor(requireContext(), R.color.IIAScolor)
+                }
+                else -> {
+                    Color.TRANSPARENT
+                }
+            }
+        )
     }
 }

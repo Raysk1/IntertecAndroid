@@ -17,7 +17,7 @@
         <TextView
             android:id="@+id/tvMateria"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center"
             android:textAllCaps="true"
             android:textColor="@color/black"
@@ -25,7 +25,7 @@
             android:textStyle="normal|bold"
             app:layout_constraintBottom_toBottomOf="@id/guideline47"
             app:layout_constraintEnd_toStartOf="@+id/guideline48"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/statusColor"
             app:layout_constraintTop_toTopOf="@id/guideline46"
             tools:text="Calculo diferencial" />
 

@@ -1,4 +1,5 @@
 package com.raysk.intertec.alumno
+
 /** Clase que contine los datos del kardex del alumno */
 data class Kardex(
     var data: List<KardexData> = emptyList<KardexData>(),
@@ -6,12 +7,12 @@ data class Kardex(
     var creditosObtenidos: String = "",
     var promedio: Float = 0f,
     var avance: Float = 0f
-    ){
+) {
     companion object {
-        val CURSADO = 1
-        val EN_CURSO = 2
-        val POR_CURSAR = 3
-        val REPROBADO = 4
-        val REPITE = 5
+        const val CURSADO = 1
+        const val EN_CURSO = 2
+        const val POR_CURSAR = 3
+        const val REPROBADO = 4
+        const val REPITE = 5
     }
 }

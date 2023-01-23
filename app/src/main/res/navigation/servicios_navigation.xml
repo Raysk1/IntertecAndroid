@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/servicios_navigation"
+    app:startDestination="@id/serviciosFragment2">
+
+    <fragment
+        android:id="@+id/serviciosFragment2"
+        android:name="com.raysk.intertec.servicios.ServiciosFragment"
+        android:label="fragment_servicios"
+        tools:layout="@layout/fragment_servicios">
+        <action
+            android:id="@+id/action_serviciosFragment2_to_catalogoDeServiciosFragment"
+            app:destination="@id/catalogoDeServiciosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/catalogoDeServiciosFragment"
+        android:name="com.raysk.intertec.servicios.CatalogoDeServiciosFragment"
+        android:label="fragment_catalogo_de_servicios"
+        tools:layout="@layout/fragment_catalogo_de_servicios" />
+</navigation>

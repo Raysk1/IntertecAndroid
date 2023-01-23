@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/datos_navigation"
+    app:startDestination="@id/datosMenuFragment2">
+
+    <fragment
+        android:id="@+id/datosAcademicosFragment"
+        android:name="com.raysk.intertec.datos.DatosAcademicosFragment"
+        android:label="fragment_datos_academicos"
+        tools:layout="@layout/fragment_datos_academicos" />
+    <fragment
+        android:id="@+id/datosGeneralesFragment"
+        android:name="com.raysk.intertec.datos.DatosGeneralesFragment"
+        android:label="fragment_datos_generales"
+        tools:layout="@layout/fragment_datos_generales" />
+    <fragment
+        android:id="@+id/datosMenuFragment2"
+        android:name="com.raysk.intertec.datos.DatosMenuFragment"
+        android:label="fragment_datos_menu"
+        tools:layout="@layout/fragment_datos_menu">
+        <action
+            android:id="@+id/action_datosMenuFragment2_to_datosGeneralesFragment"
+            app:destination="@id/datosGeneralesFragment" />
+        <action
+            android:id="@+id/action_datosMenuFragment2_to_datosPersonalesFragment"
+            app:destination="@id/datosPersonalesFragment" />
+        <action
+            android:id="@+id/action_datosMenuFragment2_to_datosAcademicosFragment"
+            app:destination="@id/datosAcademicosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/datosPersonalesFragment"
+        android:name="com.raysk.intertec.datos.DatosPersonalesFragment"
+        android:label="fragment_datos_personales"
+        tools:layout="@layout/fragment_datos_personales" />
+</navigation>

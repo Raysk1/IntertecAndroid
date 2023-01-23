@@ -40,7 +40,7 @@ class HorarioFragment : Fragment() {
         // Inflate the layout for this fragment
         if (alumno.horario.size > 0) {
             return inflater.inflate(R.layout.fragment_horario, container, false)
-        }else{
+        } else {
             return inflater.inflate(R.layout.fragment_no_content, container, false)
         }
     }

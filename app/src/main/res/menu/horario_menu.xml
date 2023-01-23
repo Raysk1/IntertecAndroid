@@ -16,7 +16,7 @@
             android:id="@+id/action_day_view"
             android:orderInCategory="100"
             android:title="Diaria"
-            app:showAsAction="never"/>
+            app:showAsAction="never" />
 
         <item
             android:id="@+id/action_three_day_view"

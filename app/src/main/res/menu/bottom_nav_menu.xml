@@ -2,30 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/datosMenuFragment"
+        android:id="@+id/datosContentFragment"
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="Datos" />
     <item
         android:id="@+id/horarioFragment"
         android:icon="@drawable/ic_baseline_access_time_24"
-        android:title="Horario"
-        />
+        android:title="Horario" />
 
     <item
-        android:id="@+id/kardexFragment"
-        android:icon="@drawable/ic_outline_wysiwyg_24"
-        android:title="Kardex"
-        />
+        android:id="@+id/notasFragment"
+        android:icon="@drawable/ic_baseline_school_24"
+        android:title="Notas" />
     <item
-        android:id="@+id/calificacionesFragment"
-        android:icon="@drawable/exam_svgrepo_com"
-        android:title="Calificaciones"
-        />
+        android:id="@+id/serviciosContainerFragment"
+        android:icon="@drawable/ic_baseline_attach_money_24"
+        android:title="Servicios" />
     <item
-        android:id="@+id/settingsFragment"
+        android:id="@+id/settingsContainerFragment"
         android:icon="@drawable/ic_baseline_settings_24"
-        android:title="Configuracion"
-        />
+        android:title="Configuracion" />
 
 
 </menu>

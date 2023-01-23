@@ -133,8 +133,7 @@
                         android:text="TextView"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/textView28"
@@ -160,8 +159,7 @@
                         android:text="TextView"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/textView26"
@@ -187,8 +185,7 @@
                         android:text="TextView"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/textView24"
@@ -214,8 +211,7 @@
                         android:text="TextView"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 

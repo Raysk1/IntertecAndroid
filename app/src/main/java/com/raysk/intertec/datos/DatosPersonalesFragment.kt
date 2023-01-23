@@ -20,7 +20,7 @@ class DatosPersonalesFragment : Fragment() {
     private lateinit var tvCorreoPer: TextView
     private lateinit var tvCorreoIns: TextView
     private lateinit var tvFechaNac: TextView
- 
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

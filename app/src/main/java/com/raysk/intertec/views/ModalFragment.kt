@@ -1,4 +1,4 @@
-package com.raysk.intertec
+package com.raysk.intertec.views
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import com.raysk.intertec.R
 import com.raysk.intertec.alumno.Calificaciones
 import com.raysk.intertec.alumno.HorarioEvent
 import com.raysk.intertec.alumno.Kardex.Companion.CURSADO

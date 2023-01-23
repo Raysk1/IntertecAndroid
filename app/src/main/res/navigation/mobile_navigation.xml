@@ -3,68 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/datosMenuFragment">
+    app:startDestination="@id/datosContentFragment">
 
-    <fragment
-        android:id="@+id/datosMenuFragment"
-        android:name="com.raysk.intertec.datos.DatosMenuFragment"
-        android:label="fragment_datos_menu"
-        tools:layout="@layout/fragment_datos_menu" >
-        <action
-            android:id="@+id/action_datosMenuFragment_to_datosGeneralesFragment"
-            app:destination="@id/datosGeneralesFragment" />
-        <action
-            android:id="@+id/action_datosMenuFragment_to_datosPersonalesFragment"
-            app:destination="@id/datosPersonalesFragment"
-            app:enterAnim="@anim/left_to_right"
-            app:popEnterAnim="@anim/left_to_right" />
-        <action
-            android:id="@+id/action_datosMenuFragment_to_datosAcademicosFragment"
-            app:destination="@id/datosAcademicosFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/datosGeneralesFragment"
-        android:name="com.raysk.intertec.datos.DatosGeneralesFragment"
-        android:label="fragment_datos_generales"
-        tools:layout="@layout/fragment_datos_generales" />
-    <fragment
-        android:id="@+id/datosPersonalesFragment"
-        android:name="com.raysk.intertec.datos.DatosPersonalesFragment"
-        android:label="fragment_datos_personales"
-        tools:layout="@layout/fragment_datos_personales" />
-
-    <fragment
-        android:id="@+id/datosAcademicosFragment"
-        android:name="com.raysk.intertec.datos.DatosAcademicosFragment"
-        android:label="fragment_datos_academicos"
-        tools:layout="@layout/fragment_datos_academicos" />
     <fragment
         android:id="@+id/horarioFragment"
         android:name="com.raysk.intertec.horario.HorarioFragment"
         android:label="fragment_horario"
         tools:layout="@layout/fragment_horario" />
     <fragment
-        android:id="@+id/kardexFragment"
-        android:name="com.raysk.intertec.kardex.KardexFragment"
-        android:label="fragment_kardex"
-        tools:layout="@layout/fragment_kardex" />
+        android:id="@+id/notasFragment"
+        android:name="com.raysk.intertec.notas.NotasFragment"
+        android:label="fragment_notas"
+        tools:layout="@layout/fragment_notas" />
     <fragment
-        android:id="@+id/calificacionesFragment"
-        android:name="com.raysk.intertec.calificaciones.CalificacionesFragment"
-        android:label="fragment_calificaciones"
-        tools:layout="@layout/fragment_calificaciones" />
+        android:id="@+id/settingsContainerFragment"
+        android:name="com.raysk.intertec.settings.SettingsContainerFragment"
+        android:label="fragment_settings_container"
+        tools:layout="@layout/fragment_settings_container" />
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.raysk.intertec.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" >
-        <action
-            android:id="@+id/action_settingsFragment_to_changePassFragment"
-            app:destination="@id/changePassFragment" />
-    </fragment>
+        android:id="@+id/datosContentFragment"
+        android:name="com.raysk.intertec.datos.DatosContentFragment"
+        android:label="fragment_datos_content"
+        tools:layout="@layout/fragment_datos_content" />
     <fragment
-        android:id="@+id/changePassFragment"
-        android:name="com.raysk.intertec.ChangePassFragment"
-        android:label="fragment_change_pass"
-        tools:layout="@layout/fragment_change_pass" />
+        android:id="@+id/serviciosContainerFragment"
+        android:name="com.raysk.intertec.servicios.ServiciosContainerFragment"
+        android:label="fragment_servicios_container"
+        tools:layout="@layout/fragment_servicios_container" />
 </navigation>

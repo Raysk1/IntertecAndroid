@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
 import com.github.nikartm.button.FitButton
-import com.raysk.intertec.calificaciones.CalificacionesFragment
-import com.raysk.intertec.kardex.KardexFragment
 import com.raysk.intertec.R
 import com.raysk.intertec.alumno.Alumno
+import com.raysk.intertec.notas.calificaciones.CalificacionesFragment
+import com.raysk.intertec.notas.kardex.KardexFragment
 
 class AvanceFragment : Fragment() {
     override fun onCreateView(
@@ -35,9 +35,9 @@ class AvanceFragment : Fragment() {
         var porcentaje = 0.0f
         //el padre de este es el navHost y el padre del navHost es el que se necesita
         val parent = parentFragment?.parentFragment
-        if ( parent is CalificacionesFragment) {
-            porcentaje = parent.parcialActual.toFloat()/6*100
-        }else if (parent is KardexFragment){
+        if (parent is CalificacionesFragment) {
+            porcentaje = parent.parcialActual.toFloat() / 6 * 100
+        } else if (parent is KardexFragment) {
             porcentaje = Alumno.alumno?.kardex?.avance!!
         }
 

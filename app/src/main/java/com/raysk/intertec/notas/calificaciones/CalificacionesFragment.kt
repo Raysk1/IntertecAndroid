@@ -1,4 +1,4 @@
-package com.raysk.intertec.calificaciones
+package com.raysk.intertec.notas.calificaciones
 
 import android.os.Bundle
 import android.view.LayoutInflater

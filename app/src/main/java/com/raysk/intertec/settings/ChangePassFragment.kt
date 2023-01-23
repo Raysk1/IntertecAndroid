@@ -1,19 +1,17 @@
-package com.raysk.intertec
+package com.raysk.intertec.settings
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.kusu.loadingbutton.LoadingButton
+import com.raysk.intertec.R
 import com.raysk.intertec.alumno.Alumno
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.CoroutineScope
@@ -24,13 +22,14 @@ import java.util.regex.Pattern
 
 
 class ChangePassFragment : Fragment() {
-    lateinit var tvPasswordActual: TextInputEditText
-    lateinit var tvPasswordNew: TextInputEditText
-    lateinit var tvPasswordNewConfirm: TextInputEditText
-    lateinit var tilPasswordActual: TextInputLayout
-    lateinit var tilPasswordNew: TextInputLayout
-    lateinit var tilPasswordNewConfirm: TextInputLayout
-    lateinit var guardarButton: LoadingButton
+    private lateinit var tvPasswordActual: TextInputEditText
+    private lateinit var tvPasswordNew: TextInputEditText
+    private lateinit var tvPasswordNewConfirm: TextInputEditText
+    private lateinit var tilPasswordActual: TextInputLayout
+    private lateinit var tilPasswordNew: TextInputLayout
+    private lateinit var tilPasswordNewConfirm: TextInputLayout
+    private lateinit var guardarButton: LoadingButton
+    private lateinit var toolbar: Toolbar
     private val uiScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreateView(
@@ -50,6 +49,7 @@ class ChangePassFragment : Fragment() {
         tilPasswordNew = view.findViewById(R.id.tilPasswordNew)
         tilPasswordNewConfirm = view.findViewById(R.id.tilPasswordNewConfirm)
         guardarButton = view.findViewById(R.id.guardarButton)
+        toolbar = view.findViewById(R.id.toolbar3)
 
         tvPasswordActual.doAfterTextChanged { ValidarContraseñaActual() }
         tvPasswordNew.doAfterTextChanged { ValidarContraseñaNueva() }
@@ -60,6 +60,8 @@ class ChangePassFragment : Fragment() {
                 uiScope.launch { cambiarContraseña() }
             }
         }
+
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
 
     }
 
@@ -137,7 +139,7 @@ class ChangePassFragment : Fragment() {
             try {
                 Alumno.alumno!!.cambiarPassword(tvPasswordNew.text.toString())
                 Alumno.alumno!!.guardarDatosJson(guardarButton.context.filesDir)
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     Toasty.success(guardarButton.context, "Se cambio la contraseña").show()
                     activity?.onBackPressed()
                 }
