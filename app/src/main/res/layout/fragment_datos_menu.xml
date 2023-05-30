@@ -101,23 +101,26 @@
             app:layout_constraintTop_toTopOf="@id/guideline12">
 
 
-            <TextView
-                android:id="@+id/tvCalificacion"
+            <io.getstream.avatarview.AvatarView
+                android:id="@+id/avUser"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:autoSizeTextType="uniform"
-                android:background="@drawable/circle_name_user"
                 android:gravity="center"
-                android:textColor="#FFFFFF"
+                app:avatarViewBorderColor="@color/yellow"
+                app:avatarViewBorderWidth="3dp"
+                app:avatarViewIndicatorBorderColor="@color/white"
+                app:avatarViewIndicatorBorderSizeCriteria="10"
+                app:avatarViewIndicatorEnabled="false"
+                app:avatarViewIndicatorPosition="bottomRight"
+                app:avatarViewIndicatorSizeCriteria="9"
+                app:avatarViewInitialsTextStyle="bold"
+                app:avatarViewShape="circle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@+id/spaceBottomRight"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/spaceStart"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.375"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:text="O" />
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <Space
                 android:id="@+id/spaceBottomRight"

@@ -44,6 +44,7 @@ class Alumno private constructor(var control: String, var password: String) {
     var parcialActual = 0
     var servicios: ArrayList<Servicio> = ArrayList()
     var catalogoDeServicios: ArrayList<Servicio> = ArrayList()
+    var imagenURL = ""
 
     /** Funcion que valida si se ha iniciado correctamente la se sesion
      * @return Retorna True si se ha iniciado correctamente la sesion
@@ -76,6 +77,10 @@ class Alumno private constructor(var control: String, var password: String) {
         val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=DATOSALU&Control=" +
                 control + "&password=" + passwordToken + "&aceptar=ACEPTAR"
         val document = Jsoup.connect(url).get()
+        val imagen = document.select("img")[0]
+        imagenURL ="http://201.164.155.162${imagen.attr("src")}"
+        imagenURL = imagenURL.replace("f", "fintertec")
+
         var datos = document.select("strong")
 
         //Obteniendo los datos Generales
@@ -88,7 +93,8 @@ class Alumno private constructor(var control: String, var password: String) {
             .trim { it <= ' ' }
 
         //Obteniendo los datos Personales
-        datos = document.select("p")
+        val cards = document.select("div.card-body")
+        datos = cards[1].select("p")
         datosPersonales.calle = datos[0].text().trim { it <= ' ' }
         datosPersonales.noCalle = datos[1].text().trim { it <= ' ' }
         datosPersonales.colonia = datos[2].text().trim { it <= ' ' }
@@ -99,16 +105,18 @@ class Alumno private constructor(var control: String, var password: String) {
         datosPersonales.correoInstitucional = "$control@eldorado.tecnm.mx"
         datosPersonales.fechaDeNacimiento = datos[8].text().trim { it <= ' ' }
 
+
+        datos = cards[2].select("p")
         //Obteniendo los datos Academicos
-        datosAcademicos.escuelaDeProcedencia = datos[9].text()
+        datosAcademicos.escuelaDeProcedencia = datos[0].text()
             .replace("\\s*\\(*\\d*\\)\\s*".toRegex(), "").trim { it <= ' ' }
-        datosAcademicos.periodoDeIngreso = datos[10].text()
+        datosAcademicos.periodoDeIngreso = datos[1].text()
             .replace("\\(\\d+\\)".toRegex(), "").trim { it <= ' ' }
-        datosAcademicos.periodosValidados = datos[11].text().trim { it <= ' ' }
-        datosAcademicos.periodoActual = datos[12].text()
+        datosAcademicos.periodosValidados = datos[2].text().trim { it <= ' ' }
+        datosAcademicos.periodoActual = datos[3].text()
             .replace("\\(\\d+\\)".toRegex(), "").trim { it <= ' ' }
-        datosAcademicos.creditosAcumulados = datos[13].text().trim { it <= ' ' }
-        datosAcademicos.situacion = datos[14].text().trim { it <= ' ' }
+        datosAcademicos.creditosAcumulados = datos[4].text().trim { it <= ' ' }
+        datosAcademicos.situacion = datos[5].text().trim { it <= ' ' }
     }
 
     /** Obtiene el [Kardex] del alumno */

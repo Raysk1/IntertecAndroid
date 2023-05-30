@@ -12,11 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
 import com.raysk.intertec.R
 import com.raysk.intertec.alumno.Alumno.Companion.alumno
+import io.getstream.avatarview.AvatarView
+import io.getstream.avatarview.coil.loadImage
 
 class DatosMenuFragment : Fragment() {
     private lateinit var tvUsername: TextView
     private lateinit var tvUserNumControl: TextView
-    private lateinit var tvUsernameIcon: TextView
+    private lateinit var avUser: AvatarView
     private lateinit var btDatosGenerales: Button
     private lateinit var btDatosPersonales: Button
     private lateinit var btDatosAcademicos: Button
@@ -34,7 +36,7 @@ class DatosMenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tvUsername = view.findViewById(R.id.userName)
-        tvUsernameIcon = view.findViewById(R.id.tvCalificacion)
+        avUser = view.findViewById(R.id.avUser)
         tvUserNumControl = view.findViewById(R.id.userNumControl)
         btDatosGenerales = view.findViewById(R.id.btDatosGenerales)
         btDatosPersonales = view.findViewById(R.id.btDatosPersonales)
@@ -46,7 +48,11 @@ class DatosMenuFragment : Fragment() {
         val nombre = alumno!!.datosGenerales.nombre
         tvUsername.text = nombre
         val icon = nombre[0].toString() + ""
-        tvUsernameIcon.text = icon
+
+        avUser.loadImage(data = alumno.imagenURL, onError = {_,_ ->
+            avUser.avatarInitials = icon
+        })
+
         tvUserNumControl.text = alumno.control
         btDatosGenerales.setOnClickListener {
             navController.navigate(
