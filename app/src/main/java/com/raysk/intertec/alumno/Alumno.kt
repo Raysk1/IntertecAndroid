@@ -130,12 +130,9 @@ class Alumno private constructor(var control: String, var password: String) {
         val data: MutableList<KardexData> = ArrayList()
         for (i in 2 until trs.size - 1) {
             val tr = trs[i]
-            val tds = tr.select("td")
+            val tds = tr.select("td[style]")
             for (j in tds.indices) {
                 val td = tds[j]
-                if (td.childNodes().size <= 2) {
-                    continue
-                }
                 val divs = td.select("div")
                 val materia = td.childNode(2) as TextNode
                 var calificacion = divs[2].text().trim { it <= ' ' }.split(" ").toTypedArray()[0]
@@ -232,6 +229,7 @@ class Alumno private constructor(var control: String, var password: String) {
     /** Obtiene las [Calificaciones] del alumno */
     private fun obtenerCalificaciones() {
         calificaciones = ArrayList()
+        promedioDelSemestreActual = 0f
         val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=CALIF&Control=" + control +
                 "&password=" + passwordToken + "&aceptar=ACEPTAR"
         val document = Jsoup.connect(url).get()
@@ -314,7 +312,7 @@ class Alumno private constructor(var control: String, var password: String) {
                     tds[1].text().trim(),
                     tds[2].text().trim(),
                     tds[3].text().trim(),
-                    tds[4].text().trim(),
+                    "$${tds[4].text().trim()}",
                     tds[5].text().trim(),
                     tds[6].text().trim(),
                     tds[0].selectFirst("input").`val`().trim()
@@ -343,8 +341,6 @@ class Alumno private constructor(var control: String, var password: String) {
                         .getSystemService(Context.PRINT_SERVICE) as PrintManager?
 
                     val jobName: String = servicio.descripcion + " " + servicio.folio
-
-                    // Creating  PrintDocumentAdapter instance
 
                     // Creating  PrintDocumentAdapter instance
                     val printAdapter = webView.createPrintDocumentAdapter(jobName)

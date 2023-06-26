@@ -9,9 +9,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
+import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
-import com.kusu.loadingbutton.LoadingButton
 import com.raysk.intertec.alumno.Alumno
 import com.raysk.intertec.alumno.Alumno.Companion.getAlumno
 import es.dmoral.toasty.Toasty
@@ -24,11 +24,12 @@ import kotlinx.coroutines.withContext
 class LoginActivity : AppCompatActivity() {
     private lateinit var control: TextView
     private lateinit var password: TextView
-    private lateinit var login: LoadingButton
+    private lateinit var login: CircularProgressButton
     private lateinit var snackBarContainer: View
     private val uiScope = CoroutineScope(Dispatchers.Main)
     private lateinit var tilUsername: TextInputLayout
     private lateinit var tilPassword: TextInputLayout
+    private var cargando = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +45,10 @@ class LoginActivity : AppCompatActivity() {
         password.doAfterTextChanged { validarPassword() }
 
         login.setOnClickListener {
-            if (validarCampos()) {
-                login.showLoading()
+
+            if (validarCampos() && !cargando) {
                 uiScope.launch { conectar(control.text.toString(), password.text.toString()) }
+
             }
         }
     }
@@ -105,23 +107,21 @@ class LoginActivity : AppCompatActivity() {
      * @param password Contraseña del alumno*/
     private suspend fun conectar(control: String, password: String) {
         var alumno: Alumno?
-        var mensaje = ""
         var validado = false
         var guardado = false
+        cargando = true
 
-        withContext(Dispatchers.Default) {
+        login.startAnimation()
+
+        withContext(Dispatchers.IO) {
             try {
                 alumno = getAlumno(control, password)
                 validado = alumno!!.validarInicioDeSesion()
             } catch (e: Exception) {
                 alumno = null
-                mensaje = "Error de conexion"
                 e.printStackTrace()
-                login.isClickable = true
             }
-        }
 
-        withContext(Dispatchers.IO) {
             try {
                 if (validado) {
                     alumno?.guardarDatosJson(filesDir)
@@ -135,12 +135,6 @@ class LoginActivity : AppCompatActivity() {
 
         //en hilo principal
         withContext(Dispatchers.Main) {
-
-            if (alumno == null) {
-                login.hideLoading()
-                mostrarMensaje(mensaje, R.color.error)
-                return@withContext
-            }
             if (validado) {
                 if (!guardado) {
                     Toasty.error(
@@ -152,10 +146,15 @@ class LoginActivity : AppCompatActivity() {
                 val intent = Intent(this@LoginActivity, ButtonNavigation::class.java)
                 startActivity(intent)
                 finish()
-            } else if (mensaje.isEmpty()) {
-                mensaje = "Usuario o Contraseña Incorrecto"
-                mostrarMensaje(mensaje, R.color.warning)
-                login.hideLoading()
+            } else {
+                login.revertAnimation()
+                if (alumno == null) {
+                    mostrarMensaje("Error de conexion", R.color.error)
+                } else {
+                    mostrarMensaje("Usuario o Contraseña Incorrecto", R.color.warning)
+                }
+                cargando = false
+
             }
         }
     }

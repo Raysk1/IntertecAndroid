@@ -23,14 +23,13 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerView3"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:name="com.raysk.intertec.indicadores.IndicadoresFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:navGraph="@navigation/kardex_indicadores_navigation" />
+            tools:layout="@layout/fragment_indicadores" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline52"

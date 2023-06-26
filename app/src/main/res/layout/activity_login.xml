@@ -216,30 +216,23 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.07" />
 
-        <com.kusu.loadingbutton.LoadingButton
+        <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
             android:id="@+id/loginButton"
-            style="@style/TextAppearance.AppCompat.Button"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:autoSizeTextType="none"
+            android:background="@drawable/button_shape_fill"
             android:backgroundTint="@color/yellow"
-            android:enabled="true"
-            android:paddingLeft="10sp"
-            android:paddingRight="10sp"
             android:text="Ingresar"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
+            android:textColor="@color/white"
+            app:finalCornerAngle="50dp"
+            app:initialCornerAngle="10dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline25"
             app:layout_constraintEnd_toStartOf="@+id/guideline9"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline10"
             app:layout_constraintTop_toTopOf="@+id/guideline24"
-            app:layout_constraintVertical_bias="0.0"
-            app:lb_isCircular="true"
-            app:lb_isLoading="false"
-            app:lb_isShadowEnable="true" />
+            app:spinning_bar_color="#FF000000"
+            app:spinning_bar_padding="8dp"
+            app:spinning_bar_width="4dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline19"
