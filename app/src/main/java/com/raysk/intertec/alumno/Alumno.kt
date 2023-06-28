@@ -19,6 +19,7 @@ import com.raysk.intertec.alumno.Kardex.Companion.REPITE
 import com.raysk.intertec.alumno.Kardex.Companion.REPROBADO
 import es.dmoral.toasty.Toasty
 import org.jsoup.Jsoup
+import org.jsoup.nodes.TextNode
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
@@ -133,7 +134,7 @@ class Alumno private constructor(var control: String, var password: String) {
             for (j in tds.indices) {
                 val td = tds[j]
                 val divs = td.select("div")
-                val materia = divs[1]
+                val materia = td.childNodes()[2] as TextNode
                 var calificacion = divs[2].text().trim { it <= ' ' }.split(" ").toTypedArray()[0]
                 calificacion = calificacion.ifEmpty { "SC" }
 
