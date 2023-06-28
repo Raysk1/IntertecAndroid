@@ -45,7 +45,7 @@ class ServicioItemView(view: View) : ViewHolder(view) {
             btnBorrar.setOnClickListener {
 
                 //recive onClickLister para cada boton
-                AlertasDialog.alertaEliminar(
+                Dialogs.alertaEliminar(
                     itemView.context,
                     { dialog, _ ->
                         run {
@@ -56,7 +56,7 @@ class ServicioItemView(view: View) : ViewHolder(view) {
                     },
                     { dialog, _ ->
                         run { dialog.dismiss() }
-                    })?.show()
+                    }).show()
             }
         }
     }

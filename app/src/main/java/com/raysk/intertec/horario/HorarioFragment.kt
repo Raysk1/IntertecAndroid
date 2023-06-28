@@ -35,7 +35,7 @@ class HorarioFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
         if (alumno.horario.size > 0) {
@@ -66,6 +66,7 @@ class HorarioFragment : Fragment() {
                         weekView.scrollToDateTime(dateTime = LocalDateTime.now())
                         true
                     }
+
                     else -> {
                         val viewType = item.mapToWeekViewType()
                         if (viewType != currentViewType) {

@@ -17,7 +17,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toStartOf="@+id/guideline53"
             app:layout_constraintStart_toStartOf="@+id/guideline44"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/view_item_calificaciones" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline44"
@@ -27,15 +28,14 @@
             app:layout_constraintGuide_percent=".05" />
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:id="@+id/fragmentContainerView3"
+            android:name="com.raysk.intertec.indicadores.IndicadoresFragment"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:defaultNavHost="true"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:navGraph="@navigation/kardex_indicadores_navigation" />
+            tools:layout="@layout/fragment_indicadores" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline53"

@@ -6,7 +6,7 @@ data class Kardex(
     var creditosTotales: String = "",
     var creditosObtenidos: String = "",
     var promedio: Float = 0f,
-    var avance: Float = 0f
+    var avance: Float = 0f,
 ) {
     companion object {
         const val CURSADO = 1

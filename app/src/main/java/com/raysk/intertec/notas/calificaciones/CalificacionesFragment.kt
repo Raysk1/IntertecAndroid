@@ -18,7 +18,7 @@ class CalificacionesFragment : Fragment() {
     val alumno = Alumno.alumno!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
         if (alumno.calificaciones.size > 0) {

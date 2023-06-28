@@ -6,5 +6,5 @@ data class DatosGenerales(
     var curp: String = "",
     var carrera: String = "",
     var planDeEstudios: String = "",
-    var especialidad: String = ""
+    var especialidad: String = "",
 )

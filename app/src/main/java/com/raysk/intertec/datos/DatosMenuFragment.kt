@@ -1,6 +1,9 @@
 package com.raysk.intertec.datos
 
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +13,13 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
+import coil.request.SuccessResult
 import com.raysk.intertec.R
 import com.raysk.intertec.alumno.Alumno.Companion.alumno
+import com.raysk.intertec.views.Dialogs
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
+
 
 class DatosMenuFragment : Fragment() {
     private lateinit var tvUsername: TextView
@@ -22,12 +28,12 @@ class DatosMenuFragment : Fragment() {
     private lateinit var btDatosGenerales: Button
     private lateinit var btDatosPersonales: Button
     private lateinit var btDatosAcademicos: Button
-    lateinit var tvUserCarrera: TextView
-
+    private lateinit var tvUserCarrera: TextView
+    private var imagen: Drawable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_datos_menu, container, false)
@@ -49,9 +55,16 @@ class DatosMenuFragment : Fragment() {
         tvUsername.text = nombre
         val icon = nombre[0].toString() + ""
 
-        avUser.loadImage(data = alumno.imagenURL, onError = {_,_ ->
-            avUser.avatarInitials = icon
-        })
+        avUser.loadImage(data = alumno.imagenURL,
+            onError = { _, _ ->
+                avUser.avatarInitials = icon
+            },
+            onSuccess = { _, successResult: SuccessResult ->
+                val b = (successResult.drawable as BitmapDrawable).bitmap
+                val dp = (400 * requireContext().resources.displayMetrics.density).toInt()
+                val bitmapResized = Bitmap.createScaledBitmap(b, dp, dp, false)
+                imagen = BitmapDrawable(resources, bitmapResized)
+            })
 
         tvUserNumControl.text = alumno.control
         btDatosGenerales.setOnClickListener {
@@ -75,22 +88,33 @@ class DatosMenuFragment : Fragment() {
                 "ISC" -> {
                     ContextCompat.getColor(requireContext(), R.color.ISCcolor)
                 }
+
                 "IIAL" -> {
                     ContextCompat.getColor(requireContext(), R.color.IIALcolor)
                 }
+
                 "INN" -> {
                     ContextCompat.getColor(requireContext(), R.color.INNcolor)
                 }
+
                 "IGE" -> {
                     ContextCompat.getColor(requireContext(), R.color.IGEcolor)
                 }
+
                 "IIAS" -> {
                     ContextCompat.getColor(requireContext(), R.color.IIAScolor)
                 }
+
                 else -> {
                     Color.TRANSPARENT
                 }
             }
         )
+
+        avUser.setOnClickListener {
+            if (imagen != null) {
+                Dialogs.imageDialog(requireContext(), imagen!!).show()
+            }
+        }
     }
 }

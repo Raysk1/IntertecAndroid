@@ -19,7 +19,6 @@ import com.raysk.intertec.alumno.Kardex.Companion.REPITE
 import com.raysk.intertec.alumno.Kardex.Companion.REPROBADO
 import es.dmoral.toasty.Toasty
 import org.jsoup.Jsoup
-import org.jsoup.nodes.TextNode
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
@@ -78,7 +77,7 @@ class Alumno private constructor(var control: String, var password: String) {
                 control + "&password=" + passwordToken + "&aceptar=ACEPTAR"
         val document = Jsoup.connect(url).get()
         val imagen = document.select("img")[0]
-        imagenURL ="http://201.164.155.162${imagen.attr("src")}"
+        imagenURL = "http://201.164.155.162${imagen.attr("src")}"
         imagenURL = imagenURL.replace("f", "fintertec")
 
         var datos = document.select("strong")
@@ -134,7 +133,7 @@ class Alumno private constructor(var control: String, var password: String) {
             for (j in tds.indices) {
                 val td = tds[j]
                 val divs = td.select("div")
-                val materia = td.childNode(2) as TextNode
+                val materia = divs[1]
                 var calificacion = divs[2].text().trim { it <= ' ' }.split(" ").toTypedArray()[0]
                 calificacion = calificacion.ifEmpty { "SC" }
 
@@ -146,15 +145,19 @@ class Alumno private constructor(var control: String, var password: String) {
                     "rgba(125,190,255)" -> {
                         CURSADO
                     }
+
                     "rgba(0,255,0)" -> {
                         EN_CURSO
                     }
+
                     "rgba(255,255,0)" -> {
                         REPROBADO
                     }
+
                     "rgba(255,128,0)" -> {
                         REPITE
                     }
+
                     else -> {
                         POR_CURSAR
                     }
@@ -360,7 +363,7 @@ class Alumno private constructor(var control: String, var password: String) {
             override fun onReceivedError(
                 view: WebView?,
                 request: WebResourceRequest?,
-                error: WebResourceError?
+                error: WebResourceError?,
             ) {
                 super.onReceivedError(view, request, error)
                 cargo = false

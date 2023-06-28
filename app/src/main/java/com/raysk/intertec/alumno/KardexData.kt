@@ -6,5 +6,5 @@ data class KardexData(
     var materia: String = "",
     var calificacion: String = "",
     var periodo: Int = 0,
-    val estado: Int = 0
+    val estado: Int = 0,
 )

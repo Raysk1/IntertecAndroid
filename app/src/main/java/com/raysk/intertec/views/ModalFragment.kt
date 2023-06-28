@@ -77,11 +77,13 @@ class ModalFragment() : DialogFragment() {
                     clave = calificacion.clave
                     createCalificacionesLayout()
                 }
+
                 KARDEX -> {
                     materia = kardexData.materia
                     clave = kardexData.clave
                     createKardexLayout()
                 }
+
                 HORARIO -> {
                     materia = horarioData.materia
                     clave = horarioData.clave

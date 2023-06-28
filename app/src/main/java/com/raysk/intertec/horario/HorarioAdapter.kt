@@ -6,7 +6,7 @@ import com.alamkanak.weekview.WeekViewEntity
 import com.raysk.intertec.alumno.HorarioEvent
 import com.raysk.intertec.views.ModalFragment
 import java.time.LocalDate
-import java.util.*
+import java.util.Calendar
 
 class HorarioAdapter : WeekView.SimpleAdapter<HorarioEvent>() {
     lateinit var fragmentManager: FragmentManager

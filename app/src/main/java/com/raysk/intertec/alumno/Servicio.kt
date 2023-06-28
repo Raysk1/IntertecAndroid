@@ -8,5 +8,5 @@ data class Servicio(
     var importe: String,
     var vigencia: String,
     var solicitado: String,
-    var value: String
+    var value: String,
 )

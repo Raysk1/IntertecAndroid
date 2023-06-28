@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 
 class AdaptadorDeSecciones(
     fm: FragmentManager?,
-    behavior: Int = BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+    behavior: Int = BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
 ) : FragmentStatePagerAdapter(
     fm!!, behavior
 ) {
