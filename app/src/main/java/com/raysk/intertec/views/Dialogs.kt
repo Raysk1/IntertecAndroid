@@ -6,7 +6,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.widget.RelativeLayout
+import android.widget.ImageView
 import com.raysk.intertec.R
 import dev.shreyaspatil.MaterialDialog.AbstractDialog.OnClickListener
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
@@ -39,17 +39,10 @@ class Dialogs {
 
         fun imageDialog(context: Context, drawable: Drawable): Dialog {
             val dialog = Dialog(context)
-            // Creating a new RelativeLayout
-            val relativeLayout = RelativeLayout(context)
-
-            val rlp = RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-            )
-            relativeLayout.layoutParams = rlp
-            relativeLayout.background = drawable
-
-            dialog.setContentView(relativeLayout)
+            dialog.setContentView(R.layout.layout_image)
+            val imageView = dialog.findViewById<ImageView>(R.id.imageUser)
+            imageView.adjustViewBounds = true
+            imageView.setImageDrawable(drawable)
             return dialog
         }
     }

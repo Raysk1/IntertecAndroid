@@ -1,7 +1,6 @@
 package com.raysk.intertec.datos
 
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -17,6 +16,7 @@ import coil.request.SuccessResult
 import com.raysk.intertec.R
 import com.raysk.intertec.alumno.Alumno.Companion.alumno
 import com.raysk.intertec.views.Dialogs
+import es.dmoral.toasty.Toasty
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
 
@@ -83,33 +83,48 @@ class DatosMenuFragment : Fragment() {
             )
         }
         tvUserCarrera.text = alumno.datosGenerales.carrera
-        tvUserCarrera.setBackgroundColor(
-            when (alumno.datosGenerales.carrera) {
-                "ISC" -> {
-                    ContextCompat.getColor(requireContext(), R.color.ISCcolor)
-                }
-
-                "IIAL" -> {
-                    ContextCompat.getColor(requireContext(), R.color.IIALcolor)
-                }
-
-                "INN" -> {
-                    ContextCompat.getColor(requireContext(), R.color.INNcolor)
-                }
-
-                "IGE" -> {
-                    ContextCompat.getColor(requireContext(), R.color.IGEcolor)
-                }
-
-                "IIAS" -> {
-                    ContextCompat.getColor(requireContext(), R.color.IIAScolor)
-                }
-
-                else -> {
-                    Color.TRANSPARENT
-                }
+        var colorId = 0
+        var nombreCarrera = ""
+        when (alumno.datosGenerales.carrera) {
+            "ISC" -> {
+                colorId = R.color.ISCcolor
+                nombreCarrera = "Ingeniería en Sistemas Computacionales"
             }
-        )
+
+            "IIAL" -> {
+                colorId = R.color.IIALcolor
+                nombreCarrera = "Ingeniería en Industrias Alimentarias"
+            }
+
+            "INN" -> {
+                colorId = R.color.INNcolor
+                nombreCarrera = "Ingeniería Industrial"
+            }
+
+            "IGE" -> {
+                colorId = R.color.IGEcolor
+                nombreCarrera = "Ingeniería en Gestión Empresarial"
+            }
+
+            "IIAS" -> {
+                colorId = R.color.IIAScolor
+                nombreCarrera = "Ingeniería en Innovación Agrícola Sustentable "
+            }
+        }
+        tvUserCarrera.setBackgroundColor(ContextCompat.getColor(requireContext(), colorId))
+        tvUserCarrera.setOnClickListener {
+            context?.let { it1 ->
+                Toasty.custom(
+                    it1,
+                    nombreCarrera,
+                    R.drawable.rounded_ui,
+                    colorId,
+                    Toasty.LENGTH_LONG,
+                    false,
+                    true
+                ).show()
+            }
+        }
 
         avUser.setOnClickListener {
             if (imagen != null) {

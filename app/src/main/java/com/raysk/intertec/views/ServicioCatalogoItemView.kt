@@ -28,7 +28,7 @@ class ServicioCatalogoItemView(view: View) : ViewHolder(view) {
         servicio.apply {
             tvDescricion.text = descripcion
             tvCodigo.text = codigo
-            tvImporte.text = importe
+            tvImporte.text = "$$importe"
             tvVigencia.text = vigencia
             btnAgregar.setOnClickListener {
                 uiScope.launch { agregarServicio(servicio) }

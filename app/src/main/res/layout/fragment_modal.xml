@@ -18,7 +18,7 @@
         android:paddingHorizontal="10dp"
         android:paddingVertical="10dp"
         android:textAllCaps="true"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="22sp"
         android:textStyle="bold"
         tools:text="Menu" />

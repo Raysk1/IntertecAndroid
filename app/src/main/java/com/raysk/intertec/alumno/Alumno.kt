@@ -28,14 +28,8 @@ import java.io.IOException
 
 class Alumno private constructor(var control: String, var password: String) {
     private var passwordToken: String? = null
-
-    @JvmField
     var datosGenerales: DatosGenerales = DatosGenerales()
-
-    @JvmField
     var datosPersonales: DatosPersonales = DatosPersonales()
-
-    @JvmField
     var datosAcademicos: DatosAcademicos = DatosAcademicos()
     var horario: ArrayList<HorarioEvent> = ArrayList()
     var kardex: Kardex = Kardex()
@@ -139,30 +133,25 @@ class Alumno private constructor(var control: String, var password: String) {
                 calificacion = calificacion.ifEmpty { "SC" }
 
                 //Buscando por color para asignar el estado
-                var estado: Int
-                var style = td.attr("style")
-                style = style.substring(style.indexOf("rgba")).trim()
-                estado = when (style) {
-                    "rgba(125,190,255)" -> {
-                        CURSADO
-                    }
-
-                    "rgba(0,255,0)" -> {
+                val divVaciosCount = divs.count { it.text() == "" }
+                val style = td.attr("style")
+                val rgb = style.substring(style.indexOf("rgba")+5).trim().dropLast(1).split(",")
+                val max = rgb.maxOfOrNull { it.toInt() }
+                val estado = if (rgb.all { it == "255" }){
+                    POR_CURSAR
+                }else if (rgb.indexOf(max.toString()) == 0){
+                    REPROBADO
+                } else if (rgb.indexOf(max.toString()) == 1){
+                    if(divVaciosCount < 5 ){
+                        REPITE
+                    }else{
                         EN_CURSO
                     }
+                }else{
+                    CURSADO
 
-                    "rgba(255,255,0)" -> {
-                        REPROBADO
-                    }
-
-                    "rgba(255,128,0)" -> {
-                        REPITE
-                    }
-
-                    else -> {
-                        POR_CURSAR
-                    }
                 }
+
                 data.add(
                     KardexData(
                         divs[0].text().trim { it <= ' ' },
