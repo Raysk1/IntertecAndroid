@@ -34,15 +34,15 @@ android {
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.annotation:annotation:1.7.0'
     implementation 'androidx.core:core-ktx:1.12.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    implementation 'org.jsoup:jsoup:1.11.1'
-    implementation "androidx.navigation:navigation-fragment-ktx:2.7.2"
-    implementation "androidx.navigation:navigation-ui-ktx:2.7.2"
+    implementation 'org.jsoup:jsoup:1.17.1'
+    implementation "androidx.navigation:navigation-fragment-ktx:2.7.5"
+    implementation "androidx.navigation:navigation-ui-ktx:2.7.5"
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'com.github.koushikcse:LoadingButton:1.7'
     implementation 'com.github.thellmund.Android-Week-View:core:5.3.2'
@@ -52,13 +52,13 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     implementation 'com.github.zladnrms:RoundableLayout:1.1.4'
-    implementation 'com.akexorcist:round-corner-progress-bar:2.1.2'
+    implementation 'com.akexorcist:round-corner-progress-bar:2.2.1'
     implementation 'io.github.nikartm:fit-button:2.0.0'
     implementation 'com.github.GrenderG:Toasty:1.5.2'
     implementation "io.getstream:avatarview-coil:1.0.7"
     implementation "com.github.leandroborgesferreira:loading-button-android:2.3.0"
-    implementation "androidx.constraintlayout:constraintlayout:2.2.0-alpha12"
+    implementation "androidx.constraintlayout:constraintlayout:2.2.0-alpha13"
     implementation 'dev.shreyaspatil.MaterialDialog:MaterialDialog:2.2.3'
-    implementation 'com.airbnb.android:lottie:6.0.0'
+    implementation 'com.airbnb.android:lottie:6.2.0'
 
 }

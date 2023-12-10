@@ -78,6 +78,6 @@ class IndicadoresFragment : Fragment() {
         tvSegundoTitulo.text = segundoTitulo
         tvSegundoTituloValor.text = segundoTituloValor
         tvPorcentajeDeAvance.text = String.format("%.2f", porcentaje)
-        progressBar.progress = porcentaje
+        progressBar.setProgress(porcentaje)
     }
 }
