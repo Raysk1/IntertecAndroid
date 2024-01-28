@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.raysk.intertec.databinding.ActivityButtonNavigationBinding
 
 class ButtonNavigation : AppCompatActivity() {
@@ -15,7 +14,7 @@ class ButtonNavigation : AppCompatActivity() {
             layoutInflater
         )
         setContentView(binding!!.root)
-        val navView = findViewById<BottomNavigationView>(R.id.nav_view)
+        //val navView = findViewById<BottomNavigationView>(R.id.nav_view)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         /*AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(

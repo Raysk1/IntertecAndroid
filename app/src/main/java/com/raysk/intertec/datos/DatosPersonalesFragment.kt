@@ -52,6 +52,6 @@ class DatosPersonalesFragment : Fragment() {
         tvCorreoIns.text = alumno.datosPersonales.correoInstitucional
         tvFechaNac.text = alumno.datosPersonales.fechaDeNacimiento
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        toolbar.setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
     }
 }

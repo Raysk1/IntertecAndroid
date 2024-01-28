@@ -46,6 +46,6 @@ class DatosGeneralesFragment : Fragment() {
         tvModalidad.text = "matutina"
         tvPlan.text = alumno.datosGenerales.planDeEstudios
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        toolbar.setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
     }
 }

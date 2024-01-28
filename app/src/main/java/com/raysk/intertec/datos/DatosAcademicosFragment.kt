@@ -42,6 +42,6 @@ class DatosAcademicosFragment : Fragment() {
         tvCreditos.text = alumno.datosAcademicos.creditosAcumulados
         tvSituacion.text = alumno.datosAcademicos.situacion
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        toolbar.setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
     }
 }

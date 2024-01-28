@@ -61,7 +61,7 @@ class ChangePassFragment : Fragment() {
             }
         }
 
-        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        toolbar.setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
 
     }
 
@@ -141,7 +141,7 @@ class ChangePassFragment : Fragment() {
                 Alumno.alumno!!.guardarDatosJson(guardarButton.context.filesDir)
                 withContext(Dispatchers.Main) {
                     Toasty.success(guardarButton.context, "Se cambio la contraseña").show()
-                    activity?.onBackPressed()
+                    activity?.onBackPressedDispatcher?.onBackPressed()
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {

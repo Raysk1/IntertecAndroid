@@ -27,7 +27,7 @@ class CatalogoDeServiciosFragment : Fragment() {
         recyclerView.adapter = ServiciosCatalogoAdapter(Alumno.alumno!!.catalogoDeServicios)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         val toolbar: Toolbar = view.findViewById(R.id.toolbar4)
-        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        toolbar.setNavigationOnClickListener { activity?.onBackPressedDispatcher?.onBackPressed() }
     }
 
 }
