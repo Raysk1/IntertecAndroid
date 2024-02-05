@@ -38,7 +38,7 @@ jobs:
         id: version
         run: |
           versionCode=$(grep "versionCode" app/build.gradle | awk '{print $2}')
-          versionName=$(grep "versionName" app/build.gradle | awk '{print $2}')
+          versionName=$(grep "versionName" app/build.gradle | awk '{gsub(/"/, "", $2) | awk '{print $2}')
           echo "Version Code: $versionCode"
           echo "Version Name: $versionName"
           echo "versionName=$versionName" >> $GITHUB_OUTPUT
@@ -66,7 +66,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: artifacts/*
-          tag_name: "${{ steps.version.outputs.versionName }}"
+          tag_name: ${{ steps.version.outputs.versionName }}
           name: Release ${{ steps.package.outputs.artifact_name }}
           body: ${{ steps.commit_message.outputs.commit_message }}
           draft: false
