@@ -38,7 +38,7 @@ jobs:
         id: version
         run: |
           versionCode=$(grep "versionCode" app/build.gradle | awk '{print $2}')
-          versionName=$(grep "versionName" app/build.gradle | awk '{gsub(/"/, "", $2)' | awk '{print $2}')
+          versionName=$(grep "versionName" app/build.gradle | awk '{gsub(/"/, "", $2); print $2}' | awk '{print $2}')
           echo "Version Code: $versionCode"
           echo "Version Name: $versionName"
           echo "versionName=$versionName" >> $GITHUB_OUTPUT
