@@ -40,15 +40,25 @@ jobs:
           versionName=$(grep "versionName" app/build.gradle | awk '{print $2}')
           echo "Version Code: $versionCode"
           echo "Version Name: $versionName"
+        env:
+          VERSION_CODE: ${{ versionCode }}
+          VERSION_NAME: ${{ versionName }}
+
+      - name: Increase Version
+        run: |
+          new_version=$(echo "${{ steps.extract_version.outputs.versionName }}" | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
+          sed -i "s/versionName \".*\"/versionName \"$new_version\"/" app/build.gradle
+        env:
+          NEW_VERSION: ${{new_version}}
 
       - name: Package Artifact
         id: package
         run: |
-            mkdir artifacts
-            artifact_name="myapp-${versionName}-${versionCode}.apk"
-            cp app/build/outputs/apk/debug/app-debug.apk artifacts/$artifact_name
-            echo "::set-output name=artifact_name::$artifact_name"
-          
+          mkdir artifacts
+          artifact_name="intertec-${{env.NEW_VERSION}}.apk"
+          cp app/build/outputs/apk/debug/app-debug.apk artifacts/$artifact_name
+          echo "::set-output name=artifact_name::$artifact_name"
+
       - name: Get Last Commit Message
         id: commit_message
         run: echo "::set-output name=commit_message::$(git log -1 --pretty=%B)"
@@ -64,8 +74,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: artifacts/*
-          tag_name: v${versionName}
-          name: Release ${versionName}
+          tag_name: ${{ steps.increase_version.outputs.new_version }}
+          name: Release v${{ steps.increase_version.outputs.new_version }}
           body: ${{ steps.commit_message.outputs.commit_message }}
           draft: false
           prerelease: false
