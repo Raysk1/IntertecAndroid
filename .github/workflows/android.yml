@@ -43,18 +43,11 @@ jobs:
           echo "Version Name: $versionName"
           echo "versionName=$versionName" >> $GITHUB_OUTPUT
 
-      - name: Increase Version
-        id: increse_version
-        run: |
-          new_version=$(echo "${{ steps.version.outputs.versionName }}" | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
-          sed -i "s/versionName \".*\"/versionName \"$new_version\"/" app/build.gradle
-          echo "versionName=$new_version" >> $GITHUB_OUTPUT
-
       - name: Package Artifact
         id: package
         run: |
           mkdir artifacts
-          artifact_name="intertec-${{ steps.increse_version.outputs.versionName }}.apk"
+          artifact_name="intertec-${{ steps.version.outputs.versionName }}.apk"
           cp app/build/outputs/apk/debug/app-debug.apk artifacts/$artifact_name
           echo "artifact_name=$artifact_name" >> $GITHUB_OUTPUT
 
@@ -73,7 +66,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: artifacts/*
-          tag_name: V${{ steps.package.outputs.artifact_name }}
+          tag_name: ${{ steps.version.outputs.versionName }}
           name: Release ${{ steps.package.outputs.artifact_name }}
           body: ${{ steps.commit_message.outputs.commit_message }}
           draft: false
