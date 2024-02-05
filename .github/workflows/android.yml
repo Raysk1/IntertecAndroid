@@ -66,7 +66,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: artifacts/*
-          tag_name: ${{ steps.version.outputs.versionName }}
+          tag_name: "${{ steps.version.outputs.versionName }}"
           name: Release ${{ steps.package.outputs.artifact_name }}
           body: ${{ steps.commit_message.outputs.commit_message }}
           draft: false
