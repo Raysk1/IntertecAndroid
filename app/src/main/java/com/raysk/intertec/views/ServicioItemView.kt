@@ -1,10 +1,8 @@
 package com.raysk.intertec.views
 
 
-import android.content.ContentValues.TAG
 import android.util.Log
 import android.view.View
-import android.webkit.WebView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -28,6 +26,7 @@ class ServicioItemView(view: View) : ViewHolder(view) {
     private val tvFolio: TextView = view.findViewById(R.id.tvFolio)
     private val btnPagar: LoadingButton = view.findViewById(R.id.btnPagar)
     private val btnBorrar: LoadingButton = view.findViewById(R.id.btnEliiminar)
+    private  val uiScope = CoroutineScope(Dispatchers.Main)
 
     /**Renderiza los elementos dados
      * @param servicio Servicio a renderizar */
@@ -39,7 +38,7 @@ class ServicioItemView(view: View) : ViewHolder(view) {
             tvSolicitado.text = solicitado
             tvVigencia.text = vigencia
             btnPagar.setOnClickListener {
-                Alumno.alumno!!.imprimirServicio(this, WebView(itemView.context))
+                uiScope.launch { imprimirReciboServicio(servicio) }
                 Toasty.info(itemView.context, "Cargando").show()
             }
             btnBorrar.setOnClickListener {
@@ -49,7 +48,7 @@ class ServicioItemView(view: View) : ViewHolder(view) {
                     itemView.context,
                     { dialog, _ ->
                         run {
-                            val uiScope = CoroutineScope(Dispatchers.Main)
+
                             uiScope.launch { eliminarServicio(this@apply) }
                         }
                         dialog.dismiss()
@@ -61,27 +60,36 @@ class ServicioItemView(view: View) : ViewHolder(view) {
         }
     }
 
+    /**
+     * Funcion para imprimir el recibo
+     */
+    private suspend fun imprimirReciboServicio(servicio: Servicio){
+        withContext(Dispatchers.IO){
+            Alumno.alumno!!.imprimirServicio(servicio, itemView.context)
+        }
+    }
 
     /** Elimina el servicio en un hilo diferente */
     private suspend fun eliminarServicio(servicio: Servicio) {
         var eliminado = false
+        val alumno = Alumno.alumno!!
         withContext(Dispatchers.IO) {
             try {
 
-                Alumno.alumno!!.eliminarServicio(servicio)
+               alumno.eliminarServicio(servicio)
                 eliminado = true
             } catch (e: Exception) {
-                Log.e(TAG, "eliminarServicio: error", e)
+                Log.e(this.javaClass.name, "eliminarServicio: error", e)
             }
         }
 
         withContext(Dispatchers.Main) {
-            if (!eliminado || !Alumno.alumno!!.servicios.remove(servicio)) {
+            if (!eliminado || !alumno.servicios.remove(servicio)) {
                 Toasty.error(itemView.context, "Error al eliminar").show()
                 return@withContext
             }
             val parent = itemView.parent as RecyclerView
-            parent.adapter!!.notifyDataSetChanged()
+            parent.adapter!!.notifyItemRemoved(alumno.servicios.indexOf(servicio))
             Toasty.success(itemView.context, "Eliminado correctamente").show()
         }
 

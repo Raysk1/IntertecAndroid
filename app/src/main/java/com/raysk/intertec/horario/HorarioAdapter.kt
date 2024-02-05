@@ -45,6 +45,6 @@ class HorarioAdapter : WeekView.SimpleAdapter<HorarioEvent>() {
     override fun onEventClick(data: HorarioEvent) {
         super.onEventClick(data)
         val modal = ModalFragment("Detalles", data)
-        modal.show(fragmentManager, "nosexd")
+        modal.show(fragmentManager, data.clave)
     }
 }
