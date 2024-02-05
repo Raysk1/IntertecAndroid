@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.raysk.intertec.alumno.Alumno
 import com.raysk.intertec.alumno.Alumno.Companion.getAlumno
+import com.raysk.intertec.util.update.Updates
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -51,6 +52,8 @@ class LoginActivity : AppCompatActivity() {
 
             }
         }
+        val updates = Updates(this)
+        updates.buscar()
     }
 
     /** valida los campos de numero de control y paswword*/

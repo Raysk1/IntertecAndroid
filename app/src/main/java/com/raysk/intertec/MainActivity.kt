@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         progressBar = findViewById(R.id.progressBar)
 
+
+
         if (Alumno.datosJsonExists(filesDir)) {
             progressBar.visibility = View.VISIBLE
             uiScope.launch { actualizarDatos() }

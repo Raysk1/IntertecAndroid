@@ -37,6 +37,23 @@ class Dialogs {
             return dialog
         }
 
+        fun alertaActualizacion(
+            context: Context,
+            positiveOnClickListener: OnClickListener,
+            negativeOnClickListener: OnClickListener,
+        ): MaterialDialog{
+            val dialog = MaterialDialog.Builder(context as Activity) // set message, title, and icon
+                .setTitle("Actualizacion Disponible")
+                .setMessage("Hay una nueva actualizacion disponible.\n¿Deseas Actualizar?")
+                .setPositiveButton("Actualizar", R.drawable.ic_update, positiveOnClickListener)
+                .setNegativeButton("Cancelar", R.drawable.ic_close, negativeOnClickListener)
+                .setAnimation(R.raw.update_anim)
+                .build()
+            val animView = dialog.animationView
+            animView.repeatCount = 0
+            return dialog
+        }
+
         fun imageDialog(context: Context, drawable: Drawable): Dialog {
             val dialog = Dialog(context)
             dialog.setContentView(R.layout.layout_image)

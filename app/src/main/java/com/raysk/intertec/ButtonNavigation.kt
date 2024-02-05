@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.raysk.intertec.databinding.ActivityButtonNavigationBinding
+import com.raysk.intertec.util.update.Updates
 
 class ButtonNavigation : AppCompatActivity() {
     private var binding: ActivityButtonNavigationBinding? = null
@@ -24,5 +25,8 @@ class ButtonNavigation : AppCompatActivity() {
             findNavController(this, R.id.nav_host_fragment_activity_button_navigation)
         //NavigationUI.setupActionBarWithNavController(this, navController);
         setupWithNavController(binding!!.navView, navController)
+
+        val updates = Updates(this)
+        updates.buscar()
     }
 }
