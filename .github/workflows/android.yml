@@ -5,9 +5,9 @@ name: Android Build
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
   pull_request:
-    branches: ["master"]
+    branches: [ "master" ]
   push:
-    branches: ["master"]
+    branches: [ "master" ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -35,33 +35,32 @@ jobs:
         run: ./gradlew build
 
       - name: Extract Android Version
+        id: version
         run: |
           versionCode=$(grep "versionCode" app/build.gradle | awk '{print $2}')
           versionName=$(grep "versionName" app/build.gradle | awk '{print $2}')
           echo "Version Code: $versionCode"
           echo "Version Name: $versionName"
-        env:
-          VERSION_CODE: ${{ versionCode }}
-          VERSION_NAME: ${{ versionName }}
+          echo "versionName=$versionName" >> $GITHUB_OUTPUT
 
       - name: Increase Version
+        id: increse_version
         run: |
-          new_version=$(echo "${{ steps.extract_version.outputs.versionName }}" | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
+          new_version=$(echo "${{ steps.version.outputs.versionName }}" | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
           sed -i "s/versionName \".*\"/versionName \"$new_version\"/" app/build.gradle
-        env:
-          NEW_VERSION: ${{new_version}}
+          echo "versionName=$new_version" >> $GITHUB_OUTPUT
 
       - name: Package Artifact
         id: package
         run: |
           mkdir artifacts
-          artifact_name="intertec-${{env.NEW_VERSION}}.apk"
+          artifact_name="intertec-${{ steps.increse_version.outputs.versionName }}.apk"
           cp app/build/outputs/apk/debug/app-debug.apk artifacts/$artifact_name
-          echo "::set-output name=artifact_name::$artifact_name"
+          echo "artifact_name=$artifact_name" >> $GITHUB_OUTPUT
 
       - name: Get Last Commit Message
         id: commit_message
-        run: echo "::set-output name=commit_message::$(git log -1 --pretty=%B)"
+        run: echo "commit_message=$(git log -1 --pretty=%B)"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
@@ -74,8 +73,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: artifacts/*
-          tag_name: ${{ steps.increase_version.outputs.new_version }}
-          name: Release v${{ steps.increase_version.outputs.new_version }}
+          tag_name: V${{ steps.package.outputs.artifact_name }}
+          name: Release ${{ steps.package.outputs.artifact_name }}
           body: ${{ steps.commit_message.outputs.commit_message }}
           draft: false
           prerelease: false
