@@ -69,5 +69,4 @@ jobs:
           body: ${{ steps.commit_message.outputs.commit_message }}
           draft: false
           prerelease: false
-          env:
-            GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          token: ${{ secrets.TOKEN }}
