@@ -72,7 +72,7 @@ jobs:
 
       - name: Create GitHub Release
         id: create_release
-        uses: softprops/action-gh-release@v1.1.0
+        uses: softprops/action-gh-release@v1
         with:
           files: "${{steps.sign_app.outputs.signedReleaseFile}}/*"
           tag_name: ${{ steps.version.outputs.versionName }}
