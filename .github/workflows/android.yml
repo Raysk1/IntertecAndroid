@@ -26,16 +26,21 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Sign Android App
-        run: |
-          echo ${{ secrets.KEYSTORE_FILE_BASE64 }} | base64 --decode > keystore.jks
-          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
-            -keystore keystore.jks \
-            -storepass ${{ secrets.KEYSTORE_PASSWORD }} \
-            -keypass ${{ secrets.KEY_PASSWORD }} \
-            app/build/outputs/apk/debug/app-debug.apk ${{ secrets.KEY_ALIAS }}
-
-          zipalign -v 4 app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/signed-app-debug.apk
+      - name: Sign Android
+        # You may pin to the exact commit or the version.
+        # uses: noriban/sign-android-release@a0600624488748d90ba893de54d52d41417dc64f
+        uses: noriban/sign-android-release@v5
+        with:
+          # The directory to find your release to sign
+          releaseDirectory: app/build/outputs/apk/debug/app-debug.apk
+          # The key used to sign your release in base64 encoded format
+          signingKeyBase64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+          # The key alias
+          alias: ${{ secrets.KEY_ALIAS }}
+          # The password to the keystore
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          # The password for the key
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
 
       - name: Extract Android Version
         id: version
