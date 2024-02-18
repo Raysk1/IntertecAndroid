@@ -37,9 +37,10 @@ jobs:
       - name: Package Artifact
         id: package
         run: |
-          mkdir artifacts
+          mkdir -p artifacts
           artifact_name="intertec-${{ steps.version.outputs.versionName }}.apk"
           cp app/build/outputs/apk/debug/app-debug.apk artifacts/$artifact_name
+          ls
           echo "artifact_name=$artifact_name" >> $GITHUB_OUTPUT
 
       - name: Android Sign
