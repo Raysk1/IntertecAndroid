@@ -37,9 +37,7 @@ jobs:
       - name: Package Artifact
         id: package
         run: |
-          mkdir -p artifacts
           artifact_name="intertec-${{ steps.version.outputs.versionName }}.apk"
-          ls
           echo "artifact_name=$artifact_name" >> $GITHUB_OUTPUT
 
       - name: Setup build tool version variable
@@ -50,16 +48,14 @@ jobs:
           echo Last build tool version is: $BUILD_TOOL_VERSION
 
       - name: Android Sign
-        # You may pin to the exact commit or the version.
-        uses: Tlaster/android-sign@v1.2.2
+        uses: r0adkll/sign-android-release@v1
+        id: sign_app
         with:
           releaseDirectory: app/build/outputs/apk/debug/
           signingKeyBase64: ${{ secrets.SIGNING_KEY_BASE64 }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-          buildDirectory: artifacts/
-          output: artifacts/
         env:
           BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
 
@@ -72,13 +68,13 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ steps.package.outputs.artifact_name }}
-          path: artifacts/
+          path: ${{steps.sign_app.outputs.signedReleaseFile}}
 
       - name: Create GitHub Release
         id: create_release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v1.1.0
         with:
-          files: artifacts/*
+          files: "${{steps.sign_app.outputs.signedReleaseFile}}/*"
           tag_name: ${{ steps.version.outputs.versionName }}
           name: Release ${{ steps.package.outputs.artifact_name }}
           body: ${{ steps.commit_message.outputs.commit_message }}
