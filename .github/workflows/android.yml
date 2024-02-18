@@ -1,23 +1,16 @@
-# This is a basic workflow to help you get started with Actions
-name: Android Build
+name: Android Build and Sign
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
   pull_request:
     branches: [ "master" ]
   push:
     branches: [ "master" ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
+
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
@@ -30,9 +23,19 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
-      # Runs a single command using the runners shell
       - name: Build with Gradle
         run: ./gradlew build
+
+      - name: Sign Android App
+        run: |
+          # Firma de la aplicación con jarsigner y zipalign
+          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+            -keystore /path/to/your/keystore.jks \
+            -storepass ${{ secrets.KEYSTORE_PASSWORD }} \
+            -keypass ${{ secrets.KEY_PASSWORD }} \
+            app/build/outputs/apk/debug/app-debug.apk ${{ secrets.KEY_ALIAS }}
+
+          zipalign -v 4 app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/signed-app-debug.apk
 
       - name: Extract Android Version
         id: version
@@ -48,7 +51,7 @@ jobs:
         run: |
           mkdir artifacts
           artifact_name="intertec-${{ steps.version.outputs.versionName }}.apk"
-          cp app/build/outputs/apk/debug/app-debug.apk artifacts/$artifact_name
+          cp app/build/outputs/apk/signed-app-debug.apk artifacts/$artifact_name
           echo "artifact_name=$artifact_name" >> $GITHUB_OUTPUT
 
       - name: Get Last Commit Message
