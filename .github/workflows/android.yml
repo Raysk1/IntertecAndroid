@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -26,27 +25,11 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Sign Android
-        # You may pin to the exact commit or the version.
-        # uses: noriban/sign-android-release@a0600624488748d90ba893de54d52d41417dc64f
-        uses: noriban/sign-android-release@v5
-        with:
-          # The directory to find your release to sign
-          releaseDirectory: app/build/outputs/apk/debug/app-debug.apk
-          # The key used to sign your release in base64 encoded format
-          signingKeyBase64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
-          # The key alias
-          alias: ${{ secrets.KEY_ALIAS }}
-          # The password to the keystore
-          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
-          # The password for the key
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
-
       - name: Extract Android Version
         id: version
         run: |
           versionCode=$(grep "versionCode" app/build.gradle | awk '{print $2}')
-          versionName=$(grep "versionName" app/build.gradle | sed -n 's/.*versionName "\([^"]*\)".*/\1/p')
+          versionName=$(grep "versionName" app/build.gradle | sed -n 's/.versionName "\([^"]\)".*/\1/p')
           echo "Version Code: $versionCode"
           echo "Version Name: $versionName"
           echo "versionName=$versionName" >> $GITHUB_OUTPUT
@@ -56,8 +39,18 @@ jobs:
         run: |
           mkdir artifacts
           artifact_name="intertec-${{ steps.version.outputs.versionName }}.apk"
-          cp app/build/outputs/apk/signed-app-debug.apk artifacts/$artifact_name
+          cp app/build/outputs/apk/debug/app-debug.apk artifacts/$artifact_name
           echo "artifact_name=$artifact_name" >> $GITHUB_OUTPUT
+
+      - name: Android Sign
+        # You may pin to the exact commit or the version.
+        uses: Tlaster/android-sign@v1.2.2
+        with:
+          releaseDirectory: artifacts/
+          signingKeyBase64: ${{ secrets.SIGNING_KEY_BASE64 }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
 
       - name: Get Last Commit Message
         id: commit_message
