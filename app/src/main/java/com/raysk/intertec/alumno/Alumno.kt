@@ -39,7 +39,8 @@ class Alumno private constructor(var control: String, var password: String) {
      * */
     @Throws(IOException::class)
     fun validarInicioDeSesion(): Boolean {
-        val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=MAIN&Control=$control&password=$password&aceptar=ACEPTAR"
+        val url =
+            "http://201.164.155.162/cgi-bin/sie.pl?Opc=MAIN&Control=$control&password=$password&aceptar=ACEPTAR"
         val document = Jsoup.connect(url).get()
         val title = document.title()
         if (title == "SIE Estudiantes") {
@@ -61,7 +62,8 @@ class Alumno private constructor(var control: String, var password: String) {
     /**Obtiene los [DatosPersonales], [DatosAcademicos] y [DatosGenerales] del alumno*/
     @Throws(IOException::class)
     private fun obtenerDatosDeAlumno() {
-        val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=DATOSALU&Control=$control&password=$passwordToken&aceptar=ACEPTAR"
+        val url =
+            "http://201.164.155.162/cgi-bin/sie.pl?Opc=DATOSALU&Control=$control&password=$passwordToken&aceptar=ACEPTAR"
         val document = Jsoup.connect(url).get()
         val imagen = document.select("img")[0]
         imagenURL = "http://201.164.155.162${imagen.attr("src")}"
@@ -108,7 +110,8 @@ class Alumno private constructor(var control: String, var password: String) {
     /** Obtiene el [Kardex] del alumno */
     @Throws(IOException::class)
     private fun obtenerKardex() {
-        val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=KARDEX&Control=$control&password=$passwordToken&aceptar=ACEPTAR"
+        val url =
+            "http://201.164.155.162/cgi-bin/sie.pl?Opc=KARDEX&Control=$control&password=$passwordToken&aceptar=ACEPTAR"
         val document = Jsoup.connect(url).get()
         val tables = document.select("table")
         val trs = tables[1].select("tr")
@@ -167,7 +170,8 @@ class Alumno private constructor(var control: String, var password: String) {
     @Throws(IOException::class)
     private fun obtenerHorario() {
         horario = ArrayList()
-        val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=HORARIO&Control=$control&password=$passwordToken&aceptar=ACEPTAR"
+        val url =
+            "http://201.164.155.162/cgi-bin/sie.pl?Opc=HORARIO&Control=$control&password=$passwordToken&aceptar=ACEPTAR"
         val document = Jsoup.connect(url).get()
         val tables = document.select("table")
         val trs = tables[1].select("tr")
@@ -213,7 +217,8 @@ class Alumno private constructor(var control: String, var password: String) {
     private fun obtenerCalificaciones() {
         calificaciones = ArrayList()
         promedioDelSemestreActual = 0f
-        val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=CALIF&Control=$control&password=$passwordToken&aceptar=ACEPTAR"
+        val url =
+            "http://201.164.155.162/cgi-bin/sie.pl?Opc=CALIF&Control=$control&password=$passwordToken&aceptar=ACEPTAR"
         val document = Jsoup.connect(url).get()
         val tables = document.select("table")
         val trs = tables[1].select("tr")
@@ -263,7 +268,8 @@ class Alumno private constructor(var control: String, var password: String) {
      * @param nuevoPassword Nueva contraseña del alumno
      * @return Retorna true si el cambio se realizo correctamente*/
     fun cambiarPassword(nuevoPassword: String): Boolean {
-        val url = "http://201.164.155.162/cgi-bin/sie.pl?Opc=CAMBIARNIP&Control=$control&password=$passwordToken&Newpass=$nuevoPassword&aceptar=ACEPTAR"
+        val url =
+            "http://201.164.155.162/cgi-bin/sie.pl?Opc=CAMBIARNIP&Control=$control&password=$passwordToken&Newpass=$nuevoPassword&aceptar=ACEPTAR"
         val document = Jsoup.connect(url).get()
 
         return if (document.title() == "Cambio de NIP") {
@@ -308,11 +314,12 @@ class Alumno private constructor(var control: String, var password: String) {
      * @param servicio Servicio a imprimir o generar el recivo
      * @param context Contexto para la generacion del documento*/
     fun imprimirServicio(servicio: Servicio, context: Context) {
-        val url = "http://201.164.155.162/cgi-bin/sie.pl?servicio=${servicio.value}&Opc=PSERVICIOS&Imprimir=Imprimir&Control=$control&Password=$passwordToken&psie=intertec&dummy=0"
+        val url =
+            "http://201.164.155.162/cgi-bin/sie.pl?servicio=${servicio.value}&Opc=PSERVICIOS&Imprimir=Imprimir&Control=$control&Password=$passwordToken&psie=intertec&dummy=0"
 
         //val document = Jsoup.connect(url).get()
         val file = File(
-           context.getExternalFilesDir(null),
+            context.getExternalFilesDir(null),
             "${servicio.descripcion}-${servicio.folio}.pdf"
         )
         PdfConverter.instance?.convert(context, url, file)
