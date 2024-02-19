@@ -26,7 +26,7 @@ class ServicioItemView(view: View) : ViewHolder(view) {
     private val tvFolio: TextView = view.findViewById(R.id.tvFolio)
     private val btnPagar: LoadingButton = view.findViewById(R.id.btnPagar)
     private val btnBorrar: LoadingButton = view.findViewById(R.id.btnEliiminar)
-    private  val uiScope = CoroutineScope(Dispatchers.Main)
+    private val uiScope = CoroutineScope(Dispatchers.Main)
 
     /**Renderiza los elementos dados
      * @param servicio Servicio a renderizar */
@@ -63,8 +63,8 @@ class ServicioItemView(view: View) : ViewHolder(view) {
     /**
      * Funcion para imprimir el recibo
      */
-    private suspend fun imprimirReciboServicio(servicio: Servicio){
-        withContext(Dispatchers.IO){
+    private suspend fun imprimirReciboServicio(servicio: Servicio) {
+        withContext(Dispatchers.IO) {
             Alumno.alumno!!.imprimirServicio(servicio, itemView.context)
         }
     }
@@ -76,7 +76,7 @@ class ServicioItemView(view: View) : ViewHolder(view) {
         withContext(Dispatchers.IO) {
             try {
 
-               alumno.eliminarServicio(servicio)
+                alumno.eliminarServicio(servicio)
                 eliminado = true
             } catch (e: Exception) {
                 Log.e(this.javaClass.name, "eliminarServicio: error", e)

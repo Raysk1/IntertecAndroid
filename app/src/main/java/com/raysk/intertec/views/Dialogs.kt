@@ -41,7 +41,7 @@ class Dialogs {
             context: Context,
             positiveOnClickListener: OnClickListener,
             negativeOnClickListener: OnClickListener,
-        ): MaterialDialog{
+        ): MaterialDialog {
             val dialog = MaterialDialog.Builder(context as Activity) // set message, title, and icon
                 .setTitle("Actualizacion Disponible")
                 .setMessage("Hay una nueva actualizacion disponible.\n¿Deseas Actualizar?")

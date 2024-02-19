@@ -4,15 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="10dp"
+    android:layout_marginVertical="@dimen/x5dp"
     android:backgroundTint="@color/white"
     android:clickable="true"
     android:gravity="center"
-    app:cornerAll="40dp">
+    app:cornerAll="@dimen/x20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="@dimen/x30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tvMateria"
@@ -21,7 +25,7 @@
             android:gravity="center"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="@dimen/x8sp"
             android:textStyle="normal|bold"
             app:layout_constraintBottom_toBottomOf="@id/guideline47"
             app:layout_constraintEnd_toStartOf="@+id/guideline48"
@@ -34,37 +38,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="5dp" />
+            app:layout_constraintGuide_end="@dimen/x2_5dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline48"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="55dp" />
+            app:layout_constraintGuide_end="@dimen/x27_5dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline46"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="5dp" />
+            app:layout_constraintGuide_begin="@dimen/x2_5dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline47"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="55dp" />
+            app:layout_constraintGuide_begin="@dimen/x27_5dp" />
 
         <com.tistory.zladnrms.roundablelayout.RoundableLayout
             android:id="@+id/statusColor"
-            android:layout_width="30dp"
+            android:layout_width="@dimen/x15dp"
             android:layout_height="0dp"
             app:backgroundColor="@color/white"
-            app:cornerLeftBottom="40dp"
-            app:cornerLeftSide="40dp"
-            app:cornerLeftTop="40dp"
+            app:cornerLeftBottom="@dimen/x20dp"
+            app:cornerLeftSide="@dimen/x20dp"
+            app:cornerLeftTop="@dimen/x20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -78,11 +82,11 @@
             android:elevation="10dp"
             android:textAlignment="gravity"
             app:backgroundColor="@color/yellow"
-            app:cornerAll="40dp"
-            app:cornerLeftBottom="40dp"
-            app:cornerLeftTop="40dp"
-            app:cornerRightBottom="40dp"
-            app:cornerRightTop="40dp"
+            app:cornerAll="@dimen/x20dp"
+            app:cornerLeftBottom="@dimen/x20dp"
+            app:cornerLeftTop="@dimen/x20dp"
+            app:cornerRightBottom="@dimen/x20dp"
+            app:cornerRightTop="@dimen/x20dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline47"
             app:layout_constraintEnd_toEndOf="@id/guideline45"
             app:layout_constraintStart_toStartOf="@+id/guideline48"
@@ -94,7 +98,7 @@
                 android:layout_height="0dp"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="@dimen/x10sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

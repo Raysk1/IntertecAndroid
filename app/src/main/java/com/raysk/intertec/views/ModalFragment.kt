@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.TypedValue
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
@@ -67,7 +68,7 @@ class ModalFragment() : DialogFragment() {
             val tvTitle = view.findViewById<TextView>(R.id.tvTitle)
             var materia = ""
             var clave = ""
-            layout = view.findViewById<LinearLayout>(R.id.modalLayout)
+            layout = view.findViewById(R.id.modalLayout)
             tvReferencia = tvMateria
 
             //comprueba la seleccion
@@ -106,7 +107,11 @@ class ModalFragment() : DialogFragment() {
         val titulo = TextView(activity)
         titulo.text = texto
         titulo.setTextColor(Color.BLACK)
-        titulo.textSize = 18F
+
+        titulo.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX,
+            requireContext().resources.getDimension(R.dimen.x9sp)
+        )
         titulo.isAllCaps = true
         titulo.setTypeface(null, Typeface.BOLD)
         titulo.gravity = tvReferencia.gravity
@@ -125,7 +130,10 @@ class ModalFragment() : DialogFragment() {
         val contenido = TextView(activity)
         contenido.text = texto
         contenido.setTextColor(Color.BLACK)
-        contenido.textSize = 16F
+        contenido.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX,
+            requireContext().resources.getDimension(R.dimen.x8sp)
+        )
         contenido.gravity = tvReferencia.gravity
         contenido.setPadding(
             tvReferencia.paddingLeft,
@@ -146,15 +154,15 @@ class ModalFragment() : DialogFragment() {
 
     /** Crea el Layout del modal del kardex*/
     private fun createKardexLayout() {
-        layout.addView(createTitulo("Calificacion"))
+        layout.addView(createTitulo("Calificacion:"))
         layout.addView(
             createContenido(
-                if (kardexData.calificacion.isEmpty()) "Sin calificacion" else kardexData.calificacion
+                kardexData.calificacion.ifEmpty { "Sin calificacion" }
             )
         )
-        layout.addView(createTitulo("Periodo"))
+        layout.addView(createTitulo("Periodo:"))
         layout.addView(createContenido(kardexData.periodo.toString()))
-        layout.addView(createTitulo("Estado"))
+        layout.addView(createTitulo("Estado:"))
         val estado = when (kardexData.estado) {
             CURSADO -> "Cursado"
             POR_CURSAR -> "Por cursar"
@@ -168,11 +176,11 @@ class ModalFragment() : DialogFragment() {
 
     /** Crea el Layout del modal del horario*/
     private fun createHorarioLayout() {
-        layout.addView(createTitulo("aula"))
+        layout.addView(createTitulo("aula:"))
         layout.addView(createContenido(horarioData.aula))
-        layout.addView(createTitulo("Hora de entrada"))
+        layout.addView(createTitulo("Hora de entrada:"))
         layout.addView(createContenido(horarioData.horaDeEntrada.toString() + ":00"))
-        layout.addView(createTitulo("Hora de salida"))
+        layout.addView(createTitulo("Hora de salida:"))
         layout.addView(createContenido(horarioData.horaDeSalida.toString() + ":00"))
     }
 }

@@ -8,4 +8,4 @@ data class DatosAcademicos(
     var periodoActual: String = "",
     var creditosAcumulados: String = "",
     var situacion: String = "",
-    )
+)

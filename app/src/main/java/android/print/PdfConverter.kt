@@ -31,6 +31,7 @@ class PdfConverter private constructor() : Runnable {
     private var mPdfPrintAttrs: PrintAttributes? = null
     private var mIsCurrentlyConverting = false
     private var mWebView: WebView? = null
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun run() {
         mWebView = WebView(mContext!!)

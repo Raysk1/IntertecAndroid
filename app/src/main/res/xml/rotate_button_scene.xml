@@ -13,14 +13,14 @@
     <ConstraintSet android:id="@+id/start">
         <Constraint
             android:id="@+id/btnCambiar"
-            motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="10dp"
-            motion:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="5dp"
+            android:layout_width="@dimen/x25dp"
+            android:layout_height="@dimen/x25dp"
+            android:layout_marginTop="@dimen/x2_5dp"
+            android:layout_marginEnd="@dimen/x5dp"
+            android:layout_marginBottom="@dimen/x2_5dp"
             motion:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="5dp">
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintTop_toTopOf="parent">
             <Transform android:rotation="0" />
         </Constraint>
     </ConstraintSet>
@@ -28,14 +28,14 @@
     <ConstraintSet android:id="@+id/end">
         <Constraint
             android:id="@+id/btnCambiar"
-            motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="10dp"
-            motion:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="5dp"
+            android:layout_width="@dimen/x25dp"
+            android:layout_height="@dimen/x25dp"
+            android:layout_marginTop="@dimen/x2_5dp"
+            android:layout_marginEnd="@dimen/x5dp"
+            android:layout_marginBottom="@dimen/x2_5dp"
             motion:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="5dp">
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintTop_toTopOf="parent">
             <Transform android:rotation="90" />
         </Constraint>
     </ConstraintSet>

@@ -6,10 +6,10 @@ data class GitHubRelease(
     @SerializedName("tag_name")
     val tagName: String?,
     @SerializedName("assets")
-    val assets: List<GitHubAsset>
+    val assets: List<GitHubAsset>,
 )
 
 data class GitHubAsset(
     @SerializedName("browser_download_url")
-    val url: String?
+    val url: String?,
 )

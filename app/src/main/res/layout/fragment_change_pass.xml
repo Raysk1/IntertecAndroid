@@ -25,16 +25,17 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/x16dp"
+            android:layout_marginEnd="@dimen/x16dp"
             android:background="@drawable/rounded_ui"
             android:backgroundTint="@color/white"
             android:backgroundTintMode="src_in"
-            app:layout_constraintBottom_toBottomOf="@id/guideline41"
-            app:layout_constraintEnd_toStartOf="@+id/guideline39"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline38"
-            app:layout_constraintTop_toTopOf="@id/guideline40"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar3"
+            app:layout_constraintVertical_bias="0.25">
 
             <com.kusu.loadingbutton.LoadingButton
                 android:id="@+id/guardarButton"
@@ -42,6 +43,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="@dimen/x8dp"
+                android:layout_marginBottom="@dimen/x16dp"
                 android:autoSizeTextType="none"
                 android:backgroundTint="@color/yellow"
                 android:enabled="true"
@@ -50,10 +53,10 @@
                 android:text="Guardar"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/guideline43"
-                app:layout_constraintEnd_toStartOf="@+id/guideline51"
-                app:layout_constraintStart_toStartOf="@+id/guideline50"
+                android:textSize="@dimen/x7sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tilPasswordNewConfirm"
+                app:layout_constraintStart_toStartOf="@+id/tilPasswordNewConfirm"
                 app:layout_constraintTop_toBottomOf="@+id/tilPasswordNewConfirm"
                 app:lb_isCircular="true"
                 app:lb_isLoading="false"
@@ -64,6 +67,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x4dp"
                 android:hint="Confirmar Contraseña"
                 android:textColorHint="@color/black"
                 app:boxStrokeColor="@color/yellow"
@@ -72,8 +76,8 @@
                 app:counterTextColor="@color/black"
                 app:errorEnabled="true"
                 app:helperTextTextColor="@color/black"
-                app:layout_constraintEnd_toStartOf="@+id/guideline51"
-                app:layout_constraintStart_toStartOf="@+id/guideline50"
+                app:layout_constraintEnd_toEndOf="@+id/tilPasswordNew"
+                app:layout_constraintStart_toStartOf="@+id/tilPasswordNew"
                 app:layout_constraintTop_toBottomOf="@+id/tilPasswordNew"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="@color/yellow">
@@ -87,7 +91,7 @@
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="#757575"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/x8sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -95,6 +99,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x12dp"
                 android:hint="Contraseña Nueva"
                 android:textColorHint="@color/black"
                 app:boxStrokeColor="@color/yellow"
@@ -104,8 +109,8 @@
                 app:errorEnabled="true"
                 app:helperText="La contraseña debe iniciar con una mayuscula"
                 app:helperTextTextColor="@color/black"
-                app:layout_constraintEnd_toStartOf="@+id/guideline51"
-                app:layout_constraintStart_toStartOf="@+id/guideline50"
+                app:layout_constraintEnd_toEndOf="@+id/tilPasswordActual"
+                app:layout_constraintStart_toStartOf="@+id/tilPasswordActual"
                 app:layout_constraintTop_toBottomOf="@+id/tilPasswordActual"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="@color/yellow">
@@ -119,7 +124,7 @@
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="#757575"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/x8sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -127,6 +132,9 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x12dp"
+                android:layout_marginTop="@dimen/x16dp"
+                android:layout_marginEnd="@dimen/x12dp"
                 android:hint="Contraseña Actual"
                 android:textColorHint="@color/black"
                 app:boxStrokeColor="@color/yellow"
@@ -135,9 +143,9 @@
                 app:counterTextColor="@color/black"
                 app:errorEnabled="true"
                 app:helperTextTextColor="@color/black"
-                app:layout_constraintEnd_toStartOf="@+id/guideline51"
-                app:layout_constraintStart_toStartOf="@+id/guideline50"
-                app:layout_constraintTop_toTopOf="@id/guideline42"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="@color/yellow">
 
@@ -150,66 +158,11 @@
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="#757575"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/x8sp" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline42"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.1" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline43"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.9" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline50"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".05" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline51"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".95" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline38"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent=".05" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline39"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.95" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline40"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.16" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline41"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.73" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

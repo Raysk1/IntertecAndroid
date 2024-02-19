@@ -15,11 +15,11 @@
         android:background="@color/yellow"
         android:elevation="10dp"
         android:gravity="center"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="10dp"
+        android:paddingHorizontal="@dimen/x5dp"
+        android:paddingVertical="@dimen/x5dp"
         android:textAllCaps="true"
         android:textColor="@color/white"
-        android:textSize="22sp"
+        android:textSize="@dimen/x11sp"
         android:textStyle="bold"
         tools:text="Menu" />
 
@@ -35,12 +35,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="3dp"
+            android:paddingHorizontal="@dimen/x5dp"
+            android:paddingVertical="@dimen/x1_5dp"
             android:text="Materia:"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/x9sp"
             android:textStyle="bold" />
 
         <TextView
@@ -48,23 +48,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="3dp"
+            android:paddingHorizontal="@dimen/x5dp"
+            android:paddingVertical="@dimen/x1_5dp"
             android:text="TextView"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="@dimen/x8sp" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="3dp"
+            android:paddingHorizontal="@dimen/x5dp"
+            android:paddingVertical="@dimen/x1_5dp"
             android:text="Clave:"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/x9sp"
             android:textStyle="bold" />
 
         <TextView
@@ -72,11 +72,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="3dp"
+            android:paddingHorizontal="@dimen/x5dp"
+            android:paddingVertical="@dimen/x1_5dp"
             android:text="TextView"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="@dimen/x8sp" />
     </LinearLayout>
 
 </LinearLayout>
