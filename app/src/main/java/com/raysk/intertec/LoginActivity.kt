@@ -1,16 +1,12 @@
 package com.raysk.intertec
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.raysk.intertec.alumno.Alumno
 import com.raysk.intertec.alumno.Alumno.Companion.getAlumno
@@ -26,7 +22,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var control: TextView
     private lateinit var password: TextView
     private lateinit var login: CircularProgressButton
-    private lateinit var snackBarContainer: View
     private val uiScope = CoroutineScope(Dispatchers.Main)
     private lateinit var tilUsername: TextInputLayout
     private lateinit var tilPassword: TextInputLayout
@@ -35,12 +30,11 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        control = findViewById(R.id.username)
-        password = findViewById(R.id.password)
-        login = findViewById(R.id.loginButton)
-        snackBarContainer = findViewById(R.id.snackBar)
-        tilUsername = findViewById(R.id.tilUsername)
-        tilPassword = findViewById(R.id.tilPassword)
+        control = this.findViewById(R.id.username)
+        password = this.findViewById(R.id.password)
+        login = this.findViewById(R.id.loginButton)
+        tilUsername = this.findViewById(R.id.tilUsername)
+        tilPassword = this.findViewById(R.id.tilPassword)
 
         control.doAfterTextChanged { validarControl() }
         password.doAfterTextChanged { validarPassword() }
@@ -95,15 +89,6 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    /** Muestra un Snackbar con un mensaje
-     * @param Mensaje El mensaje a mostrar
-     * @param color El color del Snackbar a mostrar*/
-    private fun mostrarMensaje(Mensaje: String, color: Int = R.color.ligh_gray) {
-        Snackbar.make(snackBarContainer, Mensaje, Snackbar.LENGTH_LONG)
-            .setBackgroundTint(ContextCompat.getColor(this, color))
-            .setTextColor(Color.WHITE)
-            .show()
-    }
 
     /** corrutina que realiza la conexion al servidor para traer de vuelta los datos del alumno
      * @param control Numero de control del alumno
@@ -152,9 +137,13 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 login.revertAnimation()
                 if (alumno == null) {
-                    mostrarMensaje("Error de conexion", R.color.error)
+                    Toasty.error(this@LoginActivity, "Error de conexion", Toasty.LENGTH_LONG).show()
                 } else {
-                    mostrarMensaje("Usuario o Contraseña Incorrecto", R.color.warning)
+                    Toasty.warning(
+                        this@LoginActivity,
+                        "Usuario o Contraseña Incorrecto",
+                        Toasty.LENGTH_LONG
+                    ).show()
                 }
                 cargando = false
 

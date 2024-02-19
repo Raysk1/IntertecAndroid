@@ -2,11 +2,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="@dimen/x35dp"
     android:background="@color/white"
     android:gravity="center"
-    android:paddingHorizontal="15dp"
-    android:paddingVertical="5dp">
+    android:paddingHorizontal="@dimen/x7_5dp"
+    android:paddingVertical="@dimen/x2_5dp">
 
 
     <androidx.constraintlayout.motion.widget.MotionLayout
@@ -67,9 +67,9 @@
             <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
                 android:id="@+id/progressBarAvance"
                 android:layout_width="0dp"
-                android:layout_height="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_height="@dimen/x5dp"
+                android:layout_marginStart="@dimen/x5dp"
+                android:layout_marginEnd="@dimen/x5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/linearLayout6"
@@ -84,9 +84,9 @@
                 android:id="@+id/linearLayout6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginStart="@dimen/x5dp"
+                android:layout_marginTop="@dimen/x2_5dp"
+                android:layout_marginBottom="@dimen/x2_5dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -98,6 +98,7 @@
                     android:gravity="center"
                     android:text="% de avance:"
                     android:textColor="@color/black"
+                    android:textSize="@dimen/x7sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -106,6 +107,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="@color/yellow"
+                    android:textSize="@dimen/x7sp"
                     android:textStyle="bold"
                     tools:text="66.25" />
 
@@ -128,9 +130,9 @@
                 android:id="@+id/linearLayout4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginStart="@dimen/x5dp"
+                android:layout_marginTop="@dimen/x2_5dp"
+                android:layout_marginBottom="@dimen/x2_5dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -142,6 +144,7 @@
                     android:gravity="center"
                     android:text="Promedio:"
                     android:textColor="@color/black"
+                    android:textSize="@dimen/x7sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -150,6 +153,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="@color/yellow"
+                    android:textSize="@dimen/x7sp"
                     android:textStyle="bold"
                     tools:text="66.25" />
 
@@ -158,8 +162,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="@dimen/x2_5dp"
+                android:layout_marginBottom="@dimen/x2_5dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -172,6 +176,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:textColor="@color/black"
+                    android:textSize="@dimen/x7sp"
                     android:textStyle="bold"
                     tools:text="Creditos Acumulados" />
 
@@ -181,6 +186,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="@color/yellow"
+                    android:textSize="@dimen/x7sp"
                     android:textStyle="bold"
                     tools:text="66.25" />
 

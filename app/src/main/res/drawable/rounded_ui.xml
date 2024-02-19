@@ -8,7 +8,7 @@
     <!--  stroke for defining a border for view -->
 
     <size
-        android:width="40dp"
-        android:height="40dp" />
+        android:width="@dimen/x20dp"
+        android:height="@dimen/x20dp" />
     <!-- size element is used to define a design here height & width are same means square with some radius -->
 </shape>

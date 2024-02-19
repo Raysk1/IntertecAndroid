@@ -9,10 +9,11 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/x32dp"
         android:background="@color/white"
         app:elevation="15dp"
         app:itemHorizontalTranslationEnabled="true"
+        app:itemIconSize="@dimen/x12dp"
         app:itemIconTint="@color/buttom_nav_color"
         app:itemRippleColor="@color/buttom_nav_ripple"
         app:itemTextColor="@color/buttom_nav_color"

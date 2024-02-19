@@ -67,7 +67,7 @@
                             android:text="Ciudad"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="22sp"
+                            android:textSize="@dimen/x11sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -79,7 +79,7 @@
                             android:text="Colonia"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="22sp"
+                            android:textSize="@dimen/x11sp"
                             android:textStyle="bold" />
                     </TableRow>
 
@@ -97,7 +97,7 @@
                             android:text="TextView"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/x9sp" />
 
                         <TextView
                             android:id="@+id/tvColonia"
@@ -108,7 +108,7 @@
                             android:text="TextView"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/x9sp" />
                     </TableRow>
 
                     <TableRow
@@ -125,7 +125,7 @@
                             android:text="calle"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="22sp"
+                            android:textSize="@dimen/x11sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -137,7 +137,7 @@
                             android:text="NO."
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="22sp"
+                            android:textSize="@dimen/x11sp"
                             android:textStyle="bold" />
                     </TableRow>
 
@@ -155,7 +155,7 @@
                             android:text="TextView"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/x9sp" />
 
                         <TextView
                             android:id="@+id/tvNoCalle"
@@ -166,7 +166,7 @@
                             android:text="TextView"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/x9sp" />
                     </TableRow>
 
                     <TableRow
@@ -183,7 +183,7 @@
                             android:text="Cp"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="22sp"
+                            android:textSize="@dimen/x11sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -195,7 +195,7 @@
                             android:text="telefono"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="22sp"
+                            android:textSize="@dimen/x11sp"
                             android:textStyle="bold" />
                     </TableRow>
 
@@ -213,7 +213,7 @@
                             android:text="TextView"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/x9sp" />
 
                         <TextView
                             android:id="@+id/tvTelefono"
@@ -224,7 +224,7 @@
                             android:text="TextView"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/x9sp" />
                     </TableRow>
 
                     <TableRow
@@ -240,7 +240,7 @@
                             android:text="Correo Per."
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="22sp"
+                            android:textSize="@dimen/x11sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -252,7 +252,7 @@
                             android:text="Correo Ins."
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="22sp"
+                            android:textSize="@dimen/x11sp"
                             android:textStyle="bold" />
                     </TableRow>
 
@@ -270,7 +270,7 @@
                             android:text="TextView"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/x9sp" />
 
                         <TextView
                             android:id="@+id/tvCorreoInstitucional"
@@ -281,7 +281,7 @@
                             android:text="TextView"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/x9sp" />
                     </TableRow>
 
                     <TableRow
@@ -298,7 +298,7 @@
                             android:text="Fecha Nac"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="22sp"
+                            android:textSize="@dimen/x11sp"
                             android:textStyle="bold" />
                     </TableRow>
 
@@ -316,7 +316,7 @@
                             android:text="TextView"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/x9sp" />
 
                     </TableRow>
                 </TableLayout>
