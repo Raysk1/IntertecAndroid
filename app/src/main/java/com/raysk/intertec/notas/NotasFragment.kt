@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.raysk.intertec.R
 import com.raysk.intertec.notas.calificaciones.CalificacionesFragment
 import com.raysk.intertec.notas.kardex.KardexFragment
@@ -14,7 +15,7 @@ import com.raysk.intertec.notas.kardex.KardexFragment
 class NotasFragment : Fragment() {
 
     private lateinit var tabs: TabLayout
-    private lateinit var viewPager: ViewPager
+    private lateinit var viewPager: ViewPager2
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,11 +30,14 @@ class NotasFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         tabs = view.findViewById(R.id.tabs)
         viewPager = view.findViewById(R.id.viewPager)
-        val adaptadorDeSecciones = AdaptadorDeSecciones(childFragmentManager)
-        adaptadorDeSecciones.addFragment(KardexFragment(), "Kardex")
-        adaptadorDeSecciones.addFragment(CalificacionesFragment(), "Calificaciones")
+        val adaptadorDeSecciones = AdaptadorDeSecciones(childFragmentManager,lifecycle)
+        val nombresTabs = arrayOf("Kardex","Calificaciones")
+        adaptadorDeSecciones.addFragment(KardexFragment())
+        adaptadorDeSecciones.addFragment(CalificacionesFragment())
         viewPager.adapter = adaptadorDeSecciones
-        tabs.setupWithViewPager(viewPager)
 
+        TabLayoutMediator(tabs, viewPager) { tab, position ->
+            tab.text = nombresTabs[position]
+        }.attach()
     }
 }
