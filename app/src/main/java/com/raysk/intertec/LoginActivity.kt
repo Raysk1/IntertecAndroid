@@ -30,11 +30,11 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        control = this.findViewById(R.id.username)
-        password = this.findViewById(R.id.password)
-        login = this.findViewById(R.id.loginButton)
-        tilUsername = this.findViewById(R.id.tilUsername)
-        tilPassword = this.findViewById(R.id.tilPassword)
+        control = findViewById(R.id.username)
+        password = findViewById(R.id.password)
+        login = findViewById(R.id.loginButton)
+        tilUsername = findViewById(R.id.tilUsername)
+        tilPassword = findViewById(R.id.tilPassword)
 
         control.doAfterTextChanged { validarControl() }
         password.doAfterTextChanged { validarPassword() }

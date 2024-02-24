@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.net.Uri
+import android.util.Log
 import androidx.core.content.ContextCompat.startActivity
 import com.google.gson.GsonBuilder
 import com.raysk.intertec.views.Dialogs
@@ -27,12 +28,18 @@ class Updates(val contex: Context) {
 
         val url = "https://api.github.com/repos/$repoOwner/$repoName/releases/latest"
 
-        val uiScope = CoroutineScope(Dispatchers.IO)
+        val ioScope = CoroutineScope(Dispatchers.IO)
 
-        uiScope.launch {
-            val body = Fuel.get(url).body
-            val gson = GsonBuilder().create()
-            val release = gson.fromJson(body, GitHubRelease::class.java)
+        ioScope.launch {
+            lateinit var release: GitHubRelease
+            try {
+                val body = Fuel.get(url).body
+                val gson = GsonBuilder().create()
+                release = gson.fromJson(body, GitHubRelease::class.java)
+            }catch (e:Exception){
+                e.message?.let { Log.e(this@Updates.javaClass.name, it) }
+                return@launch
+            }
 
             withContext(Dispatchers.Main) {
                 val pInfo: PackageInfo =
