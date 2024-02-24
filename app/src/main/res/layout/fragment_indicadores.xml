@@ -82,7 +82,7 @@
 
             <LinearLayout
                 android:id="@+id/linearLayout6"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/x60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/x5dp"
                 android:layout_marginTop="@dimen/x2_5dp"
@@ -104,7 +104,7 @@
                 <TextView
                     android:id="@+id/tvPorcentajeDeAvance"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:textColor="@color/yellow"
                     android:textSize="@dimen/x7sp"
@@ -130,7 +130,7 @@
                 android:id="@+id/linearLayout4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/x5dp"
+                android:layout_marginStart="@dimen/x8dp"
                 android:layout_marginTop="@dimen/x2_5dp"
                 android:layout_marginBottom="@dimen/x2_5dp"
                 android:orientation="vertical"
@@ -162,6 +162,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x8dp"
                 android:layout_marginTop="@dimen/x2_5dp"
                 android:layout_marginBottom="@dimen/x2_5dp"
                 android:orientation="vertical"
@@ -178,7 +179,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/x7sp"
                     android:textStyle="bold"
-                    tools:text="Creditos Acumulados" />
+                    tools:text="Creditos Acumulados:" />
 
                 <TextView
                     android:id="@+id/tvSegundoTituloValor"

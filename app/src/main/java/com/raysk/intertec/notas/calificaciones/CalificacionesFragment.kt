@@ -21,10 +21,10 @@ class CalificacionesFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        if (alumno.calificaciones.size > 0) {
-            return inflater.inflate(R.layout.fragment_calificaciones, container, false)
+        return if (alumno.calificaciones.size > 0) {
+            inflater.inflate(R.layout.fragment_calificaciones, container, false)
         } else {
-            return inflater.inflate(R.layout.fragment_no_content, container, false)
+            inflater.inflate(R.layout.fragment_no_content, container, false)
         }
     }
 

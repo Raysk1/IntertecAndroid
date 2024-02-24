@@ -11,12 +11,12 @@ import com.raysk.intertec.R
 import com.raysk.intertec.alumno.Alumno.Companion.alumno
 
 class DatosAcademicosFragment : Fragment() {
-    lateinit var tvEscuelaProcedencia: TextView
-    lateinit var tvPeriodoIngreso: TextView
-    lateinit var tvPeriodoActual: TextView
-    lateinit var tvPeriodosValidados: TextView
-    lateinit var tvCreditos: TextView
-    lateinit var tvSituacion: TextView
+    private lateinit var tvEscuelaProcedencia: TextView
+    private lateinit var tvPeriodoIngreso: TextView
+    private lateinit var tvPeriodoActual: TextView
+    private lateinit var tvPeriodosValidados: TextView
+    private lateinit var tvCreditos: TextView
+    private lateinit var tvSituacion: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

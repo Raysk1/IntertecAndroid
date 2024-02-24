@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class Updates(val contex: Context) {
+class Updates(private val contex: Context) {
 
 
     /**

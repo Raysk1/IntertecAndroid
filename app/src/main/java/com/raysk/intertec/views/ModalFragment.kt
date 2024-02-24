@@ -28,7 +28,7 @@ class ModalFragment() : DialogFragment() {
     private lateinit var kardexData: KardexData
     private lateinit var horarioData: HorarioEvent
     private var title: String? = null
-    var seleccion = 0
+    private var seleccion = 0
     private lateinit var tvReferencia: TextView
     private lateinit var layout: LinearLayout
 

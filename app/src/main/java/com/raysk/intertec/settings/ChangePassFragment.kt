@@ -51,12 +51,12 @@ class ChangePassFragment : Fragment() {
         guardarButton = view.findViewById(R.id.guardarButton)
         toolbar = view.findViewById(R.id.toolbar3)
 
-        tvPasswordActual.doAfterTextChanged { ValidarContraseñaActual() }
-        tvPasswordNew.doAfterTextChanged { ValidarContraseñaNueva() }
-        tvPasswordNewConfirm.doAfterTextChanged { ValidarConfirmarContraseña() }
+        tvPasswordActual.doAfterTextChanged { validarContraseñaActual() }
+        tvPasswordNew.doAfterTextChanged { validarContraseñaNueva() }
+        tvPasswordNewConfirm.doAfterTextChanged { validarConfirmarContraseña() }
 
         guardarButton.setOnClickListener {
-            if (ValidarCampos()) {
+            if (validarCampos()) {
                 uiScope.launch { cambiarContraseña() }
             }
         }
@@ -65,7 +65,7 @@ class ChangePassFragment : Fragment() {
 
     }
 
-    private fun ValidarContraseñaActual(): Boolean {
+    private fun validarContraseñaActual(): Boolean {
         if (tvPasswordActual.text.toString().isEmpty()) {
             tilPasswordActual.error = "Debe llenar el campo"
             return false
@@ -78,7 +78,7 @@ class ChangePassFragment : Fragment() {
         return true
     }
 
-    private fun ValidarContraseñaNueva(): Boolean {
+    private fun validarContraseñaNueva(): Boolean {
         if (tvPasswordNew.text.toString().isEmpty()) {
             tilPasswordNew.error = "Debe llenar el campo"
             return false
@@ -99,7 +99,7 @@ class ChangePassFragment : Fragment() {
         return true
     }
 
-    private fun ValidarConfirmarContraseña(): Boolean {
+    private fun validarConfirmarContraseña(): Boolean {
         if (tvPasswordNewConfirm.text.toString().isEmpty()) {
             tilPasswordNewConfirm.error = "Debe llenar el campo"
             return false
@@ -113,16 +113,16 @@ class ChangePassFragment : Fragment() {
 
     }
 
-    private fun ValidarCampos(): Boolean {
-        if (!ValidarContraseñaActual()) {
+    private fun validarCampos(): Boolean {
+        if (!validarContraseñaActual()) {
             tvPasswordActual.requestFocus()
             return false
         }
-        if (!ValidarContraseñaNueva()) {
+        if (!validarContraseñaNueva()) {
             tvPasswordNew.requestFocus()
             return false
         }
-        if (!ValidarConfirmarContraseña()) {
+        if (!validarConfirmarContraseña()) {
             tvPasswordNewConfirm.requestFocus()
             return false
         }
