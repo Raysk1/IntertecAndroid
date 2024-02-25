@@ -72,7 +72,7 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          files: "${{steps.sign_app.outputs.signedReleaseFile}}/*"
+          files: ${{steps.sign_app.outputs.signedReleaseFile}}
           tag_name: ${{ steps.version.outputs.versionName }}
           name: Release ${{ steps.package.outputs.artifact_name }}
           body: ${{ steps.commit_message.outputs.commit_message }}
