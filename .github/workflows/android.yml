@@ -1,9 +1,6 @@
 name: Android Build and Sign
 
 on:
-  pull_request_review:
-    types: [submitted]
-    branches: [ "master" ]
   push:
     branches: [ "master" ]
 
