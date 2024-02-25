@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <com.tistory.zladnrms.roundablelayout.RoundableLayout
+        android:id="@+id/roundableLayout2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/x170dp"
+        android:paddingHorizontal="@dimen/x15dp"
+        app:cornerLeftTop="@dimen/x25dp"
+        app:cornerRightTop="@dimen/x25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x18dp"
+
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textColor="@color/yellow"
+            android:textSize="@dimen/x15sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Datos del Alumno" />
+
+        <TextView
+            android:id="@+id/textDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="@dimen/x8dp"
+
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/x8sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textTitle"
+            tools:text="La información que necesitas, cuando la necesitas: al alcance de tus dedos." />
+
+    </com.tistory.zladnrms.roundablelayout.RoundableLayout>
+
+    <ImageView
+        android:id="@+id/imageOnboarding"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:padding="@dimen/x15dp"
+        app:layout_constraintBottom_toTopOf="@+id/roundableLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/ic_baseline_account_circle_24" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
