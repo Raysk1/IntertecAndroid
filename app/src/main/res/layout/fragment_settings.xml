@@ -27,6 +27,18 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <Button
+                android:id="@+id/btnTutorial"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x10dp"
+                android:text="Abrir Tutorial"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x7sp"
+                app:layout_constraintEnd_toEndOf="@+id/btnCambiarPass"
+                app:layout_constraintStart_toStartOf="@+id/btnCambiarPass"
+                app:layout_constraintTop_toBottomOf="@+id/btnCambiarPass" />
+
+            <Button
                 android:id="@+id/btnCerrarSesion"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -34,9 +46,9 @@
                 android:text="Cerrar Sesion"
                 android:textColor="@color/black"
                 android:textSize="@dimen/x7sp"
-                app:layout_constraintEnd_toEndOf="@+id/btnCambiarPass"
-                app:layout_constraintStart_toStartOf="@+id/btnCambiarPass"
-                app:layout_constraintTop_toBottomOf="@+id/btnCambiarPass" />
+                app:layout_constraintEnd_toEndOf="@+id/btnTutorial"
+                app:layout_constraintStart_toStartOf="@+id/btnTutorial"
+                app:layout_constraintTop_toBottomOf="@+id/btnTutorial" />
 
             <Button
                 android:id="@+id/btnCambiarPass"

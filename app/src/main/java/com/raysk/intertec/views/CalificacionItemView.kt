@@ -25,19 +25,23 @@ class CalificacionItemView(view: View) : ViewHolder(view) {
         calificacion.text = kardexData.calificacion
         statusColor.backgroundColor = when (kardexData.estado) {
             Kardex.REPROBADO -> {
-                ContextCompat.getColor(itemView.context, R.color.error)
+                ContextCompat.getColor(itemView.context, R.color.IGEcolor)
             }
 
             Kardex.EN_CURSO -> {
-                ContextCompat.getColor(itemView.context, R.color.info)
+                ContextCompat.getColor(itemView.context, R.color.ISCcolor)
             }
 
             Kardex.CURSADO -> {
-                ContextCompat.getColor(itemView.context, R.color.success)
+                ContextCompat.getColor(itemView.context, R.color.INNcolor)
             }
 
             Kardex.REPITE -> {
-                ContextCompat.getColor(itemView.context, R.color.warning)
+                ContextCompat.getColor(itemView.context, R.color.IIALcolor)
+            }
+
+            Kardex.POR_CURSAR ->{
+                ContextCompat.getColor(itemView.context, R.color.IIAScolor)
             }
 
             else -> {

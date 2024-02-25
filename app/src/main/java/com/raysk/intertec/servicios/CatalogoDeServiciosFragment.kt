@@ -12,7 +12,7 @@ import com.raysk.intertec.R
 import com.raysk.intertec.alumno.Alumno
 
 class CatalogoDeServiciosFragment : Fragment() {
-    lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,

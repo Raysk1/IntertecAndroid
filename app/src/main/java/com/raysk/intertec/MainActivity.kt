@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.raysk.intertec.alumno.Alumno
+import com.raysk.intertec.tutorial.OnBoardingActivity
+import com.raysk.intertec.util.preferences.Preferences
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         progressBar = findViewById(R.id.progressBar)
 
+        val hizoTutorial = Preferences(this).tutorialComplete
 
 
         if (Alumno.datosJsonExists(filesDir)) {
@@ -27,7 +30,11 @@ class MainActivity : AppCompatActivity() {
             uiScope.launch { actualizarDatos() }
 
         } else {
-            iniciarLogin()
+            if (hizoTutorial) {
+                iniciarLogin()
+            }else{
+                iniciarTutorial()
+            }
         }
 
 
@@ -36,6 +43,15 @@ class MainActivity : AppCompatActivity() {
     /** Inicializa el activity Login */
     private fun iniciarLogin() {
         val intent = Intent(this@MainActivity, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    /**
+     * Inicializa el Activity Tutorial
+     */
+    private fun iniciarTutorial(){
+        val intent = Intent(this@MainActivity, OnBoardingActivity::class.java)
         startActivity(intent)
         finish()
     }

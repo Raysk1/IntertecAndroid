@@ -11,6 +11,7 @@ import androidx.navigation.Navigation.findNavController
 import com.raysk.intertec.LoginActivity
 import com.raysk.intertec.R
 import com.raysk.intertec.alumno.Alumno
+import com.raysk.intertec.tutorial.OnBoardingActivity
 
 
 class SettingsFragment : Fragment() {
@@ -37,6 +38,13 @@ class SettingsFragment : Fragment() {
         val btnCambiarPass: Button = view.findViewById(R.id.btnCambiarPass)
         btnCambiarPass.setOnClickListener {
             navController.navigate(R.id.action_settingsFragment2_to_changePassFragment)
+        }
+
+        val btnTutorial = view.findViewById<Button>(R.id.btnTutorial)
+
+        btnTutorial.setOnClickListener{
+            val intent = Intent(view.context, OnBoardingActivity::class.java)
+            startActivity(intent)
         }
 
 

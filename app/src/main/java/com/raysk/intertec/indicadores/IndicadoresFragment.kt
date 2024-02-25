@@ -38,7 +38,6 @@ class IndicadoresFragment : Fragment() {
         val tvSegundoTituloValor = view.findViewById<TextView>(R.id.tvSegundoTituloValor)
         val tvPromedio = view.findViewById<TextView>(R.id.tvPromedio)
 
-
         val mlIndicadores: MotionLayout = view.findViewById(R.id.mlIndicadores)
         val mlRotacionButton: MotionLayout = view.findViewById(R.id.mlButton)
 

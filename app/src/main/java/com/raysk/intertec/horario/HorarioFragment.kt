@@ -38,10 +38,10 @@ class HorarioFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        if (alumno.horario.size > 0) {
-            return inflater.inflate(R.layout.fragment_horario, container, false)
+        return if (alumno.horario.size > 0) {
+            inflater.inflate(R.layout.fragment_horario, container, false)
         } else {
-            return inflater.inflate(R.layout.fragment_no_content, container, false)
+            inflater.inflate(R.layout.fragment_no_content, container, false)
         }
     }
 
@@ -89,7 +89,7 @@ class HorarioFragment : Fragment() {
         WeekView(5);
 
         companion object {
-            fun of(days: Int): WeekViewType = values().first { it.value == days }
+            fun of(days: Int): WeekViewType = entries.first { it.value == days }
         }
     }
 
