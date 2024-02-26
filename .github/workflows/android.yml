@@ -32,11 +32,7 @@ jobs:
           echo "Version Name: $versionName"
           echo "versionName=$versionName" >> $GITHUB_OUTPUT
 
-      - name: Package Artifact
-        id: package
-        run: |
-          artifact_name="intertec-${{ steps.version.outputs.versionName }}.apk"
-          echo "artifact_name=$artifact_name" >> $GITHUB_OUTPUT
+     
 
       - name: Setup build tool version variable
         shell: bash
@@ -62,6 +58,13 @@ jobs:
         id: commit_message
         run: echo "commit_message=$(git log -1 --pretty=%B)"
 
+      - name: Package Artifact
+        id: package
+        run: |
+          artifact_name="intertec-${{ steps.version.outputs.versionName }}.apk"
+          cp ${{steps.sign_app.outputs.signedReleaseFile}} artifacts/$artifact_name
+          echo "artifact_name=$artifact_name" >> $GITHUB_OUTPUT
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4.3.1
         with:
@@ -72,7 +75,7 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{steps.sign_app.outputs.signedReleaseFile}}
+          files: artifacts/*
           tag_name: ${{ steps.version.outputs.versionName }}
           name: Release ${{ steps.package.outputs.artifact_name }}
           body: ${{ steps.commit_message.outputs.commit_message }}
