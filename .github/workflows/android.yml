@@ -61,6 +61,7 @@ jobs:
       - name: Package Artifact
         id: package
         run: |
+          mkdir -p artifacts
           artifact_name="intertec-${{ steps.version.outputs.versionName }}.apk"
           cp ${{steps.sign_app.outputs.signedReleaseFile}} artifacts/$artifact_name
           echo "artifact_name=$artifact_name" >> $GITHUB_OUTPUT
