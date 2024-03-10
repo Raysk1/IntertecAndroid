@@ -12,6 +12,7 @@ import com.raysk.intertec.LoginActivity
 import com.raysk.intertec.R
 import com.raysk.intertec.alumno.Alumno
 import com.raysk.intertec.tutorial.OnBoardingActivity
+import com.raysk.intertec.util.preferences.Preferences
 
 
 class SettingsFragment : Fragment() {
@@ -29,7 +30,8 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val btnCerrarSesion = view.findViewById<Button>(R.id.btnCerrarSesion)
         btnCerrarSesion.setOnClickListener {
-            Alumno.eliminarDatosJson(view.context.filesDir)
+            Preferences.eliminarDatosJson(view.context.filesDir,Preferences.ALUMNO_FILE_NAME)
+            Alumno.alumno = null
             val intent = Intent(view.context, LoginActivity::class.java)
             startActivity(intent)
             activity?.finish()

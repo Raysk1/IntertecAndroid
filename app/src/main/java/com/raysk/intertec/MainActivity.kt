@@ -25,14 +25,14 @@ class MainActivity : AppCompatActivity() {
         val hizoTutorial = Preferences(this).tutorialComplete
 
 
-        if (Alumno.datosJsonExists(filesDir)) {
+        if (Preferences.datosJsonExists(filesDir, Preferences.ALUMNO_FILE_NAME)) {
             progressBar.visibility = View.VISIBLE
             uiScope.launch { actualizarDatos() }
 
         } else {
             if (hizoTutorial) {
                 iniciarLogin()
-            }else{
+            } else {
                 iniciarTutorial()
             }
         }
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * Inicializa el Activity Tutorial
      */
-    private fun iniciarTutorial(){
+    private fun iniciarTutorial() {
         val intent = Intent(this@MainActivity, OnBoardingActivity::class.java)
         startActivity(intent)
         finish()
@@ -66,9 +66,8 @@ class MainActivity : AppCompatActivity() {
 
         withContext(Dispatchers.IO) {
             try {
-
-                if (Alumno.cargarDatosAlumno(filesDir)) {
-                    alumno = Alumno.alumno
+                alumno = Preferences.cargarDatos(filesDir, Preferences.ALUMNO_FILE_NAME)
+                if (alumno != null) {
                     validado = alumno!!.validarInicioDeSesion()
                 }
             } catch (e: Exception) {
@@ -79,8 +78,8 @@ class MainActivity : AppCompatActivity() {
 
             try {
                 if (validado) {
-                    alumno?.guardarDatosJson(filesDir)
-                    guardado = true
+                    guardado =
+                        Preferences.guardarDatosJson(filesDir, Preferences.ALUMNO_FILE_NAME, alumno)
                     mensaje = "Se han actualizado los datos"
                 }
             } catch (e: Exception) {
@@ -104,7 +103,8 @@ class MainActivity : AppCompatActivity() {
             } else {
                 mensaje = "Vuleva a iniciar sesion"
                 Toasty.warning(this@MainActivity, mensaje, Toasty.LENGTH_LONG).show()
-                Alumno.eliminarDatosJson(filesDir)
+                Preferences.eliminarDatosJson(filesDir, Preferences.ALUMNO_FILE_NAME)
+                Alumno.alumno = null
                 iniciarLogin()
             }
             val intent = Intent(this@MainActivity, ButtonNavigation::class.java)

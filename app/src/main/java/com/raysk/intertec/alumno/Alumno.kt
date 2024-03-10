@@ -3,8 +3,6 @@ package com.raysk.intertec.alumno
 import android.content.Context
 import android.graphics.Color
 import android.print.PdfConverter
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.raysk.intertec.alumno.Kardex.Companion.CURSADO
 import com.raysk.intertec.alumno.Kardex.Companion.EN_CURSO
 import com.raysk.intertec.alumno.Kardex.Companion.POR_CURSAR
@@ -14,8 +12,6 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.TextNode
 import java.io.File
-import java.io.FileReader
-import java.io.FileWriter
 import java.io.IOException
 import java.nio.charset.Charset
 
@@ -299,15 +295,7 @@ class Alumno private constructor(var control: String, var password: String) {
         }
     }
 
-    /** Convierte y guarda los datos del alumno en un archivo JSON */
-    fun guardarDatosJson(filesDir: File) {
-        //guardando datos del alumno
-        val alumnoDataFile = File(filesDir, "alumnoData.json")
-        val gson = GsonBuilder().setPrettyPrinting().create()
-        val fileWriter = FileWriter(alumnoDataFile)
-        gson.toJson(this, fileWriter)
-        fileWriter.close()
-    }
+
 
     /** Cambia la contraseña del alumno
      * @param nuevoPassword Nueva contraseña del alumno
@@ -442,6 +430,10 @@ class Alumno private constructor(var control: String, var password: String) {
         obtenerServicios()
     }
 
+    private fun obtenerDatosDocentes(){
+
+    }
+
     companion object {
         @JvmStatic
         var alumno: Alumno? = null
@@ -455,39 +447,6 @@ class Alumno private constructor(var control: String, var password: String) {
             return alumno
         }
 
-        /** Comprueba si existe el archivo JSON con los datos del alumno en la ruta especificada
-         *@param filesDir Ruta del archivo
-         * @return Retorna True si el archivo existe */
-        fun datosJsonExists(filesDir: File): Boolean {
-            val alumnoDataFile = File(filesDir, "alumnoData.json")
-            return alumnoDataFile.exists()
-        }
 
-        /** Carga y convierte el archivo JSON a una instancia de Alumno
-         * @param filesDir Ruta del archivo
-         * @return Retorna True si se cargo correctamente*/
-        fun cargarDatosAlumno(filesDir: File): Boolean {
-            return try {
-                val alumnoDataFile = File(filesDir, "alumnoData.json")
-                val gson = Gson()
-                val fileReader = FileReader(alumnoDataFile)
-                alumno = gson.fromJson(fileReader, Alumno::class.java)
-                fileReader.close()
-                true
-            } catch (e: Exception) {
-                e.printStackTrace()
-                false
-            }
-
-        }
-
-        /** Elimina el archivo JSON con los datos del alumno si este existe */
-        fun eliminarDatosJson(filesDir: File) {
-            alumno = null
-            val alumnoDataFile = File(filesDir, "alumnoData.json")
-            if (alumnoDataFile.exists()) {
-                alumnoDataFile.delete()
-            }
-        }
     }
 }

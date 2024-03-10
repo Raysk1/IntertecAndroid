@@ -10,6 +10,7 @@ import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgre
 import com.google.android.material.textfield.TextInputLayout
 import com.raysk.intertec.alumno.Alumno
 import com.raysk.intertec.alumno.Alumno.Companion.getAlumno
+import com.raysk.intertec.util.preferences.Preferences
 import com.raysk.intertec.util.update.Updates
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.CoroutineScope
@@ -112,8 +113,8 @@ class LoginActivity : AppCompatActivity() {
 
             try {
                 if (validado) {
-                    alumno?.guardarDatosJson(filesDir)
-                    guardado = true
+                    guardado =
+                        Preferences.guardarDatosJson(filesDir, Preferences.ALUMNO_FILE_NAME, alumno)
                 }
             } catch (e: Exception) {
                 Log.e("Error", e.message!!)

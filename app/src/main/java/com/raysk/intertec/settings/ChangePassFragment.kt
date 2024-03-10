@@ -13,6 +13,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.kusu.loadingbutton.LoadingButton
 import com.raysk.intertec.R
 import com.raysk.intertec.alumno.Alumno
+import com.raysk.intertec.util.preferences.Preferences
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -138,7 +139,11 @@ class ChangePassFragment : Fragment() {
         withContext(Dispatchers.IO) {
             try {
                 Alumno.alumno!!.cambiarPassword(tvPasswordNew.text.toString())
-                Alumno.alumno!!.guardarDatosJson(guardarButton.context.filesDir)
+                Preferences.guardarDatosJson(
+                    guardarButton.context.filesDir,
+                    Preferences.ALUMNO_FILE_NAME,
+                    Alumno.alumno
+                )
                 withContext(Dispatchers.Main) {
                     Toasty.success(guardarButton.context, "Se cambio la contraseña").show()
                     activity?.onBackPressedDispatcher?.onBackPressed()
