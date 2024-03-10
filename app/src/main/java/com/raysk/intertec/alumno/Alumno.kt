@@ -1,10 +1,8 @@
 package com.raysk.intertec.alumno
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.Color
 import android.print.PdfConverter
-import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.raysk.intertec.alumno.Kardex.Companion.CURSADO
@@ -13,14 +11,17 @@ import com.raysk.intertec.alumno.Kardex.Companion.POR_CURSAR
 import com.raysk.intertec.alumno.Kardex.Companion.REPITE
 import com.raysk.intertec.alumno.Kardex.Companion.REPROBADO
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 import org.jsoup.nodes.TextNode
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.IOException
+import java.nio.charset.Charset
 
 
 class Alumno private constructor(var control: String, var password: String) {
+    private val url = "http://201.164.155.162/cgi-bin/sie.pl"
     private var passwordToken: String? = null
     var datosGenerales: DatosGenerales = DatosGenerales()
     var datosPersonales: DatosPersonales = DatosPersonales()
@@ -32,6 +33,7 @@ class Alumno private constructor(var control: String, var password: String) {
     var parcialActual = 0
     var servicios: ArrayList<Servicio> = ArrayList()
     var catalogoDeServicios: ArrayList<Servicio> = ArrayList()
+    var residencia: Residencia = Residencia()
     var imagenURL = ""
 
     /** Funcion que valida si se ha iniciado correctamente la se sesion
@@ -55,8 +57,51 @@ class Alumno private constructor(var control: String, var password: String) {
         obtenerCalificaciones()
         obtenerServicios()
         obtenerCatalogoDeServicios()
+        obtenerResidencia()
         alumno = this
         return true
+    }
+
+    /**
+     * Obtiene el documento HTML para procesarlo
+     * @param opc Opcion del sistema a consultar
+     * @return El documento HTML de la opcion consultada
+     */
+    private fun obtenerDocumento(opc: String): Document {
+        val connection = Jsoup.connect(url)
+            .data("Opc", opc)
+            .data("Control", control)
+            .data("Password", passwordToken!!)
+            .data("psie", "intertec")
+            .data("dummy", "0")
+
+        return Jsoup.parse(
+            String(
+                connection.execute().bodyAsBytes(),
+                Charset.forName("ISO-8859-15")
+            )
+        )
+    }
+
+    /**
+     * Obtiene los datos de la [Residencia] del alumno
+     */
+    private fun obtenerResidencia() {
+        val document = obtenerDocumento("RESIDENCIA")
+        val tds = document.select("table")[1].select("td")
+        if (tds[9].text().contains("<")){
+            return
+        }
+        residencia.opcion = tds[3].text().trim()
+        residencia.proyecto = tds[5].text().trim()
+        residencia.asesorExterno = tds[11].text().trim()
+        residencia.dictamen = tds[19].text().trim()
+        residencia.calificacion = tds[35].text().trim()
+        residencia.fechaSolicitud = tds[1].text().trim()
+        residencia.duracion = tds[7].text().trim()
+        residencia.empresa = tds[9].text().trim()
+        residencia.liberacion = tds[37].text().trim()
+        residencia.asesorInterno = tds[21].text().trim()
     }
 
     /**Obtiene los [DatosPersonales], [DatosAcademicos] y [DatosGenerales] del alumno*/
@@ -370,7 +415,7 @@ class Alumno private constructor(var control: String, var password: String) {
      * @throws IOException*/
     fun agregarServicio(servicio: Servicio) {
         val url = "http://201.164.155.162/cgi-bin/sie.pl"
-        val document = Jsoup.connect(url)
+        Jsoup.connect(url)
             .data("concepto", servicio.value)
             .data("Opc", "AGREGASER")
             .data("Agregar", "Agregar")
@@ -394,9 +439,6 @@ class Alumno private constructor(var control: String, var password: String) {
             .data("tmai", datosPersonales.correoPersonal)
             .data("trfc", datosGenerales.curp.substring(0..8))
             .get()
-        Log.i(TAG, "agregarServicio: ${document.baseUri()}")
-
-
         obtenerServicios()
     }
 

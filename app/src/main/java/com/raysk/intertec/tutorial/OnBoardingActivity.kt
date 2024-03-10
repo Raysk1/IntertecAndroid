@@ -14,7 +14,7 @@ import com.gigamole.quatrograde.QuatroGradeView
 import com.google.android.material.button.MaterialButton
 import com.raysk.intertec.LoginActivity
 import com.raysk.intertec.R
-import com.raysk.intertec.util.Color.Companion.textColor
+import com.raysk.intertec.util.ColorUtils.Companion.textColor
 import com.raysk.intertec.util.background.GradientAnimBackground
 import com.raysk.intertec.util.preferences.Preferences
 

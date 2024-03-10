@@ -10,7 +10,7 @@ import codes.side.andcolorpicker.converter.toColorInt
 import codes.side.andcolorpicker.model.IntegerHSLColor
 import com.gigamole.quatrograde.GradeModel
 import com.gigamole.quatrograde.QuatroGradeView
-import com.raysk.intertec.util.Color.Companion.randomColor
+import com.raysk.intertec.util.ColorUtils.Companion.randomColor
 import kotlin.random.Random
 
 class GradientAnimBackground(private val animationQuatroGradeView: QuatroGradeView) {

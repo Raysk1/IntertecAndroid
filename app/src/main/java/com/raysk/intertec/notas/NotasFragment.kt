@@ -9,8 +9,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.raysk.intertec.R
+import com.raysk.intertec.alumno.Alumno
 import com.raysk.intertec.notas.calificaciones.CalificacionesFragment
 import com.raysk.intertec.notas.kardex.KardexFragment
+import com.raysk.intertec.notas.residencia.ResideciaFragment
 
 class NotasFragment : Fragment() {
 
@@ -31,9 +33,12 @@ class NotasFragment : Fragment() {
         tabs = view.findViewById(R.id.tabs)
         viewPager = view.findViewById(R.id.viewPager)
         val adaptadorDeSecciones = AdaptadorDeSecciones(childFragmentManager,lifecycle)
-        val nombresTabs = arrayOf("Kardex","Calificaciones")
+        val nombresTabs = arrayOf("Kardex","Calificaciones","Residencia")
         adaptadorDeSecciones.addFragment(KardexFragment())
         adaptadorDeSecciones.addFragment(CalificacionesFragment())
+        if (Alumno.alumno!!.residencia.proyecto.isNotEmpty()){
+            adaptadorDeSecciones.addFragment(ResideciaFragment())
+        }
         viewPager.adapter = adaptadorDeSecciones
 
         TabLayoutMediator(tabs, viewPager) { tab, position ->
